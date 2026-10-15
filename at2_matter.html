@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ar tonelico2 夜会话自查表</title><link rel="stylesheet" href="at2-matter/style.css"><script src="at2-matter/data.js" defer></script><script src="at2-matter/app.js" defer></script></head>
+<body><div class="layout">
+<aside class="toc"><a class="brand" href="#top"><span>Ar tonelico2<small>夜会话自查表</small></span></a>
+<div class="nav-label">对话话题</div><nav aria-label="目次" id="nav"></nav>
+<div class="nav-label">记录</div><div class="overall"><strong id="total">0 / 324</strong><span>当前路线完成进度</span><progress id="progress" max="324" value="0"></progress></div>
+<p class="save-state" id="save-state" role="status">自动保存于当前浏览器</p>
+<div class="backup"><button id="export">导出记录 ↓</button><button id="import">导入记录 ↑</button><input id="import-file" type="file" accept="application/json,.json" hidden></div>
+<a class="source-link" href="#guide">使用说明与来源 ↗</a><a class="source-link" href="at2_dualstall.html">浴池参考页 ↗</a><a class="source-link" href="index.html">返回首页 ↗</a></aside>
+<main id="top"><header><p class="eyebrow" hidden>AR TONELICO Ⅱ · MATTER CHECKLIST</p><h1>Ar tonelico2 <span class="title-label">夜会话自查表</span></h1><p class="lead" hidden>旅の途中で、まだ話していないこと。<br>トークマターとシンクロマターの収集状況を、ひとつずつ記録。</p><div class="hero-meta"><span>对话话题 <b>243</b></span><span>同步话题 <b>81</b></span><span>勾选自动保存</span></div></header>
+<section class="filter-panel" aria-label="絞り込み"><div class="filter-title"><h2>筛选显示</h2><button id="clear-filters" class="text-button">清除筛选</button></div>
+<div class="filters"><label>魔大陆选择路线<select id="route"><option value="">全部 / 未选择</option><option value="ruka">瑠珈路线</option><option value="cloche">克萝洁路线</option></select></label>
+<label>搭档 / 结局<select id="partner"><option value="">全部 / 未选择</option><option value="ruka">瑠珈</option><option value="cloche">克萝洁</option><option value="jakuri">蛇刳</option><option value="cocona">可可娜（三人均不进入 CS Lv5）</option></select></label>
+<label>勾选状态<select id="status"><option value="">全部</option><option value="todo">未勾选</option><option value="done">已勾选</option></select></label>
+<label>话题类型<select id="kind"><option value="">全部</option><option value="talk">对话话题</option><option value="rest">同步话题・休息</option><option value="bath">同步话题・浴池</option></select></label>
+<label class="search">关键词<input id="search" type="search" placeholder="搜索标题、地点或条件" autocomplete="off"></label></div>
+<div class="filter-bottom"><label><input id="limited" type="checkbox"> 仅显示标有期限或消失条件的话题</label><span id="results" aria-live="polite"></span></div><p id="filter-note" class="fine" hidden>ルートとパートナーは別の条件です。条件が明記されたマターだけを非表示にします。</p></section>
+<div id="tables"></div><p id="empty" hidden>没有符合条件的话题，请调整筛选条件。</p>
+<section id="guide" class="guide"><h2>使用说明与来源</h2><p>勾选保存在当前浏览器中。切换路线、结局或搜索条件不会删除已勾选记录；可导出 JSON 备份，导入时会替换当前记录与筛选设置。</p><p>魔大陆路线与搭档 / 结局分别计算。选择瑠珈或克萝洁结局会同步选择对应魔大陆路线；蛇刳与可可娜结局均可搭配两条魔大陆路线。可可娜按三人均不进入 CS Lv5 计算，保留仍可通过剧情、道具等方式获得的高等级话题。蛇刳第七层将 C／P 合在同一组，共九条，不再按 C／P 筛选或拆分计数。</p><p>侧栏分母表示当前路线/结局下的条目数；搜索、类型、期限和勾选状态只影响显示数。未选择魔大陆路线时，两条路线的条目合并显示，不代表一次周目能够全部获得。已过期话题仍保留以便自查，不能把可收集数当作当前即时可触发数。</p><p>表格文本保留日语，基本操作使用中文。路线、搭档和 CS 前置条件依据攻略本331–342页整理；条件不是由话题的 L1–L9 分组推断。本文沿用 Wiki，已核实的 CS 前置条件按攻略本修正。期限注意标签保持原文。</p><ul><li><a href="https://gustwiki.com/ar-tonelico2/wiki/114.html" target="_blank" rel="noopener">ルカのトークマター</a></li><li><a href="https://gustwiki.com/ar-tonelico2/wiki/113.html" target="_blank" rel="noopener">クローシェのトークマター</a></li><li><a href="https://gustwiki.com/ar-tonelico2/wiki/148.html" target="_blank" rel="noopener">ジャクリのトークマター</a></li><li><a href="https://gustwiki.com/ar-tonelico2/wiki/153.html" target="_blank" rel="noopener">シンクロマター</a></li></ul><p class="fine">资料获取日期：2026-10-15。表格文本可编辑 data.js，路线规则见 route_rules.json。</p><button id="reset" class="text-button danger">清空全部勾选</button></section>
+<footer><span>Ar tonelico Ⅱ · 夜会话自查表</span><a href="#top">返回顶部 ↑</a></footer></main></div></body></html>
