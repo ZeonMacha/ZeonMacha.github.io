@@ -46,17 +46,48 @@ function Write-Err2($t) { Write-Host "  [错误] $t" -ForegroundColor Red }
 function Fail($t) { Write-Err2 $t; Write-Host "`n发布已中止，未做任何改动。" -ForegroundColor Red; exit 1 }
 
 # git 会把进度写到 stderr，而 $ErrorActionPreference='Stop' 会把 stderr 当成
-# 致命错误。这里用临时文件把 stdout / stderr 分开接住，只按退出码判断成败。
+# 致命错误。这里把 stdout / stderr 分开接住，只按退出码判断成败。
+# 注意：不能用 Start-Process 的 -ArgumentList，它按空格拆分会把带空格的
+# commit message 拆成多个参数。这里手动做 Windows 命令行转义。
+function ConvertTo-ArgString {
+    # 参数名不能叫 $Args：在函数内部 $Args 是 PowerShell 自动变量（当前未绑定
+    # 的参数数组），同名会被静默覆盖成空数组，导致 git 收不到任何参数。
+    param([string[]]$Parts)
+    ($Parts | ForEach-Object {
+        $a = $_
+        if ($a -match '[\s"]') {
+            # 转义：内部反斜杠+引号规则，最后再包一层双引号
+            '"' + ($a -replace '(\\*)"', '$1$1\"' -replace '(\\+)$', '$1$1') + '"'
+        } else { $a }
+    }) -join ' '
+}
+
 function Invoke-Git {
-    param([string[]]$GitArgs, [switch]$Quiet)
+    param([string[]]$Cmd, [switch]$Quiet)
     $outF = Join-Path $env:TEMP ("gitout_" + [guid]::NewGuid().ToString('N') + ".txt")
     $errF = Join-Path $env:TEMP ("giterr_" + [guid]::NewGuid().ToString('N') + ".txt")
     try {
-        $p = Start-Process -FilePath 'git' -ArgumentList $GitArgs -NoNewWindow -Wait -PassThru `
-                           -RedirectStandardOutput $outF -RedirectStandardError $errF
-        $code = $p.ExitCode
-        $stdout = if (Test-Path $outF) { [System.IO.File]::ReadAllText($outF, [System.Text.Encoding]::UTF8) } else { '' }
-        $stderr = if (Test-Path $errF) { [System.IO.File]::ReadAllText($errF, [System.Text.Encoding]::UTF8) } else { '' }
+        $psi = New-Object System.Diagnostics.ProcessStartInfo
+        $psi.FileName               = 'git'
+        $psi.Arguments              = ConvertTo-ArgString $Cmd
+        $psi.UseShellExecute        = $false
+        $psi.CreateNoWindow         = $true
+        $psi.RedirectStandardOutput = $true
+        $psi.RedirectStandardError  = $true
+        $psi.StandardOutputEncoding = [System.Text.Encoding]::UTF8
+        $psi.StandardErrorEncoding  = [System.Text.Encoding]::UTF8
+        $psi.WorkingDirectory       = $RepoPath
+
+        $proc = [System.Diagnostics.Process]::Start($psi)
+        # 先异步读干净，避免大输出把管道缓冲写满导致死锁
+        $outTask = $proc.StandardOutput.ReadToEndAsync()
+        $errTask = $proc.StandardError.ReadToEndAsync()
+        $proc.WaitForExit()
+        $stdout = $outTask.Result
+        $stderr = $errTask.Result
+        $code   = $proc.ExitCode
+        $proc.Dispose()
+
         if (-not $Quiet) {
             foreach ($l in ($stdout -split "`r?`n")) { if ($l.Trim()) { Write-Host "    $l" -ForegroundColor DarkGray } }
             foreach ($l in ($stderr -split "`r?`n")) { if ($l.Trim()) { Write-Host "    $l" -ForegroundColor DarkGray } }
@@ -85,7 +116,7 @@ if (-not (Test-Path $pagePath)) { Fail "找不到页面文件：$PageFile" }
 # ---------- 1. 分支与同步状态 ----------
 Write-Head "1/5 检查仓库状态"
 
-$curBranch = (Invoke-Git @('rev-parse','--abbrev-ref','HEAD') -Quiet).Out.Trim()
+$curBranch = (Invoke-Git -Cmd @('rev-parse','--abbrev-ref','HEAD') -Quiet).Out.Trim()
 if ($curBranch -ne $Branch) {
     Write-Warn2 "当前分支是 '$curBranch'，脚本预期 '$Branch'。"
     if (-not $Yes) {
@@ -95,10 +126,10 @@ if ($curBranch -ne $Branch) {
 }
 
 # 拉取远端最新，避免落后于 GitHub（例如你在网页上直接改过）
-$r = Invoke-Git @('fetch',$Remote,$Branch) -Quiet
+$r = Invoke-Git -Cmd @('fetch',$Remote,$Branch) -Quiet
 if ($r.Code -ne 0) { Fail "git fetch 失败，请检查网络或 GitHub 登录状态。`n$($r.Err)" }
 
-$behind = (Invoke-Git @('rev-list','--count',"HEAD..$Remote/$Branch") -Quiet).Out.Trim()
+$behind = (Invoke-Git -Cmd @('rev-list','--count',"HEAD..$Remote/$Branch") -Quiet).Out.Trim()
 
 if ([int]$behind -gt 0) {
     Fail "本地落后远端 $behind 个提交（远端有你在别处做的改动）。`n请先执行： git pull $Remote $Branch`n然后再运行本脚本，以免覆盖。"
@@ -108,16 +139,16 @@ Write-Ok "分支 $curBranch，与 $Remote/$Branch 已同步"
 # ---------- 2. 显示改动 ----------
 Write-Head "2/5 将要发布的改动"
 
-Invoke-Git @('add','-A','--',$PageFile) -Quiet | Out-Null
-$staged = (Invoke-Git @('diff','--cached','--name-only') -Quiet).Out.Trim()
+Invoke-Git -Cmd @('add','-A','--',$PageFile) -Quiet | Out-Null
+$staged = (Invoke-Git -Cmd @('diff','--cached','--name-only') -Quiet).Out.Trim()
 if (-not $staged) {
     Write-Warn2 "没有检测到任何改动，文件与已发布的版本相同。"
     Write-Host "  线上地址: $SiteUrl" -ForegroundColor White
     exit 0
 }
 
-Invoke-Git @('--no-pager','diff','--cached','--stat','--',$PageFile) | Out-Null
-$fullDiff = (Invoke-Git @('--no-pager','diff','--cached','-U0','--',$PageFile) -Quiet).Out
+Invoke-Git -Cmd @('--no-pager','diff','--cached','--stat','--',$PageFile) | Out-Null
+$fullDiff = (Invoke-Git -Cmd @('--no-pager','diff','--cached','-U0','--',$PageFile) -Quiet).Out
 $changed  = ($fullDiff -split "`r?`n") | Where-Object { $_ -match '^[+-]' -and $_ -notmatch '^(\+\+\+|---)' }
 Write-Host ("  共 {0} 行变化" -f $changed.Count) -ForegroundColor White
 Write-Host "  内容摘要（前 25 行）:" -ForegroundColor DarkGray
@@ -132,7 +163,7 @@ if (-not $Yes) {
     Write-Host ""
     $ans = Read-Host "  确认发布以上改动到 GitHub Pages？(y/N)"
     if ($ans -notmatch '^[Yy]') {
-        Invoke-Git @('reset','-q','--',$PageFile) -Quiet | Out-Null
+        Invoke-Git -Cmd @('reset','-q','--',$PageFile) -Quiet | Out-Null
         Write-Host "  已取消，暂存区已还原。" -ForegroundColor Yellow
         exit 0
     }
@@ -143,43 +174,67 @@ Write-Head "3/5 提交"
 
 $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
 $msg   = "Publish dualstall page ($stamp)"
-$r = Invoke-Git @('-c','core.safecrlf=false','commit','-q','-m',$msg,'--',$PageFile)
+$r = Invoke-Git -Cmd @('-c','core.safecrlf=false','commit','-q','-m',$msg,'--',$PageFile)
 if ($r.Code -ne 0) { Fail "git commit 失败（可能是未配置 user.name / user.email）。`n$($r.Err)" }
-$newSha = (Invoke-Git @('rev-parse','--short','HEAD') -Quiet).Out.Trim()
+$newSha = (Invoke-Git -Cmd @('rev-parse','--short','HEAD') -Quiet).Out.Trim()
 Write-Ok "已提交 $newSha — $msg"
 
 # ---------- 4. 推送 ----------
 Write-Head "4/5 推送到 GitHub"
 
-$r = Invoke-Git @('push',$Remote,$Branch)
+$r = Invoke-Git -Cmd @('push',$Remote,$Branch)
 if ($r.Code -ne 0) { Fail "git push 失败。若提示认证问题，请在 Git Credential Manager 里重新登录 GitHub。`n$($r.Err)" }
 Write-Ok "已推送 $newSha 到 $Remote/$Branch"
 
 # ---------- 5. 等待并核对线上 ----------
 Write-Head "5/5 等待 GitHub Pages 重建"
 
-$localHash = (Get-FileHash $pagePath -Algorithm SHA256).Hash.ToLower()
-Write-Host "  本地 SHA256: $localHash" -ForegroundColor DarkGray
+# 校验基准用「git 里已提交的那份内容」，而不是工作区文件。
+# 原因：工作区文件可能带 CRLF，而 git 入库时按规则存成 LF，Pages 部署的是
+# LF 版本；直接比工作区会因换行符差异而永远对不上。
+$blobBytes = $null
+$tmpBlob = Join-Path $env:TEMP ("blob_" + [guid]::NewGuid().ToString('N'))
+try {
+    $r = Invoke-Git -Cmd @('show',"HEAD:$PageFile") -Quiet
+    if ($r.Code -eq 0) {
+        [System.IO.File]::WriteAllText($tmpBlob, $r.Out, (New-Object System.Text.UTF8Encoding($false)))
+        $blobBytes = [System.IO.File]::ReadAllBytes($tmpBlob)
+    }
+} catch { } finally { Remove-Item $tmpBlob -Force -ErrorAction SilentlyContinue }
+
+if (-not $blobBytes) {
+    Write-Warn2 "无法读取 git 中的文件内容，跳过逐字节校验。"
+    $blobBytes = [System.IO.File]::ReadAllBytes($pagePath)
+}
+
+$sha256 = [System.Security.Cryptography.SHA256]::Create()
+$localHash = (($sha256.ComputeHash($blobBytes)) | ForEach-Object { $_.ToString('x2') }) -join ''
+Write-Host ("  已提交内容 SHA256: {0}" -f $localHash.Substring(0,16)) -ForegroundColor DarkGray
+Write-Host ("  基准大小: {0} 字节" -f $blobBytes.Length) -ForegroundColor DarkGray
 Write-Host "  正在轮询 $SiteUrl ..." -ForegroundColor DarkGray
 
 $deadline = (Get-Date).AddSeconds($BuildWaitS)
 $live = $false
+$lastLen = -1
 while ((Get-Date) -lt $deadline) {
     Start-Sleep -Seconds 10
     try {
         $resp = Invoke-WebRequest -Uri $SiteUrl -TimeoutSec 25 -UseBasicParsing
-        $bytes = $resp.RawContentStream.ToArray()
-        $text  = [System.Text.Encoding]::UTF8.GetString($bytes)
-        $sha   = [System.Security.Cryptography.SHA256]::Create()
-        $liveHash = (($sha.ComputeHash([System.Text.Encoding]::UTF8.GetBytes($text))) |
-                     ForEach-Object { $_.ToString('x2') }) -join ''
+        # 直接对「原始字节」做哈希，绝不要先解码成字符串再编码回去
+        $raw = $resp.RawContentStream.ToArray()
+        $liveHash = (($sha256.ComputeHash($raw)) | ForEach-Object { $_.ToString('x2') }) -join ''
 
         if ($liveHash -eq $localHash) {
-            Write-Ok "线上文件与本地逐字节一致 ($([Math]::Round($text.Length/1KB)) KB)"
+            Write-Ok "线上文件与已提交内容逐字节一致（$($raw.Length) 字节）"
             $live = $true
             break
         }
-        Write-Host ("    {0} 仍在构建中…（线上 {1} 字节）" -f (Get-Date -Format 'HH:mm:ss'), $text.Length) -ForegroundColor DarkGray
+        # 只在大小变化时打印一行，避免刷屏
+        if ($raw.Length -ne $lastLen) {
+            Write-Host ("    {0} 构建中…（线上 {1} 字节 / 目标 {2} 字节）" -f `
+                (Get-Date -Format 'HH:mm:ss'), $raw.Length, $blobBytes.Length) -ForegroundColor DarkGray
+            $lastLen = $raw.Length
+        }
     } catch {
         Write-Host ("    {0} 连接失败，重试中…" -f (Get-Date -Format 'HH:mm:ss')) -ForegroundColor DarkGray
     }
@@ -191,6 +246,7 @@ if ($live) {
 } else {
     Write-Warn2 "已推送成功，但 $BuildWaitS 秒内线上还没更新完。"
     Write-Host "  通常再等 1 分钟即可，也可到 Actions 页面查看构建进度：" -ForegroundColor Yellow
+    Write-Host "  https://github.com/ZeonMacha/ZeonMacha.github.io/actions" -ForegroundColor DarkGray
 }
 Write-Host "  页面地址: $SiteUrl" -ForegroundColor White
 Write-Host "  本次提交: $newSha" -ForegroundColor White
