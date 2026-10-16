@@ -18,7 +18,8 @@ param(
     # 跳过确认提示，直接发布
     [switch]$Yes,
     # 只检查、不推送
-    [switch]$DryRun
+    [switch]$DryRun,
+    [string]$SourceFile
 )
 
 $ErrorActionPreference = 'Stop'
@@ -36,14 +37,14 @@ $PageFile   = 'at2_dualstall.html'
 $Branch     = 'main'
 $Remote     = 'origin'
 $SiteUrl    = 'https://zeonmacha.github.io/at2_dualstall.html'
-$BuildWaitS = 240      # 等待 Pages 重建的最长秒数
+$BuildWaitS = 600      # 等待 Pages 重建的最长秒数
 # ====================================================
 
 function Write-Head($t) { Write-Host "`n=== $t ===" -ForegroundColor Cyan }
 function Write-Ok($t)   { Write-Host "  [OK]   $t" -ForegroundColor Green }
 function Write-Warn2($t){ Write-Host "  [警告] $t" -ForegroundColor Yellow }
 function Write-Err2($t) { Write-Host "  [错误] $t" -ForegroundColor Red }
-function Fail($t) { Write-Err2 $t; Write-Host "`n发布已中止，未做任何改动。" -ForegroundColor Red; exit 1 }
+function Fail($t) { Write-Err2 $t; Write-Host "`n发布未完成。已完成的同步或提交会保留，可修复问题后重新运行。" -ForegroundColor Red; exit 1 }
 
 # git 会把进度写到 stderr，而 $ErrorActionPreference='Stop' 会把 stderr 当成
 # 致命错误。这里把 stdout / stderr 分开接住，只按退出码判断成败。
@@ -117,13 +118,7 @@ if (-not (Test-Path $pagePath)) { Fail "找不到页面文件：$PageFile" }
 Write-Head "1/5 检查仓库状态"
 
 $curBranch = (Invoke-Git -Cmd @('rev-parse','--abbrev-ref','HEAD') -Quiet).Out.Trim()
-if ($curBranch -ne $Branch) {
-    Write-Warn2 "当前分支是 '$curBranch'，脚本预期 '$Branch'。"
-    if (-not $Yes) {
-        $a = Read-Host "  仍要继续吗？(y/N)"
-        if ($a -notmatch '^[Yy]') { Fail "已取消（分支不符）。" }
-    }
-}
+if ($curBranch -ne $Branch) { Fail "当前必须在 main 分支，实际为 $curBranch。" }
 
 # 拉取远端最新，避免落后于 GitHub（例如你在网页上直接改过）
 $r = Invoke-Git -Cmd @('fetch',$Remote,$Branch) -Quiet
@@ -139,13 +134,26 @@ Write-Ok "分支 $curBranch，与 $Remote/$Branch 已同步"
 # ---------- 2. 显示改动 ----------
 Write-Head "2/5 将要发布的改动"
 
-Invoke-Git -Cmd @('add','-A','--',$PageFile) -Quiet | Out-Null
-$staged = (Invoke-Git -Cmd @('diff','--cached','--name-only') -Quiet).Out.Trim()
-if (-not $staged) {
-    Write-Warn2 "没有检测到任何改动，文件与已发布的版本相同。"
-    Write-Host "  线上地址: $SiteUrl" -ForegroundColor White
+if ($SourceFile) {
+    $sourcePath = (Resolve-Path -LiteralPath $SourceFile).Path
+    if ($sourcePath -eq $pagePath) { Fail "源文件不能是发布目标自身。" }
+    Write-Host "源文件: $sourcePath"
+    if (-not $DryRun -and (Get-FileHash -LiteralPath $sourcePath).Hash -ne (Get-FileHash -LiteralPath $pagePath).Hash) {
+        $backupDir = Join-Path $RepoPath '.git/publish-backups'
+        New-Item -ItemType Directory -Path $backupDir -Force | Out-Null
+        Copy-Item -LiteralPath $pagePath -Destination (Join-Path $backupDir ((Get-Date -Format 'yyyyMMdd-HHmmss') + '.html'))
+        Copy-Item -LiteralPath $sourcePath -Destination $pagePath
+    }
+}
+if ($DryRun) {
+    Write-Host "[DryRun] 环境检查通过；未同步文件、暂存、提交或推送。"
     exit 0
 }
+$r = Invoke-Git -Cmd @('diff','--check','--',$PageFile)
+if ($r.Code -ne 0) { Fail "页面差异检查失败。" }
+$r = Invoke-Git -Cmd @('add','--',$PageFile) -Quiet
+if ($r.Code -ne 0) { Fail "暂存页面失败。" }
+$staged = (Invoke-Git -Cmd @('diff','--cached','--name-only','--',$PageFile) -Quiet).Out.Trim()
 
 Invoke-Git -Cmd @('--no-pager','diff','--cached','--stat','--',$PageFile) | Out-Null
 $fullDiff = (Invoke-Git -Cmd @('--no-pager','diff','--cached','-U0','--',$PageFile) -Quiet).Out
@@ -157,14 +165,14 @@ $changed | Select-Object -First 25 | ForEach-Object {
 }
 if ($changed.Count -gt 25) { Write-Host ("    …还有 {0} 行" -f ($changed.Count - 25)) -ForegroundColor DarkGray }
 
-if ($DryRun) { Write-Host "`n[DryRun] 只检查不推送。" -ForegroundColor Yellow; exit 0 }
+
 
 if (-not $Yes) {
     Write-Host ""
     $ans = Read-Host "  确认发布以上改动到 GitHub Pages？(y/N)"
     if ($ans -notmatch '^[Yy]') {
-        Invoke-Git -Cmd @('reset','-q','--',$PageFile) -Quiet | Out-Null
-        Write-Host "  已取消，暂存区已还原。" -ForegroundColor Yellow
+        # Keep the index intact on cancellation.
+        Write-Host "  已取消，页面未推送。" -ForegroundColor Yellow
         exit 0
     }
 }
@@ -174,8 +182,10 @@ Write-Head "3/5 提交"
 
 $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
 $msg   = "Publish dualstall page ($stamp)"
+if ($staged) {
 $r = Invoke-Git -Cmd @('-c','core.safecrlf=false','commit','-q','-m',$msg,'--',$PageFile)
 if ($r.Code -ne 0) { Fail "git commit 失败（可能是未配置 user.name / user.email）。`n$($r.Err)" }
+} else { Write-Host "页面没有新改动，继续检查推送和部署状态。" }
 $newSha = (Invoke-Git -Cmd @('rev-parse','--short','HEAD') -Quiet).Out.Trim()
 Write-Ok "已提交 $newSha — $msg"
 
@@ -215,11 +225,17 @@ Write-Host "  正在轮询 $SiteUrl ..." -ForegroundColor DarkGray
 
 $deadline = (Get-Date).AddSeconds($BuildWaitS)
 $live = $false
+$commitSha = (Invoke-Git -Cmd @('rev-parse','HEAD') -Quiet).Out.Trim()
+$apiUrl = "https://api.github.com/repos/ZeonMacha/ZeonMacha.github.io/actions/runs?head_sha=$commitSha&per_page=20"
 $lastLen = -1
 while ((Get-Date) -lt $deadline) {
     Start-Sleep -Seconds 10
     try {
-        $resp = Invoke-WebRequest -Uri $SiteUrl -TimeoutSec 25 -UseBasicParsing
+        $runs = Invoke-RestMethod -Uri $apiUrl -TimeoutSec 25
+        $build = $runs.workflow_runs | Where-Object { $_.name -match 'pages' } | Select-Object -First 1
+        if (-not $build -or $build.status -ne 'completed') { Write-Host '    等待 Pages 部署…'; continue }
+        if ($build.conclusion -ne 'success') { Fail "Pages 部署失败：$($build.html_url)" }
+        $resp = Invoke-WebRequest -Uri ($SiteUrl + '?publish=' + $commitSha) -TimeoutSec 25 -UseBasicParsing
         # 直接对「原始字节」做哈希，绝不要先解码成字符串再编码回去
         $raw = $resp.RawContentStream.ToArray()
         $liveHash = (($sha256.ComputeHash($raw)) | ForEach-Object { $_.ToString('x2') }) -join ''
@@ -244,10 +260,12 @@ Write-Host ""
 if ($live) {
     Write-Host "发布成功！" -ForegroundColor Green
 } else {
-    Write-Warn2 "已推送成功，但 $BuildWaitS 秒内线上还没更新完。"
+    Write-Warn2 "已推送成功，但 $BuildWaitS 秒内未确认部署完成。可重新运行工具继续检查。"
     Write-Host "  通常再等 1 分钟即可，也可到 Actions 页面查看构建进度：" -ForegroundColor Yellow
     Write-Host "  https://github.com/ZeonMacha/ZeonMacha.github.io/actions" -ForegroundColor DarkGray
 }
 Write-Host "  页面地址: $SiteUrl" -ForegroundColor White
 Write-Host "  本次提交: $newSha" -ForegroundColor White
 Write-Host ""
+
+if (-not $live) { exit 2 }
