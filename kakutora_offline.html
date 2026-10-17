@@ -101,6 +101,14 @@ body{height:100svh;min-height:0;grid-template-rows:minmax(0,1fr) auto;gap:clamp(
 .message.mine{display:flex;gap:3px}.mine .bubble{max-width:min(90%,540px)}.mine .byline{text-align:right;margin-right:3px}
 .bubble.has-image{max-width:min(100%,300px)}.date{display:block;width:100%;text-align:center;min-width:0!important;margin:4px 0 12px;font-size:9px}.download-file{font-size:inherit}
 .site-footer{position:static;transform:none;width:min(1100px,100%);font-size:clamp(8px,.8vw,10px);line-height:1.65}.copyright-work{display:inline}.site-footer p{margin:0}
+.message.system-logout{display:flex;flex-direction:column;align-items:center;justify-content:center;width:100%;margin:28px 0 12px;grid-column:1 / -1;grid-template-columns:none;text-align:center}
+.wave-badge{display:inline-flex;align-items:center;justify-content:center;padding:4px 14px;border-radius:999px;background:#5c5c5c;color:#f0f0f0}
+.wave-badge span{display:inline-block;font-size:10px;letter-spacing:2.2px;font-weight:500;line-height:1;-webkit-transform:scaleY(.86);transform:scaleY(.86);-webkit-transform-origin:center center;transform-origin:center center}
+.wave-logout-text{margin:10px 0 14px;color:#f5f5f5;font-size:13px;letter-spacing:.3px;line-height:1.55;white-space:nowrap;font-weight:700}
+.wave-end-chat{appearance:none;-webkit-appearance:none;font:inherit;cursor:pointer;border:2px solid #e53935;background:transparent;color:#e53935;border-radius:8px;padding:12px 44px;min-width:240px;font-size:14px;letter-spacing:.35px;line-height:1.2;font-weight:700}
+.wave-end-chat:hover{background:#e5393514}
+.wave-end-chat:focus-visible{outline:2px solid #e53935;outline-offset:3px}
+@media(max-width:480px){.wave-logout-text{font-size:12px}.wave-end-chat{font-size:13px;padding:11px 28px;min-width:200px;border-width:2px}.wave-badge{padding:4px 12px}.wave-badge span{font-size:9px;letter-spacing:1.6px}}
 </style>
 <script>
 // Arm the opening before first paint; start its deadline after the document is parsed.
@@ -195,6 +203,7 @@ const CHATS = [
   name:'游戏介绍',
   subtitle:'ABOUT',
   speaker:'TSUBAME',
+  character:'逢濑燕',
   messages:[
    {text:'啊，BOT{bot}，你好呀！(*´▽｀*)'},
    {text:'这是一个什么样的游戏？',mine:true},
@@ -223,6 +232,7 @@ const CHATS = [
   name:'资源下载',
   subtitle:'DOWNLOAD',
   speaker:'AYAMI',
+  character:'国政绫水',
   messages:[
    {text:'BOT{bot}，你好'},
    {text:'从哪里开始下载？',mine:true},
@@ -242,6 +252,7 @@ const CHATS = [
   name:'改动内容',
   subtitle:'CHANGELOG',
   speaker:'GABRIELLA',
+  character:'加布里埃拉',
   messages:[
    {text:'哎呀，BOT{bot}，你好'},
    {text:'和原版相比做了哪些改动？',mine:true},
@@ -276,6 +287,7 @@ const CHATS = [
   name:'制作人员',
   subtitle:'CREDITS',
   speaker:'MIYABI',
+  character:'恋之崎雅',
   messages:[
    {text:'哟，BOT{bot}，你好咯'},
    {text:'能为我介绍一下制作团队吗？',mine:true},
@@ -311,6 +323,7 @@ const CHATS = [
   name:'相关链接',
   subtitle:'LINKS',
   speaker:'KAGURA',
+  character:'卯月神乐',
   messages:[
    {text:'BOT{bot}，你好呀，pyon！'},
    {text:'其他链接在哪里？',mine:true},
@@ -446,6 +459,15 @@ function appendMessage(message){
  }
  row.append(bubble);log.append(row);
 }
+function appendLogout(room){
+ if(!room.character)return;
+ const row=document.createElement('div');row.className='message system-logout';
+ const badge=document.createElement('div');badge.className='wave-badge';const badgeText=document.createElement('span');badgeText.textContent='WAVE SYSTEM MSG';badge.appendChild(badgeText);
+ const text=document.createElement('div');text.className='wave-logout-text';text.textContent='【'+room.character+'】已登出';
+ const end=document.createElement('button');end.type='button';end.className='wave-end-chat';end.textContent='点击结束聊天';
+ end.addEventListener('click',()=>{active=active>=rooms.length-1?-1:active+1;render();});
+ row.append(badge,text,end);log.append(row);
+}
 function render(){
  messageObserver?.disconnect();
  const isHome=active===-1;
@@ -462,6 +484,7 @@ function render(){
  date.setAttribute('aria-label','今天');
  log.append(date);
  room.messages.forEach(appendMessage);
+ appendLogout(room);
  log.scrollTop=0;
  revealMessages();
 }
