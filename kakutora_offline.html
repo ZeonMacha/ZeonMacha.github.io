@@ -22,7 +22,7 @@ button{font:inherit;cursor:pointer}button:focus-visible{outline:2px solid #fff;o
 .intro-veil{position:fixed;inset:0;z-index:9;display:none;pointer-events:none;background:#00000014}
 html.intro-active .intro-veil{display:block}
 html.intro-opening .intro-veil{animation:intro-veil-out 900ms ease both}
-.intro-loader{position:fixed;left:50%;top:50%;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;width:min(300px,72vmin);height:min(300px,72vmin);padding:28px;border-radius:50%;background:#1c1c1ee8;border:1px solid #ffffff2e;box-shadow:0 0 0 8px #ffffff0a,0 18px 50px #0003;backdrop-filter:blur(12px);transform:translate(-50%,-50%);pointer-events:none}
+.intro-loader{position:fixed;left:50%;top:50%;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;width:min(300px,72vmin);height:min(300px,72vmin);padding:28px;border-radius:50%;background:#1c1c1ee8;border:1px solid #ffffff2e;box-shadow:0 0 0 8px #ffffff0a,0 18px 50px #0003;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);pointer-events:none}
 html.intro-active .intro-loader{display:flex}
 .intro-kicker{margin:0 0 12px;font-size:9px;letter-spacing:3.2px;color:#d0d0d0}
 .intro-label{position:relative;width:100%;min-height:28px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;letter-spacing:4px;color:#eee;font-weight:400}
@@ -33,10 +33,10 @@ html.intro-ready .intro-kicker{opacity:.55}
 html.intro-ready .intro-label{color:#fff;letter-spacing:1px}
 html.intro-ready .intro-dots{visibility:hidden;animation:none}
 html.intro-ready .intro-bar-fill{width:100%;animation:none}
-html.intro-opening .intro-loader{animation:intro-loader-out 520ms ease both}
-html.intro-active .nest{opacity:0;clip-path:inset(calc(50% - 1px) max(0px,calc(50% - 36px)));animation:terminal-open 1800ms cubic-bezier(.76,0,.24,1) both;animation-play-state:paused;pointer-events:none}
+html.intro-opening .intro-loader{-webkit-animation:intro-loader-out 520ms ease both;animation:intro-loader-out 520ms ease both}
+html.intro-active .nest{opacity:0;-webkit-transform:scale(.08,.004);transform:scale(.08,.004);-webkit-transform-origin:50% 50%;transform-origin:50% 50%;pointer-events:none}
 html.intro-active .nest>*{opacity:0}
-html.intro-opening .nest{opacity:1;animation-play-state:running}
+html.intro-opening .nest{-webkit-animation:terminal-open 1800ms cubic-bezier(.76,0,.24,1) both;animation:terminal-open 1800ms cubic-bezier(.76,0,.24,1) both}
 html.intro-opening .nest>.sidebar{animation:intro-rise 640ms ease 1280ms both}
 html.intro-opening .nest>.chat{opacity:1}
 html.intro-opening .brand{animation:intro-rise 560ms ease 1320ms both}
@@ -52,13 +52,13 @@ html.intro-opening .messages{animation:intro-rise 820ms ease 1560ms both}
 @keyframes intro-bar{to{width:100%}}
 @keyframes intro-pulse{50%{opacity:.28}}
 @keyframes intro-veil-out{to{opacity:0}}
-@keyframes intro-loader-out{to{opacity:0;transform:translate(-50%,-50%) scale(.72)}}
-@keyframes terminal-open{0%{clip-path:inset(calc(50% - 1px) max(0px,calc(50% - 36px)))}26%{clip-path:inset(calc(50% - 1px) 0)}40%{clip-path:inset(calc(50% - 1px) 0)}100%{clip-path:inset(0 0 round 8px)}}
-@keyframes intro-rise{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:none}}
+@keyframes intro-loader-out{to{opacity:0;-webkit-transform:translate(-50%,-50%) scale(.72);transform:translate(-50%,-50%) scale(.72)}}
+@keyframes terminal-open{0%{opacity:1;-webkit-transform:scale(.08,.004);transform:scale(.08,.004)}26%{opacity:1;-webkit-transform:scale(1,.004);transform:scale(1,.004)}40%{opacity:1;-webkit-transform:scale(1,.004);transform:scale(1,.004)}100%{opacity:1;-webkit-transform:scale(1,1);transform:scale(1,1)}}
+@keyframes intro-rise{from{opacity:0}to{opacity:1}}
 
 /* Reveal each message once as it enters the chat viewport. */
-.messages.reveal-enabled .message{opacity:0;transform:translateY(18px);transition:opacity 650ms ease,transform 650ms cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}
-.messages.reveal-enabled .message.is-visible,.messages.reveal-enabled .message:focus-within{opacity:1;transform:none}
+.messages.reveal-enabled .message{opacity:0;-webkit-transform:translate3d(0,18px,0);transform:translate3d(0,18px,0);-webkit-transition:opacity 650ms ease,-webkit-transform 650ms cubic-bezier(.2,.7,.2,1);transition:opacity 650ms ease,transform 650ms cubic-bezier(.2,.7,.2,1);-webkit-transition-delay:var(--reveal-delay,0ms);transition-delay:var(--reveal-delay,0ms)}
+.messages.reveal-enabled .message.is-visible,.messages.reveal-enabled .message:focus-within{opacity:1;-webkit-transform:translate3d(0,0,0);transform:translate3d(0,0,0)}
 @media(prefers-reduced-motion:reduce){
 .messages.reveal-enabled .message{opacity:1;transform:none;transition:none}
 .intro-veil,.intro-loader{display:none!important}
@@ -92,7 +92,7 @@ body{height:100svh;min-height:0;grid-template-rows:minmax(0,1fr) auto;gap:clamp(
 .brand{gap:clamp(4px,.7vw,9px);padding:0 2px;font-size:clamp(8px,1vw,11px);letter-spacing:.7px}.brand-icon{width:clamp(22px,2.5vw,28px)!important;height:clamp(22px,2.5vw,28px)!important}.status{font-size:7px;letter-spacing:1px}
 .contacts{gap:clamp(4px,.7vh,7px)}.contact{flex-shrink:0;gap:clamp(5px,.8vw,10px);padding:0 clamp(2px,.6vw,8px);height:clamp(46px,6vh,53px)}.contact-icon{width:clamp(24px,3vw,38px);height:clamp(24px,3vw,38px)}.contact strong{font-size:clamp(10px,1.2vw,14px);white-space:nowrap}.contact-english{font-size:clamp(6px,.7vw,8px);letter-spacing:.55px}.contact-label{gap:4px}
 .sidebar-bottom{padding:8px 2px 0;font-size:clamp(8px,.9vw,10px);letter-spacing:.5px}
-.chat-header{height:clamp(48px,6vh,56px)}.messages{padding:clamp(4px,1vw,8px) clamp(8px,2vw,26px) clamp(12px,2vw,24px);overscroll-behavior-y:contain;touch-action:pan-y;overflow-anchor:none}
+.chat-header{height:clamp(48px,6vh,56px)}.messages{padding:clamp(4px,1vw,8px) clamp(8px,2vw,26px) clamp(12px,2vw,24px);overscroll-behavior-y:contain;touch-action:pan-y;overflow-anchor:none;-webkit-overflow-scrolling:touch}
 .message{display:grid;grid-template-columns:clamp(24px,3vw,34px) minmax(0,1fr);column-gap:clamp(7px,1vw,12px);row-gap:3px;align-items:end;margin-bottom:16px}
 .message-avatar{grid-column:1;grid-row:1 / 3;width:100%;aspect-ratio:1;object-fit:cover;border-radius:7px;align-self:end}
 .byline{grid-column:2;margin:0 0 2px;font-size:clamp(8px,.9vw,10px);line-height:1.2;overflow-wrap:anywhere}
@@ -124,7 +124,7 @@ window.introDeadline=setTimeout(()=>{
  </aside>
  <section class="chat" aria-labelledby="chat-title">
   <header class="chat-header"><h1 class="chat-title" id="chat-title">游戏介绍</h1><span class="chat-subtitle" lang="en">ABOUT</span></header>
-  <div class="messages reveal-enabled" role="log" aria-live="polite" aria-label="聊天消息"><p class="date" contenteditable="plaintext-only" spellcheck="false" aria-label="对话日期，可点击修改">2026年10月17日</p><div class="message is-visible" style="--reveal-delay: 0ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">啊，BOT23124，你好呀！(*´▽｀*)</div></div><div class="message mine is-visible" style="--reveal-delay: 90ms;"><div class="bubble">这是一个什么样的游戏？</div></div><div class="message is-visible" style="--reveal-delay: 180ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">嗯嗯，让我来介绍吧 (*´▽｀*)</div></div><div class="message is-visible" style="--reveal-delay: 270ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">《扩张少女系三重奏》呢</div></div><div class="message is-visible" style="--reveal-delay: 360ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">是 GUST 和东映动画一起做的“应用＋动画融合”恋爱 SF 跨媒体企划哦</div></div><div class="message is-visible" style="--reveal-delay: 360ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">GUST 是 Koei Tecmo Games 旗下的品牌</div></div><div class="message is-visible" style="--reveal-delay: 360ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">游戏的定位呢，是“少女表里恋爱 RPG”哟</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">日文名是《拡張少女系トライナリー》</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">英文的话，是 AUGMENTED REALITY GIRLS TRINARY……有一点点长呢 (´・ω・｀)</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">原作可以在 iOS 和 Android 上玩</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">2017 年 4 月 12 日上线的</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">后来 2018 年 8 月 31 日就结束服务了 (´つω・｀)</div></div><div class="message mine"><div class="bubble">那现在的 offline 版呢？</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">这个版本呢</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">是在 pyonko_suki 发布的 APK 基础上，重新做了逆向工作哦</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">目前对应安卓平台</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">用 PC 的话，MuMu 之类的模拟器也可以玩</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">这样就能在这里见面了呢 (≧艸≦*)</div></div><div class="message mine"><div class="bubble">未来考虑汉化吗？</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">在新建文件夹了 (/ω＼)</div></div></div>
+  <div class="messages reveal-enabled" role="log" aria-live="polite" aria-label="聊天消息"><p class="date" contenteditable="plaintext-only" spellcheck="false" aria-label="对话日期，可点击修改">2026年10月17日</p><div class="message is-visible" style="--reveal-delay: 0ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">啊，BOT23124，你好呀！(*´▽｀*)</div></div><div class="message mine is-visible" style="--reveal-delay: 90ms;"><div class="bubble">这是一个什么样的游戏？</div></div><div class="message is-visible" style="--reveal-delay: 180ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">嗯嗯，让我来介绍吧 (*´▽｀*)</div></div><div class="message is-visible" style="--reveal-delay: 270ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">《扩张少女系三重奏》呢</div></div><div class="message is-visible" style="--reveal-delay: 360ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">是 GUST 和东映动画一起做的「应用＋动画融合」恋爱 SF 跨媒体企划哦</div></div><div class="message is-visible" style="--reveal-delay: 360ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">GUST 是 Koei Tecmo Games 旗下的品牌</div></div><div class="message is-visible" style="--reveal-delay: 360ms;"><div class="byline">TSUBAME WROTE…</div><div class="bubble">游戏的定位呢，是「少女表里恋爱 RPG」哟</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">日文原名是《拡張少女系トライナリー》</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">英文的话，是 AUGMENTED REALITY GIRLS TRINARY……有一点点长呢 (´・ω・｀)</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">原作可以在 iOS 和 Android 上玩</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">2017 年 4 月 12 日上线的</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">后来 2018 年 8 月 31 日就结束服务了 (´つω・｀)</div></div><div class="message mine"><div class="bubble">那现在的 offline 版呢？</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">这个版本呢</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">是在 ぴょんこｽｷ 发布的 APK 基础上，重新做了逆向工作哦</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">目前对应安卓平台</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">用 PC 的话，MuMu 之类的模拟器也可以玩</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">这样就能在这里见面了呢 (≧艸≦*)</div></div><div class="message mine"><div class="bubble">未来考虑汉化吗？</div></div><div class="message"><div class="byline">TSUBAME WROTE…</div><div class="bubble">在新建文件夹了 (/ω＼)</div></div></div>
  </section>
 </main>
 <script>
@@ -151,17 +151,17 @@ const sections = [
   {text:'这是一个什么样的游戏？',mine:true},
   {text:'嗯嗯，让我来介绍吧 (*´▽｀*)'},
   {text:'《扩张少女系三重奏》呢'},
-  {text:'是 GUST 和东映动画一起做的“应用＋动画融合”恋爱 SF 跨媒体企划哦'},
+  {text:'是 GUST 和东映动画一起做的「应用＋动画融合」恋爱 SF 跨媒体企划哦'},
   {text:'GUST 是 Koei Tecmo Games 旗下的品牌'},
-  {text:'游戏的定位呢，是“少女表里恋爱 RPG”哟'},
-  {text:'日文名是《拡張少女系トライナリー》'},
+  {text:'游戏的定位呢，是「少女表里恋爱 RPG」哟'},
+  {text:'日文原名是《拡張少女系トライナリー》'},
   {text:'英文的话，是 AUGMENTED REALITY GIRLS TRINARY……有一点点长呢 (´・ω・｀)'},
   {text:'原作可以在 iOS 和 Android 上玩'},
   {text:'2017 年 4 月 12 日上线的'},
   {text:'后来 2018 年 8 月 31 日就结束服务了 (´つω・｀)'},
   {text:'那现在的 offline 版呢？',mine:true},
   {text:'这个版本呢'},
-  {text:'是在 pyonko_suki 发布的 APK 基础上，重新做了逆向工作哦'},
+  {text:'是在 ぴょんこｽｷ 发布的 APK 基础上，重新做了逆向工作哦'},
   {text:'目前对应安卓平台'},
   {text:'用 PC 的话，MuMu 之类的模拟器也可以玩'},
   {text:'这样就能在这里见面了呢 (≧艸≦*)'},
@@ -181,11 +181,11 @@ const sections = [
   {text:'弄混了会麻烦的 (-ω-;)'}
  ]},
  {name:'改动内容',character:'gabriella',speaker:'GABRIELLA',messages:[
-  {text:'这一版做了哪些改动？',mine:true},
+  {text:'和原版相比做了哪些改动？',mine:true},
   {text:'改动可不少'},
   {text:'我一件件告诉你'},
   {text:'认真听好了哦'},
-  {text:'首先，100 多件隐藏服装都加回来了'},
+  {text:'首先，100 多件未实装的服装都加回来了'},
   {text:'这个可不能漏看'},
   {text:'被砍掉的开始界面语音也回来了'},
   {text:'现在能在那里听到领火和千羽鹤的声音'},
@@ -193,42 +193,43 @@ const sections = [
   {text:'现在一周七天，每天换一个人播报登录奖励'},
   {text:'怎么样，比以前热闹吧？'},
   {text:'还有新增的特别资料页'},
-  {text:'领火未使用语音，还有千羽鹤的语音，都可以在那里听'},
+  {text:'领火的未使用语音，还有千羽鹤的语音，都可以在那里听'},
   {text:'デイトラ！、五人推特页、官网介绍，还有一些其他页面，都做了本地化处理'},
-  {text:'五人的生日回，也依靠现有记录尽量还原了'},
+  {text:'我们的生日回，也依靠现有记录尽量还原了'},
   {text:'记得去看看'},
-  {text:'日常玩起来有什么变化？',mine:true},
-  {text:'当然也有'},
-  {text:'クラン仓库扩容到了 600，这下能放得更多了'},
-  {text:'新增了“资源点击就送”功能，还有图鉴查看拆分功能'},
-  {text:'游戏卡顿做了优化'},
-  {text:'那些不合理的机械重复操作也调整了'},
+  {text:'还有什么变化？',mine:true},
+  {text:'当然有'},
+  {text:'クラン仓库扩容到了 600，能做到全收集了'},
+  {text:'新增了「资源点击就送」功能'},
+  {text:'还有图鉴查看拆分功能'},
+  {text:'游戏卡顿也解决了'},
+  {text:'不合理的机械重复操作也调整了'},
   {text:'好啦，说明完毕'},
   {text:'可别看完就忘了'}
  ]},
  {name:'制作人员',character:'miyabi',speaker:'MIYABI',messages:[
-  {text:'这些是谁做的？',mine:true},
-  {text:'制作名单？'},
+  {text:'能为我介绍一下制作团队吗？',mine:true},
+  {text:'制作团队？'},
   {text:'等阵'},
-  {text:'写好了咯'},
-  {text:'砂之盃杯：\n主催、逆向、吉祥物、屎山代码制造者'},
-  {text:'HachimiBot：\n啦啦队，兼 Gemini Tamer'},
+  {text:'主要是这些人咯'},
+  {text:'砂之盃杯：\n主催、逆向（！？）、吉祥物、屎山代码制造者'},
+  {text:'HachimiBot：\n啦啦队、兼 Gemini Tamer'},
   {text:'星云nebulas：\n数据分析、资源搜索、动画剪辑方案、灵感、测试'},
-  {text:'zoombie：\n补丁修整，屎山代码处理专家'},
+  {text:'zoombie：\n补丁修整、屎山代码处理专家'},
   {text:'kurogane：\ntoken 提供'},
-  {text:'一般兔子：\nLLM 赞助，技术支持'},
+  {text:'一般兔子：\nLLM 赞助、技术支持'},
   {text:'还有其他人吗？',mine:true},
   {text:'特别鸣谢这边'},
-  {text:'gutsshadow：微博'},
-  {text:'極東オンライン：YouTube'},
-  {text:'Takashi@real_tenshi：Twitter'},
+  {text:'gutsshadow（微博）'},
+  {text:'極東オンライン（YouTube）'},
+  {text:'Takashi@real_tenshi（X/Twitter）'},
   {text:'トライナリー・フォーラムWiki'},
   {text:'拡張少女系トライナリー まとめ Wiki'},
-  {text:'离线包原作者：\nぴょんこスキ'},
+  {text:'离线包原作者：\nぴょんこｽｷ'},
   {text:'逆向协力呢？',mine:true},
   {text:'据说是这批'},
   {text:'Grok 4.7、Grok 4.6'},
-  {text:'GPT-6 Astra、GPT-5.6 Sol'},
+  {text:'GPT-6 Astra、GPT-6.1 Sol、GPT-5.6 Sol'},
   {text:'Claude Opus 5.5、GLM-5.3'},
   {text:'Gemini 3.1 Pro、Gemini 3.8 Flash'},
   {text:'Deepseek-V4-Flash-0731、DeepSeek-V4.1-Flash'},
@@ -236,10 +237,10 @@ const sections = [
  ]},
  {name:'相关链接',character:'kagura',speaker:'KAGURA',messages:[
   {text:'其他链接在哪里？',mine:true},
-  {text:'找链接的话，来这边就对了，pyon'},
+  {text:'找链接的话，来这边就对了，pyon♪'},
   {text:'官网在这里',link:{name:'social.gust.co.jp/kakutora',url:'https://social.gust.co.jp/kakutora/'}},
   {text:'官推也有哦',link:{name:'x.com/kakutora_staff',url:'https://x.com/kakutora_staff'}},
-  {text:'五人的推特呢？',mine:true},
+  {text:'你们的推特呢？',mine:true},
   {text:'其实其实'},
   {text:'都在这边，pyon'},
   {text:'逢濑燕',link:{name:'@tsubame_ohse',url:'https://x.com/tsubame_ohse'}},
@@ -247,7 +248,7 @@ const sections = [
   {text:'加布里埃拉',link:{name:'@garbiela_lotty',url:'https://x.com/garbiela_lotty'}},
   {text:'恋之崎雅',link:{name:'@miyabi_koikoi',url:'https://x.com/miyabi_koikoi'}},
   {text:'卯月神乐',link:{name:'@kagura_pyonko',url:'https://x.com/kagura_pyonko'}},
-  {text:'还有 wiki 吗？',mine:true},
+  {text:'有中文 wiki 之类的吗？',mine:true},
   {text:'歌颂之丘 wiki 的三重奏页',link:{name:'附录：扩张少女系三重奏',url:'https://wiki.singinghill.top/%E9%99%84%E5%BD%95:%E6%89%A9%E5%BC%A0%E5%B0%91%E5%A5%B3%E7%B3%BB%E4%B8%89%E9%87%8D%E5%A5%8F'}},
   {text:'主站也放上了',link:{name:'wiki.singinghill.top',url:'https://wiki.singinghill.top'}}
  ]}
@@ -296,12 +297,11 @@ const homeRoom={name:'主页',speaker:'CHIHARU',avatar:'data:image/png;base64,iV
  {text:'欢迎来到《拡張少女系トライナリー》离线项目主页。'},
  {text:'我该先做什么？',mine:true},
  {text:'先去「游戏介绍」。燕会向你介绍这部作品。'},
- {text:'她们既是守护世界的少女，也会为了学习、玩乐和恋爱全力以赴。'},
- {text:'你可以慢慢了解她们。'},
+ {text:'你可以慢慢了解。'},
  {text:'想开始玩的话呢？',mine:true},
  {text:'去「资源下载」。游戏本体和视频资源都在那里。'},
- {text:'这一版的调整，放在「改动内容」。'},
- {text:'参与制作的人，以及其他资料的入口，也有各自的栏目。'},
+ {text:'版本调整，在「改动内容」里有说明。'},
+ {text:'参与制作人员，以及其他链接的入口，也有各自的栏目。'},
  {text:'一下子说这么多，我记不住。',mine:true},
  {text:'没关系。'},
  {text:'点左上角的 KAKUTORA，就能回到这里。'},
@@ -310,7 +310,7 @@ const homeRoom={name:'主页',speaker:'CHIHARU',avatar:'data:image/png;base64,iV
  {text:'至少在你看说明的时候，我不会跑掉。'},
  {text:'……刚才那句是玩笑。'},
  {text:'好，那我出发了。',mine:true},
- {text:'嗯。准备好了就往下走。'},
+ {text:'嗯。'},
  {text:'愿她们与你，共赴一段美好的心灵之旅——'}
 
 ]};
@@ -325,21 +325,51 @@ Array.from(list.children).forEach((button,i)=>{
 });
 document.querySelector('.brand').addEventListener('click',()=>{active=-1;render();});
 let messageObserver;
+let revealOrder=0;
+function messageInLog(row){
+ const area=log.getBoundingClientRect();
+ const box=row.getBoundingClientRect();
+ return box.bottom>area.top+4&&box.top<area.bottom-4;
+}
+function revealRow(row){
+ if(row.classList.contains('is-visible'))return;
+ row.style.setProperty('--reveal-delay',Math.min(revealOrder++,4)*90+'ms');
+ row.classList.add('is-visible');
+}
+function revealInView(){
+ log.querySelectorAll('.message:not(.is-visible)').forEach(row=>{
+  if(messageInLog(row))revealRow(row);
+ });
+}
 function revealMessages(){
  messageObserver?.disconnect();
- if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){log.classList.remove('reveal-enabled');return;}
+ log.removeEventListener('scroll',revealInView);
+ if(matchMedia('(prefers-reduced-motion: reduce)').matches){
+  log.classList.remove('reveal-enabled');
+  log.querySelectorAll('.message').forEach(row=>row.classList.add('is-visible'));
+  return;
+ }
  log.classList.add('reveal-enabled');
  if(document.documentElement.classList.contains('intro-active'))return;
- messageObserver=new IntersectionObserver(entries=>{
-  let order=0;
-  entries.forEach(entry=>{
-   if(!entry.isIntersecting)return;
-   entry.target.style.setProperty('--reveal-delay',Math.min(order++,4)*90+'ms');
-   entry.target.classList.add('is-visible');
-   messageObserver.unobserve(entry.target);
-  });
- },{root:log,threshold:0,rootMargin:'0px 0px -12px 0px'});
- log.querySelectorAll('.message:not(.is-visible)').forEach(row=>messageObserver.observe(row));
+ revealOrder=0;
+ const rows=[...log.querySelectorAll('.message:not(.is-visible)')];
+ if(!rows.length)return;
+ const arm=()=>{
+  revealInView();
+  if('IntersectionObserver' in window){
+   messageObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+     if(!entry.isIntersecting)return;
+     revealRow(entry.target);
+     messageObserver.unobserve(entry.target);
+    });
+   },{root:null,threshold:0.01});
+   rows.forEach(row=>{if(!row.classList.contains('is-visible'))messageObserver.observe(row);});
+  }
+  log.addEventListener('scroll',revealInView,{passive:true});
+  setTimeout(revealInView,280);
+ };
+ requestAnimationFrame(()=>requestAnimationFrame(arm));
 }
 function appendMessage(message){
  const row=document.createElement('div');row.className='message'+(message.mine?' mine':'');
@@ -451,6 +481,7 @@ render();
   const holdAfterHello=900;
   setTimeout(()=>{
    if(!root.classList.contains('intro-active'))return;
+   void panel.offsetWidth;
    root.classList.add('intro-opening');
    setTimeout(finishIntro,2100);
   },greeting.length*85+holdAfterHello);
