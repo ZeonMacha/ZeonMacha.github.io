@@ -4,6 +4,7 @@
   用法：
     · 双击 publish.cmd（推荐，绕开所有执行策略限制）
     · 或在 PowerShell 里：  .\publish.ps1
+    · 发布三重奏离线页：  .\publish.ps1 -PageFile kakutora_offline.html -SourceFile <源文件>
     · 或右键本文件 →「使用 PowerShell 运行」
 
   做的事：
@@ -19,7 +20,9 @@ param(
     [switch]$Yes,
     # 只检查、不推送
     [switch]$DryRun,
-    [string]$SourceFile
+    [string]$SourceFile,
+    # 仓库内要发布的页面文件名；不填时若给了 -SourceFile 则用其文件名
+    [string]$PageFile = ''
 )
 
 $ErrorActionPreference = 'Stop'
@@ -33,10 +36,13 @@ try {
 # ======================= 配置 =======================
 # 仓库目录：默认取本脚本所在目录，所以脚本放哪都行
 $RepoPath   = if ($PSScriptRoot) { $PSScriptRoot } else { (Get-Location).Path }
-$PageFile   = 'at2_dualstall.html'
+if (-not $PageFile) {
+    if ($SourceFile) { $PageFile = [IO.Path]::GetFileName($SourceFile) }
+    else { $PageFile = 'at2_dualstall.html' }
+}
 $Branch     = 'main'
 $Remote     = 'origin'
-$SiteUrl    = 'https://zeonmacha.github.io/at2_dualstall.html'
+$SiteUrl    = 'https://zeonmacha.github.io/' + $PageFile
 $BuildWaitS = 600      # 等待 Pages 重建的最长秒数
 # ====================================================
 
@@ -112,7 +118,6 @@ if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
 Set-Location $RepoPath
 
 $pagePath = Join-Path $RepoPath $PageFile
-if (-not (Test-Path $pagePath)) { Fail "找不到页面文件：$PageFile" }
 
 # ---------- 1. 分支与同步状态 ----------
 Write-Head "1/5 检查仓库状态"
@@ -138,13 +143,18 @@ if ($SourceFile) {
     $sourcePath = (Resolve-Path -LiteralPath $SourceFile).Path
     if ($sourcePath -eq $pagePath) { Fail "源文件不能是发布目标自身。" }
     Write-Host "源文件: $sourcePath"
-    if (-not $DryRun -and (Get-FileHash -LiteralPath $sourcePath).Hash -ne (Get-FileHash -LiteralPath $pagePath).Hash) {
+    Write-Host "目标页: $PageFile"
+    $needCopy = -not (Test-Path -LiteralPath $pagePath) -or ((Get-FileHash -LiteralPath $sourcePath).Hash -ne (Get-FileHash -LiteralPath $pagePath).Hash)
+    if (-not $DryRun -and $needCopy) {
         $backupDir = Join-Path $RepoPath '.git/publish-backups'
         New-Item -ItemType Directory -Path $backupDir -Force | Out-Null
-        Copy-Item -LiteralPath $pagePath -Destination (Join-Path $backupDir ((Get-Date -Format 'yyyyMMdd-HHmmss') + '.html'))
+        if (Test-Path -LiteralPath $pagePath) {
+            Copy-Item -LiteralPath $pagePath -Destination (Join-Path $backupDir ((Get-Date -Format 'yyyyMMdd-HHmmss') + '-' + $PageFile))
+        }
         Copy-Item -LiteralPath $sourcePath -Destination $pagePath
     }
 }
+if (-not (Test-Path -LiteralPath $pagePath)) { Fail "找不到页面文件：$PageFile" }
 if ($DryRun) {
     Write-Host "[DryRun] 环境检查通过；未同步文件、暂存、提交或推送。"
     exit 0
@@ -181,7 +191,7 @@ if (-not $Yes) {
 Write-Head "3/5 提交"
 
 $stamp = Get-Date -Format 'yyyy-MM-dd HH:mm:ss'
-$msg   = "Publish dualstall page ($stamp)"
+$msg   = "Publish $PageFile ($stamp)"
 if ($staged) {
 $r = Invoke-Git -Cmd @('-c','core.safecrlf=false','commit','-q','-m',$msg,'--',$PageFile)
 if ($r.Code -ne 0) { Fail "git commit 失败（可能是未配置 user.name / user.email）。`n$($r.Err)" }
