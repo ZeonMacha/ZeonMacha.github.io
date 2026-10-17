@@ -18,32 +18,53 @@ button{font:inherit;cursor:pointer}button:focus-visible{outline:2px solid #fff;o
 .messages::-webkit-scrollbar{width:8px}.messages::-webkit-scrollbar-track{background:#ffffff0a}.messages::-webkit-scrollbar-thumb{background:#ffffff55;border:2px solid transparent;background-clip:padding-box;border-radius:4px}.messages::-webkit-scrollbar-thumb:hover{background-color:#ffffff88}
 .date[contenteditable]{width:fit-content;min-width:130px;margin-left:auto;margin-right:auto;cursor:text}.date[contenteditable]:focus{outline:1px dashed #ffffff66;outline-offset:5px}.bubble.has-image{max-width:min(85%,340px);padding:6px}.bubble-image{display:block;max-width:100%;height:auto;max-height:300px;object-fit:contain;border-radius:3px}.image-caption{display:block;padding:6px 9px;white-space:pre-wrap;overflow-wrap:anywhere}/* 思源黑体：Light 300 / Normal 350 / Bold 700 */
 .bubble{font-weight:350}.date,.status,.sidebar-bottom{font-weight:300}.brand,.contact strong,.chat-title,.byline{font-weight:700}.download-file{display:block;margin-top:9px;font-size:13px;line-height:1.7;color:inherit;text-decoration:underline;text-underline-offset:3px;overflow-wrap:anywhere}.download-file.pending{color:#737373;text-decoration:none;cursor:default}
-/* Opening: a closed terminal unfolds without stretching its contents. */
-html.intro-active .nest{clip-path:inset(calc(50% - 27px) max(0px,calc(50% - 150px)) round 8px);animation:terminal-open 1500ms cubic-bezier(.76,0,.24,1) both;animation-play-state:paused}
-html.intro-active .nest>*{opacity:0}
-html.intro-opening .nest{animation-play-state:running}
-html.intro-opening .nest>.sidebar{animation:terminal-content 450ms ease 1120ms both}
-html.intro-opening .nest>.chat{opacity:1}
-html.intro-opening .chat-header{animation:terminal-content 450ms ease 1270ms both}
-html.intro-opening .messages{animation:terminal-content 550ms ease 1440ms both}
-html.intro-ready .intro-label{color:#fff;letter-spacing:6px}
-html.intro-ready .intro-label::after{animation:none;transform:scaleX(1);opacity:.8}
-html.intro-ready .intro-dots{visibility:hidden;animation:none}
-.intro-loader{position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;pointer-events:none;transform:translate(-50%,-50%);inset:auto;left:50%;top:50%;width:300px;height:54px}
+/* Opening: circular HUD, then the compressed window unfolds. */
+.intro-veil{position:fixed;inset:0;z-index:9;display:none;pointer-events:none;background:#00000014}
+html.intro-active .intro-veil{display:block}
+html.intro-opening .intro-veil{animation:intro-veil-out 900ms ease both}
+.intro-loader{position:fixed;left:50%;top:50%;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;width:min(300px,72vmin);height:min(300px,72vmin);padding:28px;border-radius:50%;background:#1c1c1ee8;border:1px solid #ffffff2e;box-shadow:0 0 0 8px #ffffff0a,0 18px 50px #0003;backdrop-filter:blur(12px);transform:translate(-50%,-50%);pointer-events:none}
 html.intro-active .intro-loader{display:flex}
-.intro-label{position:relative;width:260px;text-align:center;font-size:10px;letter-spacing:4px;color:#eee;padding:0;height:54px;display:flex;align-items:center;justify-content:center;font-weight:400}
-.intro-label::after{content:"";position:absolute;bottom:5px;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,#e6efff,transparent);transform-origin:left;animation:terminal-scan 1150ms ease-in-out infinite}
-.intro-dots{display:inline-block;width:16px;letter-spacing:2px;animation:terminal-pulse 900ms ease-in-out infinite}
-html.intro-opening .intro-loader{animation:terminal-content 250ms ease reverse both}
-@keyframes terminal-scan{0%{transform:scaleX(.08);opacity:.2}65%{transform:scaleX(1);opacity:1}100%{transform:scaleX(1);opacity:0}}
-@keyframes terminal-pulse{50%{opacity:.25}}
-@keyframes terminal-open{0%{clip-path:inset(calc(50% - 27px) max(0px,calc(50% - 150px)) round 8px)}32%,46%{clip-path:inset(calc(50% - 27px) 0 round 8px)}100%{clip-path:inset(0 0 round 8px)}}
-@keyframes terminal-content{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:blur(0)}}
+.intro-kicker{margin:0 0 12px;font-size:9px;letter-spacing:3.2px;color:#d0d0d0}
+.intro-label{position:relative;width:100%;min-height:28px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;letter-spacing:4px;color:#eee;font-weight:400}
+.intro-dots{display:inline-block;width:16px;letter-spacing:2px;animation:intro-pulse 900ms ease-in-out infinite}
+.intro-bar{display:block;width:132px;height:1px;margin-top:16px;overflow:hidden;background:#ffffff24}
+.intro-bar-fill{display:block;height:100%;width:0;background:linear-gradient(90deg,transparent,#fff 30%,#e8f1ff);animation:intro-bar 1650ms cubic-bezier(.16,.84,.44,1) forwards}
+html.intro-ready .intro-kicker{opacity:.55}
+html.intro-ready .intro-label{color:#fff;letter-spacing:1px}
+html.intro-ready .intro-dots{visibility:hidden;animation:none}
+html.intro-ready .intro-bar-fill{width:100%;animation:none}
+html.intro-opening .intro-loader{animation:intro-loader-out 520ms ease both}
+html.intro-active .nest{opacity:0;clip-path:inset(calc(50% - 1px) max(0px,calc(50% - 36px)));animation:terminal-open 1800ms cubic-bezier(.76,0,.24,1) both;animation-play-state:paused;pointer-events:none}
+html.intro-active .nest>*{opacity:0}
+html.intro-opening .nest{opacity:1;animation-play-state:running}
+html.intro-opening .nest>.sidebar{animation:intro-rise 640ms ease 1280ms both}
+html.intro-opening .nest>.chat{opacity:1}
+html.intro-opening .brand{animation:intro-rise 560ms ease 1320ms both}
+html.intro-opening .contact{animation:intro-rise 560ms ease both}
+html.intro-opening .contact:nth-child(1){animation-delay:1380ms}
+html.intro-opening .contact:nth-child(2){animation-delay:1460ms}
+html.intro-opening .contact:nth-child(3){animation-delay:1540ms}
+html.intro-opening .contact:nth-child(4){animation-delay:1620ms}
+html.intro-opening .contact:nth-child(5){animation-delay:1700ms}
+html.intro-opening .sidebar-bottom{animation:intro-rise 560ms ease 1760ms both}
+html.intro-opening .chat-header{animation:intro-rise 700ms ease 1420ms both}
+html.intro-opening .messages{animation:intro-rise 820ms ease 1560ms both}
+@keyframes intro-bar{to{width:100%}}
+@keyframes intro-pulse{50%{opacity:.28}}
+@keyframes intro-veil-out{to{opacity:0}}
+@keyframes intro-loader-out{to{opacity:0;transform:translate(-50%,-50%) scale(.72)}}
+@keyframes terminal-open{0%{clip-path:inset(calc(50% - 1px) max(0px,calc(50% - 36px)))}26%{clip-path:inset(calc(50% - 1px) 0)}40%{clip-path:inset(calc(50% - 1px) 0)}100%{clip-path:inset(0 0 round 8px)}}
+@keyframes intro-rise{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:none}}
 
 /* Reveal each message once as it enters the chat viewport. */
 .messages.reveal-enabled .message{opacity:0;transform:translateY(18px);transition:opacity 650ms ease,transform 650ms cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}
 .messages.reveal-enabled .message.is-visible,.messages.reveal-enabled .message:focus-within{opacity:1;transform:none}
-@media(prefers-reduced-motion:reduce){.messages.reveal-enabled .message{opacity:1;transform:none;transition:none}}
+@media(prefers-reduced-motion:reduce){
+.messages.reveal-enabled .message{opacity:1;transform:none;transition:none}
+.intro-veil,.intro-loader{display:none!important}
+html.intro-active .nest,html.intro-opening .nest,html.intro-opening .brand,html.intro-opening .contact,html.intro-opening .sidebar-bottom,html.intro-opening .chat-header,html.intro-opening .messages{opacity:1;transform:none;filter:none;animation:none;pointer-events:auto}
+}
+.contact,.brand{transition:background-color 280ms ease,border-color 280ms ease,color 280ms ease}
 /* Original-work attribution and website credits. */
 .site-footer{position:fixed;z-index:1;bottom:12px;left:50%;transform:translateX(-50%);width:min(1100px,calc(100% - 40px));text-align:center;font-size:10px;line-height:1.8;letter-spacing:.15px;color:#30343d;text-shadow:0 1px 4px #ffffffb3}
 .site-footer p{margin:0}.site-footer a{color:inherit;text-decoration:none}.site-footer a:hover{text-decoration:underline;text-underline-offset:3px}.site-footer a:focus-visible{outline:2px solid currentColor;outline-offset:3px}.copyright-work{display:inline-block}
@@ -79,7 +100,6 @@ body{height:100svh;min-height:0;grid-template-rows:minmax(0,1fr) auto;gap:clamp(
 .message.mine{display:flex;gap:3px}.mine .bubble{max-width:min(90%,540px)}.mine .byline{text-align:right;margin-right:3px}
 .bubble.has-image{max-width:min(100%,300px)}.date{min-width:0!important;margin-bottom:22px;font-size:9px}.download-file{font-size:inherit}
 .site-footer{position:static;transform:none;width:min(1100px,100%);font-size:clamp(8px,.8vw,10px);line-height:1.65}.copyright-work{display:inline}.site-footer p{margin:0}
-.next-section{display:block;margin:24px auto 4px;padding:10px 4px;max-width:100%;border:0;background:transparent;color:#bcbcbc;font-size:11px;line-height:1.6;letter-spacing:.4px}.next-section.is-pulling{color:#fff}.next-section:hover{color:#fff}
 </style>
 <script>
 // Arm the opening before first paint; start its deadline after the document is parsed.
@@ -88,11 +108,13 @@ window.introDeadline=setTimeout(()=>{
  document.documentElement.classList.remove('intro-active','intro-ready','intro-opening');
  document.querySelector('.nest')?.removeAttribute('inert');
  document.querySelector('.intro-loader')?.remove();
+ document.querySelector('.intro-veil')?.remove();
 },30000);
 </script>
 </head>
 <body>
-<div class="intro-loader" role="status" aria-label="正在加载"><span class="intro-label">NOW LOADING<span class="intro-dots">...</span></span></div>
+<div class="intro-veil" aria-hidden="true"></div>
+<div class="intro-loader" role="status" aria-label="正在加载"><span class="intro-kicker">KAKUTORA · OFFLINE</span><span class="intro-label">NOW LOADING<span class="intro-dots">...</span></span><span class="intro-bar" aria-hidden="true"><span class="intro-bar-fill"></span></span></div>
 
 <main class="nest" aria-label="聊天小窝">
  <aside class="sidebar" aria-label="会话列表">
@@ -299,7 +321,6 @@ document.querySelector('.brand').addEventListener('click',()=>{active=-1;render(
 let messageObserver;
 function revealMessages(){
  messageObserver?.disconnect();
-
  if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion: reduce)').matches){log.classList.remove('reveal-enabled');return;}
  log.classList.add('reveal-enabled');
  if(document.documentElement.classList.contains('intro-active'))return;
@@ -365,43 +386,9 @@ function render(){
  };
  (greetings[room.character]||[]).forEach(text=>appendMessage({text}));
  room.messages.forEach(appendMessage);
- {
-  const next=document.createElement('button');next.type='button';next.className='next-section';
-  next.textContent='继续下滑 · '+(active===rooms.length-1?'主页':rooms[active+1].name)+' ↓';
-  next.addEventListener('click',nextSection);log.append(next);
- }
  log.scrollTop=0;
- resetPageGesture();
  revealMessages();
 }
-let gestureCooldown=0,lastWheel=0,wheelPull=0,wheelArmed=false,touchStartY=null,touchPull=0;
-function atBottom(){return log.scrollTop+log.clientHeight>=log.scrollHeight-3;}
-function resetPageGesture(){gestureCooldown=performance.now()+1000;wheelPull=0;wheelArmed=false;touchStartY=null;touchPull=0;}
-function nextSection(){
- if(document.documentElement.classList.contains('intro-active'))return;
- active=active===rooms.length-1?-1:active+1;render();
-}
-log.addEventListener('wheel',event=>{
- const now=performance.now(),fresh=now-lastWheel>220;lastWheel=now;
- if(fresh){wheelPull=0;wheelArmed=atBottom();}
- if(event.deltaY<=0){wheelPull=0;wheelArmed=false;return;}
- if(now<gestureCooldown||!atBottom()||!wheelArmed)return;
- event.preventDefault();wheelPull+=event.deltaY*(event.deltaMode===1?16:event.deltaMode===2?log.clientHeight:1);
- if(wheelPull>=110)nextSection();
-},{passive:false});
-log.addEventListener('touchstart',event=>{
- touchStartY=event.touches.length===1&&atBottom()&&performance.now()>=gestureCooldown?event.touches[0].clientY:null;touchPull=0;
-},{passive:true});
-log.addEventListener('touchmove',event=>{
- if(touchStartY===null||event.touches.length!==1)return;
- touchPull=touchStartY-event.touches[0].clientY;
- if(touchPull>0&&atBottom()){
-  if(event.cancelable)event.preventDefault();
-  log.querySelector('.next-section')?.classList.toggle('is-pulling',touchPull>=72);
- }
-},{passive:false});
-log.addEventListener('touchend',()=>{const advance=touchStartY!==null&&touchPull>=72&&atBottom();touchStartY=null;touchPull=0;if(advance)nextSection();},{passive:true});
-log.addEventListener('touchcancel',()=>{touchStartY=null;touchPull=0;log.querySelector('.next-section')?.classList.remove('is-pulling');},{passive:true});
 
 render();
 
@@ -409,13 +396,15 @@ render();
 (()=>{
  const root=document.documentElement, panel=document.querySelector('.nest');
  const loader=document.querySelector('.intro-loader');
+ const veil=document.querySelector('.intro-veil');
  function abortIntro(){
   root.classList.remove('intro-active','intro-ready','intro-opening');
   panel?.removeAttribute('inert');
   loader?.remove();
+  veil?.remove();
   clearTimeout(window.introDeadline);
  }
- if(!root.classList.contains('intro-active')||!panel||!loader){abortIntro();if(typeof revealMessages==='function'&&panel)revealMessages();return;}
+ if(!root.classList.contains('intro-active')||!panel||!loader||matchMedia('(prefers-reduced-motion: reduce)').matches){abortIntro();if(typeof revealMessages==='function'&&panel)revealMessages();return;}
  panel.setAttribute('inert','');
  clearTimeout(window.introDeadline);
  function alignIntro(){
@@ -436,7 +425,7 @@ render();
   window.removeEventListener('load',alignIntro);
   window.removeEventListener('resize',alignIntro);
  }
- window.introDeadline=setTimeout(finishIntro,10000);
+ window.introDeadline=setTimeout(finishIntro,16000);
  const loaded=document.readyState==='complete'?Promise.resolve():new Promise(resolve=>window.addEventListener('load',resolve,{once:true}));
  Promise.all([new Promise(resolve=>setTimeout(resolve,1350)),Promise.race([loaded,new Promise(resolve=>setTimeout(resolve,3200))])]).then(()=>{
   if(!root.classList.contains('intro-active'))return;
@@ -455,13 +444,12 @@ render();
   }
   requestAnimationFrame(typeGreeting);
   loader.setAttribute('aria-label','你好，BOT'+botId);
+  const holdAfterHello=900;
   setTimeout(()=>{
    if(!root.classList.contains('intro-active'))return;
    root.classList.add('intro-opening');
-   setTimeout(()=>{
-   finishIntro();
-   },2050);
-  },1850);
+   setTimeout(finishIntro,2100);
+  },greeting.length*85+holdAfterHello);
  });
 })();
 </script>
