@@ -29,7 +29,7 @@ html.intro-opening .messages{animation:terminal-content 550ms ease 1440ms both}
 html.intro-ready .intro-label{color:#fff;letter-spacing:6px}
 html.intro-ready .intro-label::after{animation:none;transform:scaleX(1);opacity:.8}
 html.intro-ready .intro-dots{visibility:hidden;animation:none}
-.intro-loader{position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;pointer-events:none;transform:translateY(-12px)}
+.intro-loader{position:fixed;inset:0;z-index:10;display:none;align-items:center;justify-content:center;pointer-events:none;transform:translate(-50%,-50%);inset:auto;left:50%;top:50%;width:300px;height:54px}
 html.intro-active .intro-loader{display:flex}
 .intro-label{position:relative;width:260px;text-align:center;font-size:10px;letter-spacing:4px;color:#eee;padding:19px 0;font-weight:400}
 .intro-label::after{content:"";position:absolute;bottom:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,#e6efff,transparent);transform-origin:left;animation:terminal-scan 1150ms ease-in-out infinite}
@@ -39,7 +39,7 @@ html.intro-opening .intro-loader{animation:terminal-content 250ms ease reverse b
 @keyframes terminal-pulse{50%{opacity:.25}}
 @keyframes terminal-open{0%{clip-path:inset(calc(50% - 27px) max(0px,calc(50% - 150px)) round 8px)}32%,46%{clip-path:inset(calc(50% - 27px) 0 round 8px)}100%{clip-path:inset(0 0 round 8px)}}
 @keyframes terminal-content{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:blur(0)}}
-@media(prefers-reduced-motion:reduce){html.intro-active .nest{clip-path:none;animation:none}html.intro-active .nest>*,html.intro-opening .chat-header,html.intro-opening .messages{opacity:1;animation:none}.intro-loader{display:none!important}}
+
 /* Reveal each message once as it enters the chat viewport. */
 .messages.reveal-enabled .message{opacity:0;transform:translateY(18px);transition:opacity 650ms ease,transform 650ms cubic-bezier(.2,.7,.2,1);transition-delay:var(--reveal-delay,0ms)}
 .messages.reveal-enabled .message.is-visible,.messages.reveal-enabled .message:focus-within{opacity:1;transform:none}
@@ -76,16 +76,13 @@ html.intro-ready .intro-label{font-family:Consolas,"Courier New",monospace;font-
 @media(max-width:480px){.sidebar-bottom{font-size:8px;letter-spacing:.5px}}
 </style>
 <script>
-// Set before first paint; the deadline also restores the page if initialization fails.
-if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
- document.documentElement.classList.add('intro-active');
- window.introDeadline=setTimeout(()=>{
-  document.documentElement.classList.remove('intro-active','intro-ready','intro-opening');
-  document.querySelector('.nest')?.removeAttribute('inert');
-  if(typeof revealMessages==='function')revealMessages();
-  document.querySelector('.intro-loader')?.remove();
- },8000);
-}
+// Arm the opening before first paint; start its deadline after the document is parsed.
+document.documentElement.classList.add('intro-active');
+window.introDeadline=setTimeout(()=>{
+ document.documentElement.classList.remove('intro-active','intro-ready','intro-opening');
+ document.querySelector('.nest')?.removeAttribute('inert');
+ document.querySelector('.intro-loader')?.remove();
+},30000);
 </script>
 </head>
 <body>
@@ -358,6 +355,24 @@ render();
  const root=document.documentElement, panel=document.querySelector('.nest');
  if(!root.classList.contains('intro-active')){document.querySelector('.intro-loader')?.remove();return;}
  panel.setAttribute('inert','');
+ clearTimeout(window.introDeadline);
+ const loader=document.querySelector('.intro-loader');
+ function alignIntro(){
+  const box=panel.getBoundingClientRect();
+  loader.style.top=(box.top+box.height/2)+'px';
+  loader.style.left=(box.left+box.width/2)+'px';
+ }
+ alignIntro();
+ window.addEventListener('resize',alignIntro);
+ function finishIntro(){
+  root.classList.remove('intro-active','intro-ready','intro-opening');
+  panel.removeAttribute('inert');
+  revealMessages();
+  window.removeEventListener('resize',alignIntro);
+  loader.remove();
+  clearTimeout(window.introDeadline);
+ }
+ window.introDeadline=setTimeout(finishIntro,10000);
  const loaded=document.readyState==='complete'?Promise.resolve():new Promise(resolve=>window.addEventListener('load',resolve,{once:true}));
  Promise.all([new Promise(resolve=>setTimeout(resolve,1350)),Promise.race([loaded,new Promise(resolve=>setTimeout(resolve,3200))])]).then(()=>{
   if(!root.classList.contains('intro-active'))return;
@@ -379,11 +394,7 @@ render();
    if(!root.classList.contains('intro-active'))return;
    root.classList.add('intro-opening');
    setTimeout(()=>{
-   root.classList.remove('intro-active','intro-ready','intro-opening');
-   panel.removeAttribute('inert');
-   revealMessages();
-   document.querySelector('.intro-loader')?.remove();
-   clearTimeout(window.introDeadline);
+   finishIntro();
    },2050);
   },1850);
  });
