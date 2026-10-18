@@ -264,8 +264,8 @@ const CHATS_CN = [
    {text:'这样就能见面了呢 (≧艸≦*)'},
    {text:'未来会考虑汉化吗？',mine:true},
    {text:'在新建文件夹了 (/ω＼)'},
-   {text:'因为文本量很大，想做完美汉化只靠LLM也完全不够，需要更多苦力才行(ﾟ∀ﾟ ；)ﾀﾗｰ'},
-   {text:'想参与汉化和逆向的BOT,请加QQ工作群742875683 m(_ _)m'}
+   {text:'因为文本量很大，想做完美汉化只靠 LLM 也完全不够，需要更多苦力才行(ﾟ∀ﾟ ；)ﾀﾗｰ'},
+   {text:'想参与汉化和逆向的 BOT，请加 QQ 工作群742875683 m(_ _)m'}
   ]
  },
  {
@@ -1176,7 +1176,8 @@ render();
 
 
 <!-- Credits: local staff/staff.html; original copyright verified against the official Toei release and Trinary wiki. -->
-<footer class="site-footer" aria-label="版权与制作署名">
+<!-- Keep fixed multilingual credits on the CN glyph and fallback rules in both UI languages. -->
+<footer class="site-footer" lang="zh-CN" aria-label="版权与制作署名">
  <p>Website © 2026, 逆解析班 · Trinary Offline Project<span class="copyright-divider"> | </span><span class="copyright-work"><a href="https://social.gust.co.jp/kakutora/" target="_blank" rel="noopener noreferrer">拡張少女系トライナリー</a> © コーエーテクモゲームス・東映アニメーション</span></p>
  <p>All original games, animation and related assets are property of their respective owners.</p>
 </footer>
