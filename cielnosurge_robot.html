@@ -22,13 +22,13 @@ td[data-label]{display:flex;align-items:center;gap:7px;font-size:12px;flex-wrap:
 .ingredient>.card-stock{margin-top:6px;min-height:29px;align-items:center;flex-wrap:nowrap}
 @media(max-width:760px){.ingredient>.card-stock{min-height:32px}}
 
-/* Continuous, centered width and fluid spacing, matching the release page. */
+/* Fluid width and spacing with the sidebar anchored to the left edge. */
 @media screen{
- body{padding:0 clamp(8px,2vw,28px)}
- .layout{width:min(1120px,100%);margin-inline:auto;grid-template-columns:clamp(164px,18vw,202px) minmax(0,1fr)}
+ body{padding:0}
+ .layout{width:100%;margin:0;grid-template-columns:clamp(164px,18vw,202px) minmax(0,1fr)}
  .toc{padding:clamp(16px,2vw,24px) clamp(10px,1.4vw,19px)}
  .brand{font-size:clamp(20px,2.1vw,25px)}
- main{max-width:none;padding:clamp(16px,2vw,22px) clamp(12px,2vw,26px);padding-right:0}
+ main{max-width:none;padding:clamp(16px,2vw,22px) clamp(12px,2vw,26px)}
  h1{font-size:clamp(21px,2.3vw,27px)}
  table,#gather table{min-width:0}
  th,td{padding:7px clamp(5px,.85vw,10px)}
@@ -37,8 +37,8 @@ td[data-label]{display:flex;align-items:center;gap:7px;font-size:12px;flex-wrap:
 }
 @media screen and (max-width:760px){
  .layout{display:block}
- .toc{padding:12px 0}
- main{width:100%;padding:16px 0}
+ .toc{padding:12px clamp(12px,2vw,18px)}
+ main{width:100%;padding:16px clamp(12px,2vw,18px)}
  .brand{display:none}
  .filters>*{max-width:100%}
  .section-heading{flex-wrap:wrap;gap:4px 12px}
