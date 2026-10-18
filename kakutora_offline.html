@@ -60,7 +60,7 @@ html.intro-opening .messages{animation:intro-rise 820ms ease 1810ms both}
 /* Reveal each message once as it enters the chat viewport. */
  .messages.reveal-enabled .message{opacity:0;transform:translate3d(0,-14px,0)}
 .messages.reveal-enabled .message.is-visible{opacity:1;transform:none;animation:message-enter 650ms cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0ms) both}
-.messages.reveal-enabled .message:focus-within{opacity:1;transform:none;animation:none}
+.messages.reveal-enabled .message:not(.is-visible):focus-within{opacity:1;transform:none;animation:none}
 @keyframes message-fade{from{opacity:0}to{opacity:1}}
 @keyframes message-enter{from{opacity:0;transform:translate3d(0,-14px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 @media(prefers-reduced-motion:reduce){
@@ -128,6 +128,10 @@ html.intro-opening .intro-loader>*{animation:intro-soft-out 300ms ease both}
 @keyframes intro-soft-out{to{opacity:0}}
 @supports not (clip-path:inset(0)){html.intro-opening .nest{animation:intro-rise 1200ms ease both}}
 @media(prefers-reduced-motion:reduce){.intro-label,.intro-kicker{transition:none}}
+/* The viewport and window only clip; focus/selection must never scroll these ancestors. */
+html{height:100%;overflow:hidden;overscroll-behavior:none}
+body{overscroll-behavior:none}
+@supports(overflow:clip){html,body,.nest{overflow:clip}}
 </style>
 <script>
 // Arm the opening before first paint; start its deadline after the document is parsed.
