@@ -6,10 +6,10 @@
 .ingredient{display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start;padding:5px 9px}.ingredient-toggle{border:0;background:transparent;padding:0;text-align:left;font-size:12px;line-height:1.5}.ingredient-toggle:hover{background:transparent;color:var(--accent)}.branch-arrow{margin-left:7px;font-size:10px;color:var(--accent)}.recipe-row .gather-location{margin:3px 0 0;color:#777;font-size:11px}.recipe-branch{border:1px solid #dfd7c9;border-left:2px solid var(--gold);background:#fffdf7;padding:10px 12px;margin-top:9px;min-width:0}.recipe-branch .recipe-branch{background:#fff}.recipe-row .ingredients{align-items:stretch}.recipe-branch p{overflow-wrap:anywhere}
 .card-stock{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:11px;color:#777}.card-stock .stepper{color:var(--ink)}
 
-/* Keep the bath guide reading width and adapt tables to narrow screens. */
-@media(max-width:1100px) and (min-width:761px){.layout{grid-template-columns:240px minmax(0,1fr)}main{max-width:560px}}
+/* Adapt tables to narrow screens. */
+
 @media(max-width:760px){
-main{max-width:556px;padding:16px 18px}table,#gather table{min-width:0;table-layout:auto}colgroup{display:none}
+main{padding:16px 18px}table,#gather table{min-width:0;table-layout:auto}colgroup{display:none}
 .table-wrap{overflow:visible}table,thead,tbody,tr,th,td{display:block}thead{background:#f5f5f5;border-bottom:1px solid var(--line)}thead tr{display:flex;flex-wrap:wrap;gap:0 7px;padding:4px 7px}thead th{padding:2px 0;border:0;font-size:11px;background:none}
 tbody>tr:not(.recipe-row){display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid #ddd;padding:7px 9px;gap:6px 10px}tbody>tr:last-child{border-bottom:0}tbody>tr:not(.recipe-row)>td{border:0;padding:0;min-width:0}tbody>tr:not(.recipe-row)>td:first-child{grid-column:1/-1}.item-name{font-size:14px}.alias{display:inline;margin-left:7px;font-size:10px}
 td[data-label]{display:flex;align-items:center;gap:7px;font-size:12px;flex-wrap:wrap}td[data-label]:before{content:attr(data-label);font-size:10px;font-weight:400;color:#888}.total-row{background:var(--pale)}.total-row td{background:none}
@@ -21,6 +21,28 @@ td[data-label]{display:flex;align-items:center;gap:7px;font-size:12px;flex-wrap:
 .recipe-row .ingredient>.ingredient-meta{display:block;min-height:17px;font-size:11px;line-height:17px;color:#777;margin: auto 0 0;padding:0}
 .ingredient>.card-stock{margin-top:6px;min-height:29px;align-items:center;flex-wrap:nowrap}
 @media(max-width:760px){.ingredient>.card-stock{min-height:32px}}
+
+/* Continuous, centered width and fluid spacing, matching the release page. */
+@media screen{
+ body{padding:0 clamp(8px,2vw,28px)}
+ .layout{width:min(1120px,100%);margin-inline:auto;grid-template-columns:clamp(164px,18vw,202px) minmax(0,1fr)}
+ .toc{padding:clamp(16px,2vw,24px) clamp(10px,1.4vw,19px)}
+ .brand{font-size:clamp(20px,2.1vw,25px)}
+ main{max-width:none;padding:clamp(16px,2vw,22px) clamp(12px,2vw,26px);padding-right:0}
+ h1{font-size:clamp(21px,2.3vw,27px)}
+ table,#gather table{min-width:0}
+ th,td{padding:7px clamp(5px,.85vw,10px)}
+ .recipe-col{width:34%}.stock-col{width:112px}.time-col{width:19%}
+ .plan-controls{flex-wrap:wrap}
+}
+@media screen and (max-width:760px){
+ .layout{display:block}
+ .toc{padding:12px 0}
+ main{width:100%;padding:16px 0}
+ .brand{display:none}
+ .filters>*{max-width:100%}
+ .section-heading{flex-wrap:wrap;gap:4px 12px}
+}
 </style></head>
 <body><div class="layout"><aside class="toc">
 <a class="brand" href="#top">Ciel nosurge<small>ES45カソード作成表</small></a>
