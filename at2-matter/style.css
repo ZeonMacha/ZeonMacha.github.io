@@ -71,3 +71,6 @@ button{font-size:13px}.fine,.filter-bottom,.source-link{font-size:12px}
 .toc ul.sync-list li{display:flex;align-items:baseline;justify-content:space-between;gap:6px;line-height:1.7}
 .toc ul.sync-list li a{flex:1 1 auto}
 .toc ul.sync-list li small.count{float:none;white-space:nowrap;font-size:11px;color:#222}
+
+/* Keep home navigation available when the compact sidebar hides source links. */
+@media screen and (max-width:760px){.toc .home-link{display:block}}
