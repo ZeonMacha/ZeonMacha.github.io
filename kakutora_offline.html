@@ -663,19 +663,19 @@ const CHATS_JP = [
 ];
 
 const LANGUAGE_KEY='kakutora.offline.language';
-const OPENING_CHOICE_KEY='kakutora.offline.opening-choice.v1';
 let language='JP',languageChosen=false,languageChoosing=false;
 let openingTranscript=[];
-try{const savedLanguage=localStorage.getItem(LANGUAGE_KEY);if(savedLanguage==='CN'||savedLanguage==='JP'){language=savedLanguage;languageChosen=true;}}catch{}
+try{
+ const legacyKey='kakutora.offline.opening-choice.v1';
+ const savedLanguage=localStorage.getItem(LANGUAGE_KEY);
+ const saved=savedLanguage==='CN'||savedLanguage==='JP'?savedLanguage:localStorage.getItem(legacyKey);
+ if(saved==='CN'||saved==='JP'){language=saved;languageChosen=true;localStorage.setItem(LANGUAGE_KEY,language);}
+ localStorage.removeItem(legacyKey);
+}catch{}
 function openingMessages(choice){
  return [...CHATS_JP[0].messages.slice(0,3),{text:choice==='CN'?'日语看不懂啦':'わかる',mine:true},{text:'そう。'},...(choice==='CN'?[{text:'では、中国語で。'}]:[])];
 }
-if(languageChosen){
- // Migrate older language-only preferences once; later switches preserve the original answer.
- let choice=language;
- try{const saved=localStorage.getItem(OPENING_CHOICE_KEY);if(saved==='CN'||saved==='JP')choice=saved;else localStorage.setItem(OPENING_CHOICE_KEY,choice);}catch{}
- openingTranscript=openingMessages(choice);
-}
+if(languageChosen)openingTranscript=openingMessages(language);
 // Existing explicit language preferences also count as a completed first visit.
 let CHATS=language==='JP'?CHATS_JP:CHATS_CN;
 let ui=language==='JP'?UI_JP:UI_CN;
@@ -861,6 +861,7 @@ document.querySelectorAll('[data-language]').forEach(button=>button.addEventList
  const fraction=log.scrollTop/Math.max(1,log.scrollHeight-log.clientHeight);
  language=button.dataset.language;CHATS=language==='JP'?CHATS_JP:CHATS_CN;ui=language==='JP'?UI_JP:UI_CN;
  homeRoom=CHATS[0];rooms=CHATS.slice(1);
+ openingTranscript=openingMessages(language);
  try{localStorage.setItem(LANGUAGE_KEY,language);}catch{}
  render();log.scrollTop=fraction*(log.scrollHeight-log.clientHeight);
 }));
@@ -889,7 +890,6 @@ async function chooseLanguage(value,text){
  if(value==='CN'){const reply={text:'では、中国語で。'};openingTranscript.push(reply);add(reply);await pause();}
  language=value;CHATS=language==='JP'?CHATS_JP:CHATS_CN;ui=language==='JP'?UI_JP:UI_CN;
  homeRoom=CHATS[0];rooms=CHATS.slice(1);languageChosen=true;languageChoosing=false;
- try{localStorage.setItem(OPENING_CHOICE_KEY,value);}catch{}
  try{localStorage.setItem(LANGUAGE_KEY,language);}catch{}
  // Keep the opening exchange in place as the translated continuation appears.
  const previousCount=log.children.length,previousScroll=log.scrollTop;
