@@ -138,6 +138,24 @@ html.intro-opening .intro-loader>*{animation:intro-soft-out 300ms ease both}
 html{height:100%;overflow:hidden;overflow:clip;overscroll-behavior:none;touch-action:manipulation}
 body{position:fixed;top:0;right:0;bottom:0;left:0;inset:0;height:100svh;overflow:hidden;overflow:clip;overscroll-behavior:none;touch-action:manipulation}
 .nest{overflow:hidden;overflow:clip}
+/* First-visit answers extend directly from the right edge of the chat window. */
+.language-locked .contacts,.language-locked .languages{visibility:hidden}
+.language-locked .brand:disabled{cursor:default}
+.language-choice{flex-shrink:0;display:flex;align-self:flex-end;width:fit-content;max-width:100%;min-height:160px;padding:0;background:rgba(70,85,87,.68);border-radius:8px 0 0 8px;visibility:hidden}
+.language-choice.is-ready{visibility:visible;animation:choice-enter 500ms ease both}
+.choice-caption{display:flex;align-items:center;justify-content:center;align-self:stretch;flex:0 0 30px;background:rgba(170,188,189,.55);border-radius:8px 0 0 8px;font-size:10px;letter-spacing:1.4px;font-weight:700;color:#eee;white-space:nowrap}
+.choice-caption span{writing-mode:vertical-rl;transform:rotate(180deg) scaleX(.86)}
+.choice-options{display:flex;flex-direction:column;align-items:stretch;justify-content:center;gap:12px;min-width:0;padding:20px 23px 20px 16px}
+.choice-options button{position:relative;display:block;width:100%;max-width:100%;min-height:50px;border:0;border-radius:18px 18px 2px 18px;background:#171717;color:#f4f4f4;padding:12px 16px;text-align:left;font-size:clamp(14px,1.4vw,17px);line-height:1.4;font-weight:350;overflow-wrap:anywhere}
+.choice-options button span{display:inline-block}
+.mine .bubble{border:0;border-radius:7px 7px 2px 7px}
+.mine .bubble:not(.has-stamp)::after,.choice-options button::after{content:"";position:absolute;right:-9px;bottom:0;width:13px;height:12px;background:#171717;clip-path:polygon(0 0,40% 68%,100% 100%,0 100%)}
+.choice-options button:hover::after{background:#292929}
+.choice-options button:hover{background:#292929}
+.choice-options button:focus-visible{outline:2px solid white;outline-offset:-4px}
+@keyframes choice-enter{from{opacity:0;transform:translateX(40px)}to{opacity:1;transform:none}}
+@media(max-width:480px){.language-choice{min-height:148px}.choice-caption{flex-basis:27px;font-size:8px;letter-spacing:.8px}.choice-options{padding:18px 21px 18px 14px}.choice-options button{padding:11px 14px;min-height:46px;border-radius:16px 16px 2px 16px}}
+@media(prefers-reduced-motion:reduce){.language-choice.is-ready{animation:none}}
 </style>
 <script>
 // Arm the opening before first paint; start its deadline after the document is parsed.
@@ -441,590 +459,224 @@ const UI_JP = {
   "credits": "著作権・制作クレジット"
 };
 const CHATS_JP = [
-  {
-    "id": "home",
-    "name": "ホーム",
-    "subtitle": "HOME",
-    "speaker": "CHIHARU",
-    "messages": [
-      {
-        "text": "……もしもし？"
-      },
-      {
-        "text": "BOT{bot}、私の言葉がわかる？"
-      },
-      {
-        "stamp": "img_ch09_st_006.png"
-      },
-      {
-        "text": "うん、わかるよ。",
-        "mine": true
-      },
-      {
-        "text": "よかった。ちゃんと繋がった。"
-      },
-      {
-        "text": "このプログラムを起動してくれて、ありがとう。"
-      },
-      {
-        "text": "私は、このプログラムのナビゲーター。千羽鶴。"
-      },
-      {
-        "text": "あなたの世界の誰かが、これを開くのを待っていた。"
-      },
-      {
-        "text": "ずっと僕を待っていたの？",
-        "mine": true
-      },
-      {
-        "text": "そう。"
-      },
-      {
-        "text": "……正確には、誰かを。"
-      },
-      {
-        "text": "でも、今ここに繋がったのは、あなた。"
-      },
-      {
-        "text": "というわけで。これからよろしく、BOT{bot}。"
-      },
-      {
-        "text": "えっ、いきなり？",
-        "mine": true
-      },
-      {
-        "text": "緊張しなくていい。まずは、ここを知ることから。"
-      },
-      {
-        "text": "『拡張少女系トライナリー』オフラインプロジェクトへようこそ。"
-      },
-      {
-        "text": "最初は何をすればいい？",
-        "mine": true
-      },
-      {
-        "text": "まずは「ゲーム紹介」へ。つばめがこの作品を紹介してくれる。"
-      },
-      {
-        "text": "ゆっくり知っていけばいい。"
-      },
-      {
-        "text": "遊び始めたいときは？",
-        "mine": true
-      },
-      {
-        "text": "「ダウンロード」へ。本体と動画はそこにある。"
-      },
-      {
-        "text": "このバージョンの変更点は「変更内容」にまとめてある。"
-      },
-      {
-        "text": "制作に携わった人たちや、関連リンクのページも用意している。"
-      },
-      {
-        "text": "一度にそんなに覚えられないよ。",
-        "mine": true
-      },
-      {
-        "text": "大丈夫。"
-      },
-      {
-        "text": "左上の KAKUTORA を押せば、ここに戻れる。"
-      },
-      {
-        "text": "何をすればいいかわからなくなったら、また私のところへ。"
-      },
-      {
-        "text": "ずっとここにいてくれる？",
-        "mine": true
-      },
-      {
-        "text": "少なくとも、説明を読んでいる間に逃げたりはしない。"
-      },
-      {
-        "text": "……今のは冗談。"
-      },
-      {
-        "text": "じゃあ、行ってくる。",
-        "mine": true
-      },
-      {
-        "text": "うん。"
-      },
-      {
-        "text": "彼女たちと貴方に、素敵なココロの旅を。"
-      }
-    ]
-  },
-  {
-    "id": "about",
-    "name": "ゲーム紹介",
-    "subtitle": "ABOUT",
-    "speaker": "TSUBAME",
-    "character": "逢瀬つばめ",
-    "messages": [
-      {
-        "text": "あっ、BOT{bot}さん、こんにちは！(*´▽｀*)"
-      },
-      {
-        "stamp": "img_ch01_st_002.png"
-      },
-      {
-        "text": "こんにちは！",
-        "mine": true
-      },
-      {
-        "text": "はいっ、わたしから紹介しますね (*´▽｀*)"
-      },
-      {
-        "text": "『拡張少女系トライナリー』はね"
-      },
-      {
-        "text": "ガストと東映アニメーションが一緒に作った、アプリとアニメの融合をコンセプトとした恋愛 SF 企画なんです"
-      },
-      {
-        "text": "ガストは、コーエーテクモゲームスのブランドですよ"
-      },
-      {
-        "text": "ゲームのジャンルは「少女のオモテウラ恋愛 RPG」！"
-      },
-      {
-        "stamp": "img_ch01_st_004.png"
-      },
-      {
-        "text": "英語だと AUGMENTED REALITY GIRLS TRINARY……ちょっと長いですね (´・ω・｀)"
-      },
-      {
-        "text": "もともとは iOS と Android で遊べたんです"
-      },
-      {
-        "text": "配信が始まったのは、2017年4月12日"
-      },
-      {
-        "text": "そのあと、2018年8月31日にサービスが終わってしまって……(´つω・｀)"
-      },
-      {
-        "text": "今の offline 版は？",
-        "mine": true
-      },
-      {
-        "text": "このオフラインはですね"
-      },
-      {
-        "text": "ぴょんこｽｷさんが公開した、オリジナルの 1.2.8 オフライン APK をもとに、改めて解析したものなんです"
-      },
-      {
-        "stamp": "img_ch01_st_016.png"
-      },
-      {
-        "text": "今は Android だけに対応しています"
-      },
-      {
-        "text": "PC でも、Android 用エミュレータで遊べますよ"
-      },
-      {
-        "text": "これでまた会えますね (≧艸≦*)"
-      },
-    ]
-  },
-  {
-    "id": "download",
-    "name": "ダウンロード",
-    "subtitle": "DOWNLOAD",
-    "speaker": "AYAMI",
-    "character": "國政綾水",
-    "messages": [
-      {
-        "text": "BOT{bot}、こんにちは"
-      },
-      {
-        "stamp": "img_ch02_st_003.png"
-      },
-      {
-        "text": "どこからダウンロードすればいい？",
-        "mine": true
-      },
-      {
-        "text": "まずはゲーム本体をダウンロードしてね"
-      },
-      {
-        "text": "こちらは GOOGLE DRIVE",
-        "link": {
-          "name": "Kakutora_offline.apk",
-          "url": "待补充"
-        }
-      },
-      {
-        "text": "百度網盤はこちらよ",
-        "link": {
-          "name": "Kakutora_offline.apk",
-          "url": "待补充"
-        }
-      },
-      {
-        "text": "次は動画ね"
-      },
-      {
-        "text": "画質は自分の環境に合わせて選べば大丈夫"
-      },
-      {
-        "text": "GOOGLE DRIVE の 720P 版はこちら",
-        "link": {
-          "name": "KAKUTORA_MOVIE_720p.zip",
-          "url": "https://drive.google.com/file/d/1rR4oNMDFkBNX3rOwLdk7GGzN541FV6zb/view?usp=drive_link"
-        }
-      },
-      {
-        "text": "百度網盤の 720P 版はこっち",
-        "link": {
-          "name": "KAKUTORA_MOVIE_720p.zip",
-          "url": "https://pan.baidu.com/s/1OJbuzI2QPiLvIplS9_3_ew?pwd=KKTR"
-        }
-      },
-      {
-        "text": "GOOGLE DRIVE の 360P 版ね",
-        "link": {
-          "name": "KAKUTORA_MOVIE_360p.7z",
-          "url": "https://drive.google.com/file/d/1sL4Niuwk9LwFDoBezoceCXFNOO9PyJy2/view?usp=drive_link"
-        }
-      },
-      {
-        "text": "百度網盤の 360P 版もあるわ",
-        "link": {
-          "name": "KAKUTORA_MOVIE_360p.7z",
-          "url": "https://pan.baidu.com/s/1HJCxqHg-R7dqEBbA7Np3EQ?pwd=KKTR"
-        }
-      },
-      {
-        "text": "ダウンロードする前に、対応機種とファイル名を確認してね"
-      },
-      {
-        "text": "取り違えると大変だから (-ω-;)"
-      },
-      {
-        "stamp": "img_ch02_st_040.png"
-      },
-      {
-        "text": "本体と動画が揃ったらゲームを起動して、「動画設定」でフォルダーを選べば完了よ"
-      }
-    ]
-  },
-  {
-    "id": "changelog",
-    "name": "変更内容",
-    "subtitle": "CHANGELOG",
-    "speaker": "GABRIELLA",
-    "character": "ガブリエラ",
-    "messages": [
-      {
-        "text": "あら、BOT{bot}。こんにちは"
-      },
-      {
-        "stamp": "img_ch03_st_001.png"
-      },
-      {
-        "text": "元のバージョンから何が変わったの？",
-        "mine": true
-      },
-      {
-        "text": "結構いろいろ変わってるわよ"
-      },
-      {
-        "text": "ひとつずつ教えてあげる"
-      },
-      {
-        "text": "ちゃんと聞いてなさいよね"
-      },
-      {
-        "text": "まず、未実装だった衣装が100着以上、追加されたの"
-      },
-      {
-        "text": "これは見逃せないでしょ"
-      },
-      {
-        "text": "タイトル画面で使われなかったボイスも戻ってきたわ"
-      },
-      {
-        "text": "エリカと千羽鶴の声が聞けるようになってるの"
-      },
-      {
-        "text": "ほかの未使用ボイスも、ログインボーナスのボイスも、全部追加されてるわよ"
-      },
-      {
-        "text": "今は一週間、毎日違う子がログインボーナスを案内するの"
-      },
-      {
-        "text": "どう？ 前より賑やかでしょ？"
-      },
-      {
-        "stamp": "img_ch03_st_013.png"
-      },
-      {
-        "text": "それから、新しい「特別資料」のページ"
-      },
-      {
-        "text": "エリカの未使用ボイスや、千羽鶴のボイスもそこで聞けるわ"
-      },
-      {
-        "text": "デイトラ！、私たち5人の Twitter、公式サイトの紹介なんかも、ローカルで見られるようになったの"
-      },
-      {
-        "text": "私たちの誕生日のエピソードも、残っていた記録をもとに、できる限り復元されてるわ"
-      },
-      {
-        "text": "ちゃんと見ておきなさいよね"
-      },
-      {
-        "text": "ほかにもある？",
-        "mine": true
-      },
-      {
-        "text": "もちろん"
-      },
-      {
-        "text": "クランの所持枠が600まで増えて、全員集められるようになったわ"
-      },
-      {
-        "text": "ジュエルショップには、タップするだけでアイテムを受け取れる機能が追加されたの"
-      },
-      {
-        "text": "図鑑には、画像のパーツを分けて見られる機能も増えたわ"
-      },
-      {
-        "text": "動作が重くなる問題も修正されたの"
-      },
-      {
-        "text": "無駄に同じ操作を繰り返さなくていいように、調整も入ってるわよ"
-      },
-      {
-        "text": "はい、説明はここまで"
-      },
-      {
-        "text": "読んだそばから忘れるんじゃないわよ"
-      },
-      {
-        "stamp": "img_ch03_st_012.png"
-      }
-    ]
-  },
-  {
-    "id": "credits",
-    "name": "制作スタッフ",
-    "subtitle": "CREDITS",
-    "speaker": "MIYABI",
-    "character": "恋ヶ崎みやび",
-    "messages": [
-      {
-        "text": "よう、BOT{bot}。来たがか"
-      },
-      {
-        "stamp": "img_ch04_st_029.png"
-      },
-      {
-        "text": "制作チームを紹介してくれる？",
-        "mine": true
-      },
-      {
-        "text": "制作チーム？"
-      },
-      {
-        "text": "ちょい待ち"
-      },
-      {
-        "stamp": "img_ch04_st_006.png"
-      },
-      {
-        "text": "主なメンバーはこの人らやね"
-      },
-      {
-        "text": "砂之盃杯：\n主催、解析（！？）、マスコット、スパゲッティコード製造担当"
-      },
-      {
-        "text": "HachimiBot：\n応援団、兼 Gemini Tamer"
-      },
-      {
-        "text": "星云nebulas：\nデータ分析、素材探し、動画編集案、アイデア、テスト"
-      },
-      {
-        "text": "zoombie：\nパッチ調整、スパゲッティコードのお片付け担当"
-      },
-      {
-        "text": "kurogane：\nトークン提供"
-      },
-      {
-        "text": "一般兔子：\nLLM 支援、技術サポート"
-      },
-      {
-        "text": "ほかにもいる？",
-        "mine": true
-      },
-      {
-        "text": "スペシャルサンクスはこっちや"
-      },
-      {
-        "text": "gutsshadow（微博）"
-      },
-      {
-        "text": "極東オンライン（YouTube）"
-      },
-      {
-        "text": "Takashi@real_tenshi（X/Twitter）"
-      },
-      {
-        "text": "トライナリー・フォーラムWiki"
-      },
-      {
-        "text": "拡張少女系トライナリー まとめ Wiki"
-      },
-      {
-        "text": "オフライン版の原作者：\nぴょんこｽｷ"
-      },
-      {
-        "text": "解析に協力したのは？",
-        "mine": true
-      },
-      {
-        "text": "この顔ぶれやって"
-      },
-      {
-        "text": "Grok 4.7、Grok 4.6"
-      },
-      {
-        "text": "GPT-6 Astra、GPT-6.1 Sol、GPT-5.6 Sol"
-      },
-      {
-        "text": "Claude Opus 5.5、GLM-5.3"
-      },
-      {
-        "text": "Gemini 3.1 Pro、Gemini 3.8 Flash"
-      },
-      {
-        "text": "Deepseek-V4-Flash-0731、DeepSeek-V4.1-Flash"
-      },
-      {
-        "stamp": "img_ch04_st_037.png"
-      },
-      {
-        "text": "以上やね"
-      }
-    ]
-  },
-  {
-    "id": "links",
-    "name": "関連リンク",
-    "subtitle": "LINKS",
-    "speaker": "KAGURA",
-    "character": "卯月神楽",
-    "messages": [
-      {
-        "text": "BOT{bot}さん、こんにちはぴょん！"
-      },
-      {
-        "stamp": "img_ch05_st_007.png"
-      },
-      {
-        "text": "関連リンクはどこ？",
-        "mine": true
-      },
-      {
-        "text": "リンクをお探しなら、こちらで正解ですぴょん♪"
-      },
-      {
-        "text": "公式サイトはこちらっ",
-        "link": {
-          "name": "social.gust.co.jp/kakutora",
-          "url": "https://social.gust.co.jp/kakutora/"
-        }
-      },
-      {
-        "text": "公式 Twitter もありますよっ",
-        "link": {
-          "name": "x.com/kakutora_staff",
-          "url": "https://x.com/kakutora_staff"
-        }
-      },
-      {
-        "text": "みんなの Twitter は？",
-        "mine": true
-      },
-      {
-        "stamp": "img_ch05_st_014.png"
-      },
-      {
-        "text": "実はですね、実はですね"
-      },
-      {
-        "text": "こちらに揃ってるんですぴょん"
-      },
-      {
-        "text": "逢瀬つばめ",
-        "link": {
-          "name": "@tsubame_ohse",
-          "url": "https://x.com/tsubame_ohse"
-        }
-      },
-      {
-        "text": "國政綾水",
-        "link": {
-          "name": "@ayami_kunimasa",
-          "url": "https://x.com/ayami_kunimasa"
-        }
-      },
-      {
-        "text": "ガブリエラ",
-        "link": {
-          "name": "@garbiela_lotty",
-          "url": "https://x.com/garbiela_lotty"
-        }
-      },
-      {
-        "text": "恋ヶ崎みやび",
-        "link": {
-          "name": "@miyabi_koikoi",
-          "url": "https://x.com/miyabi_koikoi"
-        }
-      },
-      {
-        "text": "卯月神楽",
-        "link": {
-          "name": "@kagura_pyonko",
-          "url": "https://x.com/kagura_pyonko"
-        }
-      },
-      {
-        "text": "Wiki などのはある？",
-        "mine": true
-      },
-      {
-        "text": "トライナリー・フォーラム Wiki のページはこちらですっ",
-        "link": {
-          "name": "EXEC_TRINARY_FORUM/.",
-          "url": "https://wikiwiki.jp/trinaryforum/"
-        }
-      },
-      {
-        "text": "拡張少女系トライナリー　まとめ Wiki も置いておきますね",
-        "link": {
-          "name": "拡張少女系トライナリー　まとめ Wiki",
-          "url": "https://wikiwiki.jp/kakutora/"
-        }
-      },
-      {
-        "text": "拡張@img wiki も",
-        "link": {
-          "name": "拡張@img wiki",
-          "url": "https://imgtrinary.swiki.jp/"
-        }
-      },
-      {
-        "stamp": "img_ch05_st_014.png"
-      }
-    ]
-  }
+ {
+  id:'home',
+  name:'ホーム',
+  subtitle:'HOME',
+  speaker:'CHIHARU',
+  messages:[
+   {text:'……もしもし？'},
+   {text:'BOT{bot}、私の言葉がわかる？'},
+   {stamp:'img_ch09_st_006.png'},
+   {text:'うん、わかるよ。',mine:true},
+   {text:'よかった。ちゃんと繋がった。'},
+   {text:'このプログラムを起動してくれて、ありがとう。'},
+   {text:'私は、このプログラムのナビゲーター。千羽鶴。'},
+   {text:'あなたの世界の誰かが、これを開くのを待っていた。'},
+   {text:'ずっと僕を待っていたの？',mine:true},
+   {text:'そう。'},
+   {text:'……正確には、誰かを。'},
+   {text:'でも、今ここに繋がったのは、あなた。'},
+   {text:'というわけで。これからよろしく、BOT{bot}。'},
+   {text:'えっ、いきなり？',mine:true},
+   {text:'緊張しなくていい。まずは、ここを知ることから。'},
+   {text:'『拡張少女系トライナリー』オフラインプロジェクトへようこそ。'},
+   {text:'最初は何をすればいい？',mine:true},
+   {text:'まずは「ゲーム紹介」へ。つばめがこの作品を紹介してくれる。'},
+   {text:'ゆっくり知っていけばいい。'},
+   {text:'遊び始めたいときは？',mine:true},
+   {text:'「ダウンロード」へ。本体と動画はそこにある。'},
+   {text:'このバージョンの変更点は「変更内容」にまとめてある。'},
+   {text:'制作に携わった人たちや、関連リンクのページも用意している。'},
+   {text:'一度にそんなに覚えられないよ。',mine:true},
+   {text:'大丈夫。'},
+   {text:'左上の KAKUTORA を押せば、ここに戻れる。'},
+   {text:'何をすればいいかわからなくなったら、また私のところへ。'},
+   {text:'ずっとここにいてくれる？',mine:true},
+   {text:'少なくとも、説明を読んでいる間に逃げたりはしない。'},
+   {text:'……今のは冗談。'},
+   {text:'じゃあ、行ってくる。',mine:true},
+   {text:'うん。'},
+   {text:'彼女たちと貴方に、素敵なココロの旅を。'}
+  ]
+ },
+ {
+  id:'about',
+  name:'ゲーム紹介',
+  subtitle:'ABOUT',
+  speaker:'TSUBAME',
+  character:'逢瀬つばめ',
+  messages:[
+   {text:'あっ、BOT{bot}さん、こんにちは！(*´▽｀*)'},
+   {stamp:'img_ch01_st_002.png'},
+   {text:'こんにちは！',mine:true},
+   {text:'はいっ、わたしから紹介しますね (*´▽｀*)'},
+   {text:'『拡張少女系トライナリー』はね'},
+   {text:'ガストと東映アニメーションが一緒に作った、アプリとアニメの融合をコンセプトとした恋愛 SF 企画なんです'},
+   {text:'ガストは、コーエーテクモゲームスのブランドですよ'},
+   {text:'ゲームのジャンルは「少女のオモテウラ恋愛 RPG」！'},
+   {stamp:'img_ch01_st_004.png'},
+   {text:'英語だと AUGMENTED REALITY GIRLS TRINARY……ちょっと長いですね (´・ω・｀)'},
+   {text:'もともとは iOS と Android で遊べたんです'},
+   {text:'配信が始まったのは、2017年4月12日'},
+   {text:'そのあと、2018年8月31日にサービスが終わってしまって……(´つω・｀)'},
+   {text:'今の offline 版は？',mine:true},
+   {text:'このオフラインはですね'},
+   {text:'ぴょんこｽｷさんが公開した、オリジナルの 1.2.8 オフライン APK をもとに、改めて解析したものなんです'},
+   {stamp:'img_ch01_st_016.png'},
+   {text:'今は Android だけに対応しています'},
+   {text:'PC でも、Android 用エミュレータで遊べますよ'},
+   {text:'これでまた会えますね (≧艸≦*)'}
+  ]
+ },
+ {
+  id:'download',
+  name:'ダウンロード',
+  subtitle:'DOWNLOAD',
+  speaker:'AYAMI',
+  character:'國政綾水',
+  messages:[
+   {text:'BOT{bot}、こんにちは'},
+   {stamp:'img_ch02_st_003.png'},
+   {text:'どこからダウンロードすればいい？',mine:true},
+   {text:'まずはゲーム本体をダウンロードしてね'},
+   {text:'こちらは GOOGLE DRIVE',link:{name:'Kakutora_offline.apk',url:'待补充'}},
+   {text:'百度網盤はこちらよ',link:{name:'Kakutora_offline.apk',url:'待补充'}},
+   {text:'次は動画ね'},
+   {text:'画質は自分の環境に合わせて選べば大丈夫'},
+   {text:'GOOGLE DRIVE の 720P 版はこちら',link:{name:'KAKUTORA_MOVIE_720p.zip',url:'https://drive.google.com/file/d/1rR4oNMDFkBNX3rOwLdk7GGzN541FV6zb/view?usp=drive_link'}},
+   {text:'百度網盤の 720P 版はこっち',link:{name:'KAKUTORA_MOVIE_720p.zip',url:'https://pan.baidu.com/s/1OJbuzI2QPiLvIplS9_3_ew?pwd=KKTR'}},
+   {text:'GOOGLE DRIVE の 360P 版ね',link:{name:'KAKUTORA_MOVIE_360p.7z',url:'https://drive.google.com/file/d/1sL4Niuwk9LwFDoBezoceCXFNOO9PyJy2/view?usp=drive_link'}},
+   {text:'百度網盤の 360P 版もあるわ',link:{name:'KAKUTORA_MOVIE_360p.7z',url:'https://pan.baidu.com/s/1HJCxqHg-R7dqEBbA7Np3EQ?pwd=KKTR'}},
+   {text:'ダウンロードする前に、対応機種とファイル名を確認してね'},
+   {text:'取り違えると大変だから (-ω-;)'},
+   {stamp:'img_ch02_st_040.png'},
+   {text:'本体と動画が揃ったらゲームを起動して、「動画設定」でフォルダーを選べば完了よ'}
+  ]
+ },
+ {
+  id:'changelog',
+  name:'変更内容',
+  subtitle:'CHANGELOG',
+  speaker:'GABRIELLA',
+  character:'ガブリエラ',
+  messages:[
+   {text:'あら、BOT{bot}。こんにちは'},
+   {stamp:'img_ch03_st_001.png'},
+   {text:'元のバージョンから何が変わったの？',mine:true},
+   {text:'結構いろいろ変わってるわよ'},
+   {text:'ひとつずつ教えてあげる'},
+   {text:'ちゃんと聞いてなさいよね'},
+   {text:'まず、未実装だった衣装が100着以上、追加されたの'},
+   {text:'これは見逃せないでしょ'},
+   {text:'タイトル画面で使われなかったボイスも戻ってきたわ'},
+   {text:'エリカと千羽鶴の声が聞けるようになってるの'},
+   {text:'ほかの未使用ボイスも、ログインボーナスのボイスも、全部追加されてるわよ'},
+   {text:'今は一週間、毎日違う子がログインボーナスを案内するの'},
+   {text:'どう？ 前より賑やかでしょ？'},
+   {stamp:'img_ch03_st_013.png'},
+   {text:'それから、新しい「特別資料」のページ'},
+   {text:'エリカの未使用ボイスや、千羽鶴のボイスもそこで聞けるわ'},
+   {text:'デイトラ！、私たち5人の Twitter、公式サイトの紹介なんかも、ローカルで見られるようになったの'},
+   {text:'私たちの誕生日のエピソードも、残っていた記録をもとに、できる限り復元されてるわ'},
+   {text:'ちゃんと見ておきなさいよね'},
+   {text:'ほかにもある？',mine:true},
+   {text:'もちろん'},
+   {text:'クランの所持枠が600まで増えて、全員集められるようになったわ'},
+   {text:'ジュエルショップには、タップするだけでアイテムを受け取れる機能が追加されたの'},
+   {text:'図鑑には、画像のパーツを分けて見られる機能も増えたわ'},
+   {text:'動作が重くなる問題も修正されたの'},
+   {text:'無駄に同じ操作を繰り返さなくていいように、調整も入ってるわよ'},
+   {text:'はい、説明はここまで'},
+   {text:'読んだそばから忘れるんじゃないわよ'},
+   {stamp:'img_ch03_st_012.png'}
+  ]
+ },
+ {
+  id:'credits',
+  name:'制作スタッフ',
+  subtitle:'CREDITS',
+  speaker:'MIYABI',
+  character:'恋ヶ崎みやび',
+  messages:[
+   {text:'よう、BOT{bot}。来たがか'},
+   {stamp:'img_ch04_st_029.png'},
+   {text:'制作チームを紹介してくれる？',mine:true},
+   {text:'制作チーム？'},
+   {text:'ちょい待ち'},
+   {stamp:'img_ch04_st_006.png'},
+   {text:'主なメンバーはこの人らやね'},
+   {text:'砂之盃杯：\n主催、解析（！？）、マスコット、スパゲッティコード製造担当'},
+   {text:'HachimiBot：\n応援団、兼 Gemini Tamer'},
+   {text:'星云nebulas：\nデータ分析、素材探し、動画編集案、アイデア、テスト'},
+   {text:'zoombie：\nパッチ調整、スパゲッティコードのお片付け担当'},
+   {text:'kurogane：\nトークン提供'},
+   {text:'一般兔子：\nLLM 支援、技術サポート'},
+   {text:'ほかにもいる？',mine:true},
+   {text:'スペシャルサンクスはこっちや'},
+   {text:'gutsshadow（微博）'},
+   {text:'極東オンライン（YouTube）'},
+   {text:'Takashi@real_tenshi（X/Twitter）'},
+   {text:'トライナリー・フォーラムWiki'},
+   {text:'拡張少女系トライナリー まとめ Wiki'},
+   {text:'オフライン版の原作者：\nぴょんこｽｷ'},
+   {text:'解析に協力したのは？',mine:true},
+   {text:'この顔ぶれやって'},
+   {text:'Grok 4.7、Grok 4.6'},
+   {text:'GPT-6 Astra、GPT-6.1 Sol、GPT-5.6 Sol'},
+   {text:'Claude Opus 5.5、GLM-5.3'},
+   {text:'Gemini 3.1 Pro、Gemini 3.8 Flash'},
+   {text:'Deepseek-V4-Flash-0731、DeepSeek-V4.1-Flash'},
+   {stamp:'img_ch04_st_037.png'},
+   {text:'以上やね'}
+  ]
+ },
+ {
+  id:'links',
+  name:'関連リンク',
+  subtitle:'LINKS',
+  speaker:'KAGURA',
+  character:'卯月神楽',
+  messages:[
+   {text:'BOT{bot}さん、こんにちはぴょん！'},
+   {stamp:'img_ch05_st_007.png'},
+   {text:'関連リンクはどこ？',mine:true},
+   {text:'リンクをお探しなら、こちらで正解ですぴょん♪'},
+   {text:'公式サイトはこちらっ',link:{name:'social.gust.co.jp/kakutora',url:'https://social.gust.co.jp/kakutora/'}},
+   {text:'公式 Twitter もありますよっ',link:{name:'x.com/kakutora_staff',url:'https://x.com/kakutora_staff'}},
+   {text:'みんなの Twitter は？',mine:true},
+   {stamp:'img_ch05_st_014.png'},
+   {text:'実はですね、実はですね'},
+   {text:'こちらに揃ってるんですぴょん'},
+   {text:'逢瀬つばめ',link:{name:'@tsubame_ohse',url:'https://x.com/tsubame_ohse'}},
+   {text:'國政綾水',link:{name:'@ayami_kunimasa',url:'https://x.com/ayami_kunimasa'}},
+   {text:'ガブリエラ',link:{name:'@garbiela_lotty',url:'https://x.com/garbiela_lotty'}},
+   {text:'恋ヶ崎みやび',link:{name:'@miyabi_koikoi',url:'https://x.com/miyabi_koikoi'}},
+   {text:'卯月神楽',link:{name:'@kagura_pyonko',url:'https://x.com/kagura_pyonko'}},
+   {text:'Wiki などのはある？',mine:true},
+   {text:'トライナリー・フォーラム Wiki のページはこちらですっ',link:{name:'EXEC_TRINARY_FORUM/.',url:'https://wikiwiki.jp/trinaryforum/'}},
+   {text:'拡張少女系トライナリー　まとめ Wiki も置いておきますね',link:{name:'拡張少女系トライナリー　まとめ Wiki',url:'https://wikiwiki.jp/kakutora/'}},
+   {text:'拡張@img wiki も',link:{name:'拡張@img wiki',url:'https://imgtrinary.swiki.jp/'}},
+   {stamp:'img_ch05_st_014.png'}
+  ]
+ }
 ];
 
-let language='JP';
-try{const savedLanguage=localStorage.getItem('kakutora.offline.language');if(savedLanguage==='CN'||savedLanguage==='JP')language=savedLanguage;}catch{}
+const LANGUAGE_KEY='kakutora.offline.language';
+const OPENING_CHOICE_KEY='kakutora.offline.opening-choice.v1';
+let language='JP',languageChosen=false,languageChoosing=false;
+let openingTranscript=[];
+try{const savedLanguage=localStorage.getItem(LANGUAGE_KEY);if(savedLanguage==='CN'||savedLanguage==='JP'){language=savedLanguage;languageChosen=true;}}catch{}
+function openingMessages(choice){
+ return [...CHATS_JP[0].messages.slice(0,3),{text:choice==='CN'?'日语看不懂啦':'わかる',mine:true},{text:'そう。'},...(choice==='CN'?[{text:'では、中国語で。'}]:[])];
+}
+if(languageChosen){
+ // Migrate older language-only preferences once; later switches preserve the original answer.
+ let choice=language;
+ try{const saved=localStorage.getItem(OPENING_CHOICE_KEY);if(saved==='CN'||saved==='JP')choice=saved;else localStorage.setItem(OPENING_CHOICE_KEY,choice);}catch{}
+ openingTranscript=openingMessages(choice);
+}
+// Existing explicit language preferences also count as a completed first visit.
 let CHATS=language==='JP'?CHATS_JP:CHATS_CN;
 let ui=language==='JP'?UI_JP:UI_CN;
 
@@ -1068,9 +720,9 @@ const list=document.querySelector('.contacts'),log=document.querySelector('.mess
 Array.from(list.children).forEach((button,i)=>{
  if(!rooms[i])return;
 
- button.addEventListener('click',()=>{active=i;render();});
+ button.addEventListener('click',()=>{if(!languageChosen)return;active=i;render();});
 });
-document.querySelector('.brand').addEventListener('click',()=>{active=-1;render();});
+document.querySelector('.brand').addEventListener('click',()=>{if(!languageChosen)return;active=-1;render();});
 // 外框锁（CSS 之外的兜底）：双击选词时浏览器会为了"露出选区"去滚动最近的祖先，
 // 老引擎里 overflow:hidden 的壳依然能被这样滚动。这里发现外壳滚了就立刻归零，
 // 只有 .messages 自己可以滚，整扇窗的位置永远不动。
@@ -1115,6 +767,7 @@ function revealMessages(){
  const arm=()=>{
   if(generation!==revealGeneration)return;
   revealInView();
+  setTimeout(()=>{if(generation===revealGeneration)document.querySelector('.language-choice')?.classList.add('is-ready');},850);
   if('IntersectionObserver' in window){
    messageObserver=new IntersectionObserver(entries=>{
     entries.forEach(entry=>{
@@ -1204,13 +857,49 @@ function applyLanguage(){
  document.querySelectorAll('[data-language]').forEach(button=>button.setAttribute('aria-pressed',String(button.dataset.language===language)));
 }
 document.querySelectorAll('[data-language]').forEach(button=>button.addEventListener('click',()=>{
- if(button.dataset.language===language)return;
+ if(!languageChosen||button.dataset.language===language)return;
  const fraction=log.scrollTop/Math.max(1,log.scrollHeight-log.clientHeight);
  language=button.dataset.language;CHATS=language==='JP'?CHATS_JP:CHATS_CN;ui=language==='JP'?UI_JP:UI_CN;
  homeRoom=CHATS[0];rooms=CHATS.slice(1);
- try{localStorage.setItem('kakutora.offline.language',language);}catch{}
+ try{localStorage.setItem(LANGUAGE_KEY,language);}catch{}
  render();log.scrollTop=fraction*(log.scrollHeight-log.clientHeight);
 }));
+// First visit: the rest of the site is rendered only after an explicit answer.
+function appendLanguageChoice(){
+ const panel=document.createElement('div');panel.className='language-choice';
+ panel.setAttribute('role','group');panel.setAttribute('aria-label','SELECT YOUR MIND / 请选择 / 選んでください');
+ const caption=document.createElement('span');caption.className='choice-caption';
+ const captionText=document.createElement('span');captionText.textContent='SELECT YOUR MIND';caption.append(captionText);
+ const options=document.createElement('div');options.className='choice-options';
+ [['JP','わかる','ja'],['CN','日语看不懂啦','zh-CN']].forEach(([value,text,lang])=>{
+  const button=document.createElement('button');button.type='button';button.lang=lang;button.dataset.choice=value;
+  const label=document.createElement('span');label.textContent=text;button.append(label);
+  button.addEventListener('click',()=>chooseLanguage(value,text));options.append(button);
+ });
+ panel.append(caption,options);document.querySelector('.chat').append(panel);
+}
+async function chooseLanguage(value,text){
+ if(languageChosen||languageChoosing)return;
+ languageChoosing=true;
+ document.querySelector('.language-choice')?.remove();
+ openingTranscript=[...CHATS_JP[0].messages.slice(0,3),{text,mine:true},{text:'そう。'}];
+ const add=message=>{appendMessage(message);log.lastElementChild.classList.add('is-visible');log.scrollTop=log.scrollHeight;};
+ const pause=()=>new Promise(resolve=>setTimeout(resolve,650));
+ add({text,mine:true});await pause();add({text:'そう。'});await pause();
+ if(value==='CN'){const reply={text:'では、中国語で。'};openingTranscript.push(reply);add(reply);await pause();}
+ language=value;CHATS=language==='JP'?CHATS_JP:CHATS_CN;ui=language==='JP'?UI_JP:UI_CN;
+ homeRoom=CHATS[0];rooms=CHATS.slice(1);languageChosen=true;languageChoosing=false;
+ try{localStorage.setItem(OPENING_CHOICE_KEY,value);}catch{}
+ try{localStorage.setItem(LANGUAGE_KEY,language);}catch{}
+ // Keep the opening exchange in place as the translated continuation appears.
+ const previousCount=log.children.length,previousScroll=log.scrollTop;
+ render();
+ Array.from(log.children).slice(0,previousCount).forEach(row=>row.classList.add('is-visible'));
+ log.scrollTop=previousScroll;revealInView();
+ const continuation=log.children[previousCount]?.querySelector('.bubble');
+ if(continuation){continuation.tabIndex=-1;continuation.focus({preventScroll:true});}
+}
+
 function render(){
  ++revealGeneration;
  applyLanguage();
@@ -1228,8 +917,17 @@ function render(){
  log.replaceChildren();const date=document.createElement('time');date.className='date';date.dateTime=systemDateValue();date.textContent=systemDate();
  date.setAttribute('aria-label',ui.today);
  log.append(date);
- room.messages.forEach(appendMessage);
- appendLogout(room);
+ document.querySelector('.language-choice')?.remove();
+ document.documentElement.classList.toggle('language-locked',!languageChosen);
+ document.querySelectorAll('.contact,.brand,[data-language]').forEach(button=>button.disabled=!languageChosen);
+ if(!languageChosen){
+  CHATS_JP[0].messages.slice(0,3).forEach(appendMessage);
+  appendLanguageChoice();
+ }else{
+  if(isHome){openingTranscript.forEach(appendMessage);room.messages.slice(4).forEach(appendMessage);}
+  else room.messages.forEach(appendMessage);
+  appendLogout(room);
+ }
  log.scrollTop=0;
  revealMessages();
 }
