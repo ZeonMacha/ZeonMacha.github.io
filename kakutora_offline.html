@@ -373,14 +373,14 @@ const CHATS_CN = [
   speaker:'KAGURA',
   character:'卯月神乐',
   messages:[
-   {text:'BOT{bot}，你好呀，pyon！'},
+   {text:'BOT{bot}，你好呀pyon！'},
    {text:'其他链接在哪里？',mine:true},
-   {text:'找链接的话，来这边就对了，pyon♪'},
+   {text:'找链接的话，来这边就对了pyon♪'},
    {text:'官网在这里',link:{name:'social.gust.co.jp/kakutora',url:'https://social.gust.co.jp/kakutora/'}},
    {text:'官推也有哦',link:{name:'x.com/kakutora_staff',url:'https://x.com/kakutora_staff'}},
    {text:'你们的推特呢？',mine:true},
    {text:'其实其实'},
-   {text:'都在这边，pyon'},
+   {text:'都在这边pyon'},
    {text:'逢濑燕',link:{name:'@tsubame_ohse',url:'https://x.com/tsubame_ohse'}},
    {text:'国政绫水',link:{name:'@ayami_kunimasa',url:'https://x.com/ayami_kunimasa'}},
    {text:'加布里埃拉',link:{name:'@garbiela_lotty',url:'https://x.com/garbiela_lotty'}},
@@ -951,8 +951,8 @@ const CHATS_JP = [
   }
 ];
 
-let language='CN';
-try{if(localStorage.getItem('kakutora.offline.language')==='JP')language='JP';}catch{}
+let language='JP';
+try{const savedLanguage=localStorage.getItem('kakutora.offline.language');if(savedLanguage==='CN'||savedLanguage==='JP')language=savedLanguage;}catch{}
 let CHATS=language==='JP'?CHATS_JP:CHATS_CN;
 let ui=language==='JP'?UI_JP:UI_CN;
 
