@@ -247,6 +247,7 @@ window.MATTERS = [
     "pair": "",
     "location": "やすむ",
     "condition": "ショップイベント 武器屋12をルカで見る\n(期間:PHASE1 行き先『大鐘堂宮殿』追加から、『大鐘堂宮殿』に入るまで)\n※ルカで発生されるとクローシェのトークマター条件は消滅",
+    "exclusive": "singhia",
     "note": "",
     "route": "",
     "partner": "",
@@ -1725,7 +1726,7 @@ window.MATTERS = [
     "note": "I.P.D.ロールミルの支持率が100%に",
     "route": "",
     "partner": "",
-    "guideNote": "レベル表記：Wiki L4／攻略本 LV3。ここではWikiの分類を使用。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/113.html",
     "limited": false,
     "requiredCS": {}
@@ -1740,9 +1741,10 @@ window.MATTERS = [
     "location": "やすむ",
     "condition": "ショップイベント武器屋12後",
     "note": "ルカL2「シンシアのこと」を見ている場合、不可。",
+    "exclusive": "singhia",
     "route": "",
     "partner": "",
-    "guideNote": "レベル表記：Wiki L4／攻略本 LV3。ここではWikiの分類を使用。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/113.html",
     "limited": false,
     "requiredCS": {}
@@ -1759,7 +1761,7 @@ window.MATTERS = [
     "note": "コスモスフィアLv.3〜4にダイブの地点で期限切れ",
     "route": "",
     "partner": "",
-    "guideNote": "レベル表記：Wiki L4／攻略本 LV3。ここではWikiの分類を使用。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/113.html",
     "limited": true,
     "requiredCS": {}
@@ -1776,7 +1778,7 @@ window.MATTERS = [
     "note": "",
     "route": "cloche",
     "partner": "",
-    "guideNote": "レベル表記：Wiki L4／攻略本 LV3。ここではWikiの分類を使用。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/113.html",
     "limited": true,
     "requiredCS": {}
@@ -1793,7 +1795,7 @@ window.MATTERS = [
     "note": "",
     "route": "cloche",
     "partner": "",
-    "guideNote": "レベル表記：Wiki L4／攻略本 LV3。ここではWikiの分類を使用。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/113.html",
     "limited": false,
     "requiredCS": {}
@@ -1810,7 +1812,7 @@ window.MATTERS = [
     "note": "",
     "route": "",
     "partner": "",
-    "guideNote": "レベル表記：Wiki L4／攻略本 LV3。ここではWikiの分類を使用。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/113.html",
     "limited": false,
     "requiredCS": {}
@@ -1827,7 +1829,7 @@ window.MATTERS = [
     "note": "",
     "route": "cloche",
     "partner": "",
-    "guideNote": "レベル表記：Wiki L4／攻略本 LV3。ここではWikiの分類を使用。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/113.html",
     "limited": false,
     "requiredCS": {}
@@ -1844,7 +1846,7 @@ window.MATTERS = [
     "note": "I.P.D.テンダーの支持率が100%に",
     "route": "",
     "partner": "",
-    "guideNote": "レベル表記：Wiki L4／攻略本 LV3。ここではWikiの分類を使用。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/113.html",
     "limited": false,
     "requiredCS": {}
@@ -1861,7 +1863,7 @@ window.MATTERS = [
     "note": "",
     "route": "",
     "partner": "",
-    "guideNote": "レベル表記：Wiki L4／攻略本 LV3。ここではWikiの分類を使用。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/113.html",
     "limited": false,
     "requiredCS": {}

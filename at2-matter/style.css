@@ -60,3 +60,14 @@ button{font-size:13px}.fine,.filter-bottom,.source-link{font-size:12px}
 
 /* Visual annotation: retain the title in its normal layout position. */
 .title-label{transform:translate(0px,0px)}
+
+/* 条件・备注按 data.js 中的换行分行显示（与 Wiki 表格的 <br> 一致）。 */
+.condition,.notes{white-space:pre-line}
+/* 二选一：另起一行，用红字标注。 */
+.exclusive{color:#d21f1f}
+
+/* 同步话题：三组搭档逐行列出，右侧显示 x / y。 */
+.toc ul.sync-list{display:block;padding-left:10px;margin:2px 0 8px}
+.toc ul.sync-list li{display:flex;align-items:baseline;justify-content:space-between;gap:6px;line-height:1.7}
+.toc ul.sync-list li a{flex:1 1 auto}
+.toc ul.sync-list li small.count{float:none;white-space:nowrap;font-size:11px;color:#222}
