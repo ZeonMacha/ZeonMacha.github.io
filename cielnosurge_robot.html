@@ -22,17 +22,17 @@ td[data-label]{display:flex;align-items:center;gap:7px;font-size:12px;flex-wrap:
 .ingredient>.card-stock{margin-top:6px;min-height:29px;align-items:center;flex-wrap:nowrap}
 @media(max-width:760px){.ingredient>.card-stock{min-height:32px}}
 
-/* Fluid width and spacing with the sidebar anchored to the left edge. */
+/* Preserve the original 260px sidebar + 1116px content width, shrinking fluidly. */
 @media screen{
  body{padding:0}
- .layout{width:100%;margin:0;grid-template-columns:clamp(164px,18vw,202px) minmax(0,1fr)}
- .toc{padding:clamp(16px,2vw,24px) clamp(10px,1.4vw,19px)}
+ .layout{width:min(1376px,100%);margin:0;grid-template-columns:clamp(200px,18.89535vw,260px) minmax(0,1fr)}
+ .toc{padding:clamp(16px,1.745vw,24px) clamp(10px,1.381vw,19px)}
  .brand{font-size:clamp(20px,2.1vw,25px)}
- main{max-width:none;padding:clamp(16px,2vw,22px) clamp(12px,2vw,26px)}
+ main{max-width:1116px;padding:clamp(16px,1.6vw,22px) clamp(12px,2.181vw,30px)}
  h1{font-size:clamp(21px,2.3vw,27px)}
  table,#gather table{min-width:0}
  th,td{padding:7px clamp(5px,.85vw,10px)}
- .recipe-col{width:34%}.stock-col{width:112px}.time-col{width:19%}
+ .recipe-col{width:35%}.stock-col{width:120px}.time-col{width:17%}
  .plan-controls{flex-wrap:wrap}
 }
 @media screen and (max-width:760px){
