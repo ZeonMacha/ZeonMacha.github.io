@@ -51,7 +51,7 @@ td[data-label]{display:flex;align-items:center;gap:7px;font-size:12px;flex-wrap:
 <div class="save" id="save-state" role="status">自动保存</div><div class="backup"><button id="export">导出进度</button><button id="import">导入进度</button><button id="undo" disabled>撤销上一步</button><input hidden id="import-file" type="file" accept="application/json,.json"></div>
 <a class="home-link" href="https://zeonmacha.github.io/">返回主页</a></aside>
 <main id="top"><header><h1><span>ES45カソード作成表</span></h1></header>
-<section id="plan" aria-label="制作计划"><div class="plan-controls"><label>目标数量<div class="stepper target"><button data-target="-1" aria-label="减少目标数量">−</button><input id="target" value="1" inputmode="numeric" aria-label="目标数量"><button data-target="1" aria-label="增加目标数量">＋</button></div></label><label>版本<select id="version"><option value="offline">offline</option><option value="original">online</option></select></label><button id="reset">清空库存</button></div><div class="stats" aria-live="polite"><span>剩余工时 <strong id="time">—</strong></span><span>待制作 <strong id="craft-count">—</strong></span><span>待采集 <strong id="raw-count">—</strong></span></div></section>
+<section id="plan" aria-label="制作计划"><div class="plan-controls"><label>目标数量<div class="stepper target"><button data-target="-1" aria-label="减少目标数量">−</button><input id="target" value="1" inputmode="numeric" aria-label="目标数量"><button data-target="1" aria-label="增加目标数量">＋</button></div></label><label>版本<select id="version"><option value="offline">offline</option><option value="original">online</option></select></label><label class="check" title="开启后，把某件成品按 +1 视为合成：它的直接前置材料会按数量自动从库存中扣除；按 −1 视为拆解，材料退回库存。"><input type="checkbox" id="auto-consume" checked> 合成自动扣料</label><button id="reset">清空库存</button></div><div class="stats" aria-live="polite"><span>剩余工时 <strong id="time">—</strong></span><span>待制作 <strong id="craft-count">—</strong></span><span>待采集 <strong id="raw-count">—</strong></span></div></section>
 <section id="assembly"><div class="section-heading"><h2>最终组件</h2><span>5 项</span></div><div id="assembly-list" class="table-wrap"></div></section>
 <section id="craft"><div class="section-heading"><h2>工作素材</h2><span id="craft-visible">62 项</span></div><div class="filters"><input class="search" type="search" id="search" aria-label="搜索工作素材" placeholder="材料名 / 未知名称"><select id="category" aria-label="工作素材分类"><option value="">全部分类</option></select><label class="check"><input type="checkbox" id="only-missing"> 只看尚缺</label></div><div id="craft-list" class="table-wrap"></div></section>
 <section id="gather"><div class="section-heading"><h2>采集素材</h2><span id="raw-visible">29 项</span></div><div class="filters"><input class="search" type="search" id="raw-search" aria-label="搜索采集素材" placeholder="材料名 / 采集地点"><select id="location" aria-label="采集地点筛选"><option value="">全部地点</option></select><label class="check"><input type="checkbox" id="raw-missing"> 只看尚缺</label><button id="copy-list">复制采集清单</button></div><div id="raw-list" class="table-wrap"></div></section>
@@ -61,7 +61,7 @@ const ALL=[...DATA.items,...DATA.raw], BY_ID=Object.fromEntries(ALL.map(x=>[x.id
 const KEY='ciel-es45-planner-v1', MAX=999999;
 const $=id=>document.getElementById(id);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const fresh=()=>({target:1,version:'offline',stock:{}});
+const fresh=()=>({target:1,version:'offline',stock:{},auto:true});
 let state=fresh(),history=[],opened=new Set(),result,toastTimer;
 const branches=new Set();
 function recipeBody(item,path=item.id){
@@ -80,7 +80,7 @@ function sortHead(label,key,group){const active=sorts[group].key===key,dir=sorts
 function validState(v){
   if(!v||!Number.isInteger(v.target)||v.target<1||v.target>99||!['original','offline'].includes(v.version)||!v.stock||typeof v.stock!=='object'||Array.isArray(v.stock))throw Error('进度文件格式不正确');
   const stock={};for(const [id,n] of Object.entries(v.stock)){if(!BY_ID[id]||!Number.isInteger(n)||n<0||n>MAX)throw Error('库存数据不正确');stock[id]=n;}
-  return {target:v.target,version:v.version,stock};
+  return {target:v.target,version:v.version,stock,auto:v.auto!==false};
 }
 try{const saved=localStorage.getItem(KEY);if(saved)state=validState(JSON.parse(saved));}catch(e){$('save-state').textContent='未能读取保存记录；当前使用零库存';}
 function toast(message){$('toast').textContent=message;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,3500);}
@@ -102,7 +102,7 @@ function render(){
   const active=document.activeElement,control=active?.closest('.stepper')?.dataset.control;
   const focusKind=active?.matches('input')?'input':active?.dataset.step;
   const scrolls=[...document.querySelectorAll('.table-wrap')].map(el=>[el.id,el.scrollLeft]);
-  result=calculate(state);$('target').value=state.target;$('version').value=state.version;
+  result=calculate(state);$('target').value=state.target;$('version').value=state.version;$('auto-consume').checked=autoOn();
   const baseline=calculate({...state,stock:{}}).time,pct=baseline?Math.round((1-result.time/baseline)*100):100;
   $('progress').value=pct;$('progress-text').textContent=pct+'%';$('time').textContent=time(result.time);
   const pending=DATA.items.filter(x=>result.missing[x.id]>0),gather=DATA.raw.filter(x=>result.missing[x.id]>0);
@@ -118,8 +118,47 @@ function render(){
   for(const [id,left] of scrolls)if($(id))$(id).scrollLeft=left;
   if(control&&focusKind){const wrapper=document.querySelector(`[data-control="${control}"]`);const next=wrapper?.querySelector(focusKind==='input'?'input':`[data-step="${focusKind}"]`);next?.focus({preventScroll:true});}
 }
-function updateStock(id,n){if(n===stock(id))return; snapshot();state.stock[id]=n;save();render();}
-function commitInput(input){const id=input.dataset.stock,isTarget=input.id==='target';const n=parseQuantity(input.value,isTarget?99:MAX);if(n===null||(isTarget&&n<1)){input.value=isTarget?state.target:stock(id);input.removeAttribute('aria-invalid');toast(isTarget?'目标请输入 1～99 的整数':'请输入非负整数或加法，例如 2+3+5');return;}input.removeAttribute('aria-invalid');if(isTarget){if(n!==state.target){snapshot();state.target=n;save();render();}else input.value=n;}else if(n!==stock(id))updateStock(id,n);else input.value=n;}
+const autoOn=()=>state.auto!==false;
+// Crafting must consume its ingredients, otherwise a finished item and its parts are counted twice.
+// takeOne() spends one unit of a material, falling back to that material's own recipe when the shelf is empty.
+function takeOne(id,taken,short){
+  if(stock(id)>0){state.stock[id]=stock(id)-1;taken.set(id,(taken.get(id)||0)+1);return true;}
+  const sub=BY_ID[id].ingredients;
+  if(!sub){short.n++;return false;}
+  let ok=true;
+  for(const [child,count] of Object.entries(sub))for(let i=0;i<count;i++)if(!takeOne(child,taken,short))ok=false;
+  return ok;
+}
+function refundIngredients(item,back){
+  for(const [child,count] of Object.entries(item.ingredients||{})){state.stock[child]=Math.min(MAX,stock(child)+count);back.set(child,(back.get(child)||0)+count);}
+}
+function brief(map){const all=[...map].map(([id,n])=>`${BY_ID[id].name}×${n}`);return all.length>4?`${all.slice(0,4).join('、')} 等 ${all.length} 项`:all.join('、');}
+// Changing an item's stock is a crafting step: +1 crafts one piece and takes its ingredients out of stock,
+// -1 dismantles one piece and puts the direct ingredients back. Existing 0/MAX limits still clamp every step.
+function updateStock(id,n){
+  const item=BY_ID[id],delta=n-stock(id);
+  if(!delta)return;
+  const taken=new Map(),back=new Map(),short={n:0};
+  snapshot();
+  for(let step=0;step<Math.abs(delta);step++){
+    if(delta>0){
+      if(stock(id)>=MAX)break;
+      state.stock[id]=stock(id)+1;
+      if(item.ingredients&&autoOn())for(const [child,count] of Object.entries(item.ingredients))for(let i=0;i<count;i++)takeOne(child,taken,short);
+    }else{
+      if(stock(id)<=0)break;
+      state.stock[id]=stock(id)-1;
+      if(item.ingredients&&autoOn())refundIngredients(item,back);
+    }
+  }
+  save();render();
+  if(!item.ingredients)return;
+  const qty=Math.abs(delta),rest=`；剩余工时 ${time(result.time)}`,gap=short.n?`（另有 ${short.n} 份材料未入库）`:'';
+  if(!autoOn())toast(`已记录 ${item.name} ×${qty}${rest}`);
+  else if(delta>0)toast(taken.size?`已合成 ${item.name} ×${qty}：扣除 ${brief(taken)}${gap}${rest}`:`已记录 ${item.name} ×${qty}；前置材料均未入库，库存未变动${rest}`);
+  else toast(back.size?`已拆解 ${item.name} ×${qty}：返还 ${brief(back)}${rest}`:`已记录 ${item.name} ×${qty}${rest}`);
+}
+function commitInput(input){const id=input.dataset.stock,isTarget=input.id==='target';const n=parseQuantity(input.value,isTarget?99:MAX);if(n===null||(isTarget&&n<1)){input.value=isTarget?state.target:stock(id);input.setAttribute('aria-invalid','true');toast(isTarget?'目标请输入 1～99 的整数':'请输入非负整数或加法，例如 2+3+5');return;}input.removeAttribute('aria-invalid');if(isTarget){if(n!==state.target){snapshot();state.target=n;save();render();}else input.value=n;}else if(n!==stock(id))updateStock(id,n);else input.value=n;}
 document.addEventListener('change',e=>{if(e.target.matches('[data-stock],#target'))commitInput(e.target);});
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&e.target.matches('[data-stock],#target')){e.preventDefault();commitInput(e.target);}});
 // Commit on Enter/change, not on each key, so addition expressions can be entered intact.
@@ -132,6 +171,7 @@ document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)r
 });
 for(const id of ['search','category','only-missing','raw-search','raw-missing','location'])$(id).addEventListener(id.includes('search')?'input':'change',render);
 $('version').addEventListener('change',()=>{snapshot();state.version=$('version').value;save();render();});
+$('auto-consume').addEventListener('change',e=>{snapshot();state.auto=e.target.checked;save();render();toast(e.target.checked?'已开启：合成时自动扣除前置材料':'已关闭：库存只按手动填写记录');});
 $('location').innerHTML+=[...new Set(DATA.raw.map(x=>x.location).filter(Boolean))].sort(collator.compare).map(x=>`<option value="${esc(x)}">${esc(x)}</option>`).join('');
 $('category').innerHTML+=[...new Set(DATA.items.filter(x=>Number(x.id)<67).map(x=>x.category))].map(c=>`<option>${esc(c)}</option>`).join('');
 $('reset').onclick=()=>{if(!confirm('清空全部库存？目标数量与时间口径将保留，可撤销。'))return;snapshot();state.stock={};save();render();};
