@@ -57,12 +57,13 @@ html.intro-opening .messages{animation:intro-rise 820ms ease 1810ms both}
 @keyframes terminal-open{0%,10%{opacity:1;clip-path:inset(calc(50% - 2px) calc(50% - 2px) round 2px)}42%,49%{opacity:1;clip-path:inset(calc(50% - 2px) 0 round 2px)}100%{opacity:1;clip-path:inset(0 round 8px)}}
 @keyframes intro-rise{from{opacity:0}to{opacity:1}}
 
-/* Reveal each message once as it enters the chat viewport. */
-.messages.reveal-enabled .message{opacity:0;transform:translate3d(0,-14px,0)}
+/* Selectable text must stay at its final coordinates throughout reveal.
+   Translating the row moves the hit-test/selection target between the two clicks. */
+.messages.reveal-enabled .message{opacity:0;transform:none}
 .messages.reveal-enabled .message.is-visible{opacity:1;transform:none;animation:message-enter 650ms cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0ms) both}
 .messages.reveal-enabled .message:not(.is-visible):focus-within{opacity:1;transform:none;animation:none}
 @keyframes message-fade{from{opacity:0}to{opacity:1}}
-@keyframes message-enter{from{opacity:0;transform:translate3d(0,-14px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes message-enter{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){
 .messages.reveal-enabled .message{transform:none}.messages.reveal-enabled .message.is-visible{animation-name:message-fade;animation-duration:400ms}
 .intro-dots,.intro-bar-fill{animation:none}
