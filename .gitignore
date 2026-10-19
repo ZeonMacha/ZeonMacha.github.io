@@ -1,0 +1,11 @@
+# Homepage artwork is embedded in index.html. Never commit raster files or originals.
+images/
+originals/
+**/originals/
+_local-originals/
+*.png
+*.jpg
+*.jpeg
+*.webp
+*.gif
+*.avif
