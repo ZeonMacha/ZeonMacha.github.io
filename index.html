@@ -142,6 +142,23 @@ html.glitch-pending body{overflow:hidden}
 #signal-intro .signal-picture *,html.signal-settled main,html.signal-settled .card,html.signal-settled .backdrop{animation:none!important}
 @media(max-width:480px){.signal-meta{font-size:8px;letter-spacing:.08em}}
 .signal-filter-defs{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+
+/* The rail deploys first; cards are fed from the left, rightmost slot first. */
+html.home-entering body{overflow:hidden}
+html.home-entering .band{position:relative;isolation:isolate;background:none;border-color:transparent}
+html.home-entering .band::before{content:"";position:absolute;inset:-1px 0;z-index:-1;background:linear-gradient(90deg,#131314ac,#0b1013dc 45%,#0a1012d4);border-block:1px solid #53f6e122;transform-origin:left center;animation:home-rail-deploy 620ms cubic-bezier(.76,0,.22,1) both}
+html.home-entering .band::after{content:"";position:absolute;top:0;bottom:0;left:0;width:2px;pointer-events:none;background:#b1d9d880;box-shadow:-12px 0 24px #83c8c51c;animation:home-rail-head 620ms cubic-bezier(.76,0,.22,1) both}
+html.home-entering .cards{position:relative}
+html.signal-settled.home-entering .card{animation:home-card-feed 520ms cubic-bezier(.18,.7,.25,1) var(--feed-delay) both!important;will-change:translate}
+html.home-entering .arrow-band{animation:home-track-deploy 620ms 180ms cubic-bezier(.76,0,.22,1) both}
+@keyframes home-rail-deploy{0%{transform:scaleX(0)}100%{transform:scaleX(1)}}
+@keyframes home-rail-head{0%{left:0;opacity:0}12%{opacity:.7}88%{opacity:.7}100%{left:calc(100% - 2px);opacity:0}}
+@keyframes home-track-deploy{0%{clip-path:inset(0 100% 0 0)}100%{clip-path:inset(0)}}
+@keyframes home-card-feed{
+  from{translate:var(--feed-from) 0}
+  to{translate:0 0}
+}
+@media(prefers-reduced-motion:reduce){html.home-entering .band::before,html.home-entering .band::after,html.home-entering .arrow-band,html.signal-settled.home-entering .card{animation:none!important}}
 </style>
 <script>
 document.documentElement.classList.add('glitch-pending');
@@ -491,6 +508,27 @@ if(location.protocol==='file:'){const homeEditorLoader=document.createElement('s
   }
   let homeRoll = null;
   let homeFrames = [];
+  let entranceTimer = 0;
+  function finishEntrance() {
+    clearTimeout(entranceTimer);
+    root.classList.remove('home-entering');
+    viewport.inert = false;
+    viewport.removeAttribute('aria-hidden');
+  }
+  function enterHome() {
+    if (motion.matches || document.hidden) return;
+    const cards = [...viewport.querySelectorAll('.card')].map(card => ({card, box:card.getBoundingClientRect()}));
+    // On the two-column layout, feed the right column from top to bottom first.
+    cards.sort((a, b) => b.box.left - a.box.left || a.box.top - b.box.top);
+    const entranceDuration = 240 + Math.max(0, cards.length - 1) * 180 + 520;
+    cards.forEach(({card, box}, order) => {
+      card.style.setProperty('--feed-from', `${-box.right - 32}px`);
+      card.style.setProperty('--feed-delay', `${240 + order * 180}ms`);
+    });
+    viewport.inert = true;
+    root.classList.add('home-entering');
+    entranceTimer = setTimeout(finishEntrance, entranceDuration);
+  }
   const repairMap = document.createElement('canvas');
   repairMap.width = 2;
   const repairInk = repairMap.getContext('2d');
@@ -533,6 +571,8 @@ if(location.protocol==='file:'){const homeEditorLoader=document.createElement('s
     const travel = turns % 1;
     const settle = Math.max(0, Math.min(1, (progress - .64) / .36));
     const strength = 1 - settle * settle * (3 - 2 * settle);
+    // Clear the old rail during the final sync lock so it can deploy once on the live home.
+    homeRoll.querySelectorAll('.band,.arrow-band').forEach(el => { el.style.opacity = String(strength); });
     const field = Math.floor(progress * 16);
     const exposure = [1.90, 1.40, 2.25, 1.65, 1.25][field % 5];
     homeFrames[0].style.transform = `translateY(${-travel * h}px)`;
@@ -585,6 +625,7 @@ if(location.protocol==='file:'){const homeEditorLoader=document.createElement('s
     const wasFocused = overlay.contains(document.activeElement);
     release(); overlay.hidden = true;
     homeRoll?.remove(); homeRoll = null; homeFrames = [];
+    enterHome();
     if (wasFocused) { main.setAttribute('tabindex', '-1'); main.focus({ preventScroll: true }); }
   }
   function loop(now) {
@@ -600,6 +641,7 @@ if(location.protocol==='file:'){const homeEditorLoader=document.createElement('s
   }
   function play() {
     cancelAnimationFrame(frame); clearTimeout(deadline);
+    finishEntrance();
     homeRoll?.remove(); homeRoll = null; homeFrames = [];
     root.classList.remove('signal-settled');
     running = true; released = false; lastTick = -1;
@@ -617,8 +659,16 @@ if(location.protocol==='file:'){const homeEditorLoader=document.createElement('s
     deadline = setTimeout(finish, duration + 800);
     frame = requestAnimationFrame(loop);
   }
-  document.addEventListener('visibilitychange', () => { if (document.hidden && running) finish(); });
-  window.addEventListener('resize', () => { if (running) { size(); lastTick = -1; } });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) { if (running) finish(); finishEntrance(); }
+  });
+  window.addEventListener('resize', () => {
+    if (running) { size(); lastTick = -1; }
+    else if (root.classList.contains('home-entering')) finishEntrance();
+  });
+  motion.addEventListener('change', () => {
+    if (motion.matches) { if (running) finish(); finishEntrance(); }
+  });
   clearTimeout(window.signalFailsafe);
   if (!ctx || !ink || !grain) { root.classList.remove('glitch-pending'); overlay.hidden = true; return; }
   play();
