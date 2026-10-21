@@ -14,7 +14,7 @@ html{--glass:rgba(30,30,34,.52)}
 .brand{padding:0 8px;display:flex;align-items:center;gap:9px;font-size:11px;letter-spacing:1.6px;font-weight:700;color:#f1f1f1}.brand-icon{width:25px;height:25px;flex-shrink:0;object-fit:contain}.brand-text{display:flex;flex-direction:column;gap:4px}.status{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:1.4px;font-weight:400;color:#b5b5b5}.status::before{content:"";width:4px;height:4px;background:#aaa;border-radius:50%}
 .contacts{display:flex;flex-direction:column;gap:7px}.contact{display:flex;align-items:center;gap:10px;width:100%;height:53px;border:1px solid transparent;background:transparent;border-radius:4px;padding:0 10px;color:#c9c9c9;text-align:left}.contact:hover{background:#ffffff0c}.contact[aria-pressed="true"]{background:#ffffff1c;border-color:#ffffff0a;color:white}.contact strong{font-size:14px}.contact-icon{width:38px;height:38px;flex-shrink:0;display:grid;place-items:center;background:transparent;border:0;outline:0;box-shadow:none;border-radius:0;overflow:hidden}.contact-icon img{width:100%;height:100%;object-fit:contain;display:block}.contact[aria-pressed="true"] .contact-icon{background:transparent}.sidebar-bottom{margin-top:auto;padding:0 10px;font-size:10px;letter-spacing:1px;color:#999}
 .chat{font-family:"Source Han Sans SC","Source Han Sans","思源黑体",sans-serif;min-width:0;min-height:0;display:flex;flex-direction:column}.chat-header{height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #ffffff12;background:#20202038}.chat-title{margin:0;font-size:15px;font-weight:700;letter-spacing:.5px}
-.messages{flex:1;min-height:0;overflow-y:scroll;overflow-x:hidden;scrollbar-gutter:stable;padding:22px 28px 30px;scrollbar-width:thin;scrollbar-color:#ffffff40 transparent}.date{display:block;width:100%;text-align:center;color:#b3b3b3;font-size:10px;letter-spacing:1px;margin:2px 0 12px}.message{display:flex;flex-direction:column;align-items:flex-start;margin:0 0 21px}.message.mine{align-items:flex-end}.byline{margin:0 0 5px 3px;font-size:10px;font-weight:700;letter-spacing:.2px;color:#e4e4e4}.bubble{position:relative;width:fit-content;max-width:85%;padding:11px 15px;border-radius:6px 6px 6px 2px;background:#f5f5f5;color:#292929;line-height:1.8;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}.message:not(.mine) .bubble::before{content:"";position:absolute;bottom:0;left:-6px;width:10px;height:10px;background:#f5f5f5;clip-path:polygon(100% 0,100% 100%,0 100%)}.mine .bubble{background:#171717;color:#f4f4f4;border:1px solid #ffffff18;border-radius:6px 6px 2px 6px}
+.messages{flex:1;min-height:0;overflow-y:scroll;overflow-x:hidden;scrollbar-gutter:stable;padding:22px 28px 30px;scrollbar-width:thin;scrollbar-color:#ffffff40 transparent}.date{display:block;width:100%;text-align:center;color:#b3b3b3;font-size:10px;letter-spacing:1px;margin:2px 0 12px}.message{display:flex;flex-direction:column;align-items:flex-start;margin:0 0 21px}.message.mine{align-items:flex-end}.byline{margin:0 0 5px 3px;font-size:10px;font-weight:700;letter-spacing:.2px;color:#e4e4e4}.bubble{position:relative;width:fit-content;max-width:85%;padding:11px 15px;border-radius:6px 6px 6px 2px;background:#f5f5f5;color:#292929;line-height:1.8;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 2px 10px rgba(0,0,0,.14)}.message:not(.mine) .bubble::before{content:"";position:absolute;bottom:0;left:-6px;width:10px;height:10px;background:#f5f5f5;clip-path:polygon(100% 0,100% 100%,0 100%)}.mine .bubble{background:#171717;color:#f4f4f4;border:1px solid #ffffff18;border-radius:6px 6px 2px 6px}
 
 .messages::-webkit-scrollbar{width:8px}.messages::-webkit-scrollbar-track{background:#ffffff0a}.messages::-webkit-scrollbar-thumb{background:#ffffff55;border:2px solid transparent;background-clip:padding-box;border-radius:4px}.messages::-webkit-scrollbar-thumb:hover{background-color:#ffffff88}
 .date{display:block;width:100%;text-align:center;cursor:default;user-select:none;outline:none}.messages{overflow-anchor:none}.bubble.has-image{max-width:min(85%,340px);padding:6px}.bubble-image{display:block;max-width:100%;height:auto;max-height:300px;object-fit:contain;border-radius:3px}.image-caption{display:block;padding:6px 9px;white-space:pre-wrap;overflow-wrap:anywhere}/* 思源黑体：Light 300 / Normal 350 / Bold 700 */
@@ -24,7 +24,10 @@ html{--glass:rgba(30,30,34,.52)}
 html.intro-active .intro-veil{display:block}
 html.intro-opening .intro-veil{animation:intro-veil-out 900ms ease both}
 .intro-loader{position:fixed;left:50%;top:50%;z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;width:min(300px,72vmin);height:min(300px,72vmin);padding:28px;border-radius:50%;background:var(--glass);border:1px solid rgba(255,255,255,.32);box-shadow:0 0 0 1px rgba(255,255,255,.05),0 0 0 8px rgba(255,255,255,.06),0 18px 50px rgba(0,0,0,.16),inset 0 1px 0 rgba(255,255,255,.22),inset 0 -24px 40px rgba(0,0,0,.1);-webkit-backdrop-filter:blur(22px) saturate(165%);backdrop-filter:blur(22px) saturate(165%);-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);pointer-events:none}
-html.intro-active .intro-loader{display:flex}
+html.intro-active .intro-loader{display:flex;animation:intro-loader-in 560ms cubic-bezier(.22,.9,.26,1) both}
+@keyframes intro-loader-in{from{opacity:0;transform:translate(-50%,-50%) scale(.92)}to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+.intro-loader::before{content:"";position:absolute;inset:-26px;z-index:-1;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.16),transparent 62%);animation:intro-glow 2400ms ease-in-out infinite}
+html.intro-opening .intro-loader::before{animation:none;opacity:0}
 .intro-kicker{margin:0 0 12px;font-size:9px;letter-spacing:3.2px;color:#ececec;text-shadow:0 1px 8px rgba(0,0,0,.35)}
 .intro-label{position:relative;width:100%;min-height:28px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:11px;letter-spacing:4px;color:#fff;font-weight:400;text-shadow:0 1px 8px rgba(0,0,0,.35)}
 .intro-dots{display:inline-block;width:16px;letter-spacing:2px;animation:intro-pulse 900ms ease-in-out infinite}
@@ -37,7 +40,7 @@ html.intro-ready .intro-bar-fill{width:100%;animation:none}
 html.intro-opening .intro-loader{animation:intro-loader-out 800ms cubic-bezier(.65,0,.35,1) both}
 html.intro-active .nest{opacity:0;visibility:hidden;pointer-events:none}
 html.intro-active .nest>*{opacity:0}
-html.intro-opening .nest{visibility:visible;animation:terminal-open 1800ms cubic-bezier(.65,0,.35,1) 780ms both}
+html.intro-opening .nest{visibility:visible;animation:terminal-open 1800ms cubic-bezier(.5,.02,.18,1) 780ms both;will-change:clip-path}
 html.intro-opening .nest>.sidebar{animation:intro-rise 640ms ease 1720ms both}
 html.intro-opening .nest>.chat{animation:intro-rise 500ms ease 1720ms both}
 html.intro-opening .brand{animation:intro-rise 560ms ease 1770ms both}
@@ -53,19 +56,30 @@ html.intro-opening .messages{animation:intro-rise 820ms ease 1810ms both}
 @keyframes intro-bar{to{width:100%}}
 @keyframes intro-pulse{50%{opacity:.28}}
 @keyframes intro-veil-out{to{opacity:0}}
-@keyframes intro-loader-out{0%{opacity:1;transform:translate(-50%,-50%) scale(1)}85%,99%{opacity:1;transform:translate(-50%,-50%) scale(var(--point-scale,.013333))}100%{opacity:0;transform:translate(-50%,-50%) scale(var(--point-scale,.013333))}}
-@keyframes terminal-open{0%,10%{opacity:1;clip-path:inset(calc(50% - 2px) calc(50% - 2px) round 2px)}42%,49%{opacity:1;clip-path:inset(calc(50% - 2px) 0 round 2px)}100%{opacity:1;clip-path:inset(0 round 8px)}}
-@keyframes intro-rise{from{opacity:0}to{opacity:1}}
+@keyframes intro-loader-out{0%{opacity:1;transform:translate(-50%,-50%) scale(1);filter:blur(0)}72%{opacity:1;filter:blur(0)}85%,99%{opacity:1;transform:translate(-50%,-50%) scale(var(--point-scale,.013333));filter:blur(1.5px)}100%{opacity:0;transform:translate(-50%,-50%) scale(var(--point-scale,.013333));filter:blur(3px)}}
+@keyframes terminal-open{0%,8%{opacity:1;clip-path:inset(calc(50% - 2px) calc(50% - 2px) round 2px)}34%,44%{opacity:1;clip-path:inset(calc(50% - 2px) 0 round 2px)}78%{opacity:1;clip-path:inset(0 round 10px)}100%{opacity:1;clip-path:inset(0 round 8px)}}
+@keyframes intro-rise{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+@keyframes intro-glow{0%{opacity:0;transform:translate(-50%,-50%) scale(.55)}45%{opacity:.5}100%{opacity:0;transform:translate(-50%,-50%) scale(1.35)}}
 
 /* Selectable text must stay at its final coordinates throughout reveal.
    Translating the row moves the hit-test/selection target between the two clicks. */
 .messages.reveal-enabled .message{opacity:0;transform:none}
 .messages.reveal-enabled .message.is-visible{opacity:1;transform:none;animation:message-enter 650ms cubic-bezier(.2,.7,.2,1) var(--reveal-delay,0ms) both}
 .messages.reveal-enabled .message:not(.is-visible):focus-within{opacity:1;transform:none;animation:none}
+/* Bubble pop: rise a touch and settle, pivoting on the tail corner.
+   The row itself never moves (see selection note above); only the bubble does,
+   and it returns to identity within the animation window. */
+.messages.reveal-enabled .message.is-visible .bubble{transform-origin:bottom left;animation:bubble-in 560ms cubic-bezier(.22,.9,.26,1.02) var(--reveal-delay,0ms) both}
+.messages.reveal-enabled .message.is-visible.mine .bubble{transform-origin:bottom right}
+.messages.reveal-enabled .message.is-visible .bubble.has-stamp{transform-origin:bottom center;animation-duration:620ms}
+.messages.reveal-enabled .message.is-visible .byline{animation:byline-in 480ms ease var(--reveal-delay,0ms) both}
 @keyframes message-fade{from{opacity:0}to{opacity:1}}
 @keyframes message-enter{from{opacity:0}to{opacity:1}}
+@keyframes bubble-in{0%{opacity:0;transform:translateY(9px) scale(.965)}55%{opacity:1}100%{opacity:1;transform:none}}
+@keyframes byline-in{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){
 .messages.reveal-enabled .message{transform:none}.messages.reveal-enabled .message.is-visible{animation-name:message-fade;animation-duration:400ms}
+.messages.reveal-enabled .message.is-visible .bubble,.messages.reveal-enabled .message.is-visible .byline{animation:none}
 .intro-dots,.intro-bar-fill{animation:none}
 .intro-bar-fill{width:100%}
 }
