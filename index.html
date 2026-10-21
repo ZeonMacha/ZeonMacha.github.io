@@ -126,8 +126,35 @@ main:has(.card.is-active) .track{opacity:1;visibility:visible}
 .main-viewport{display:flow-root;overflow:clip}
 @media(min-width:761px){:root{--inset:20px}}
 </style>
+<style id="home-signal-style">
+/* Local demo only. The original home animation declarations stay intact. */
+html.glitch-pending main,html.glitch-pending .card,html.glitch-pending .backdrop{animation-play-state:paused!important}
+html.glitch-pending .main-viewport,html.glitch-pending .page-edge{visibility:hidden}
+html.glitch-pending body{overflow:hidden}
+#signal-intro{position:fixed;inset:0;z-index:1000;background:#060708;overflow:hidden;color:#e8eeeb;isolation:isolate}
+#signal-intro[hidden]{display:none}
+#signal-intro canvas{position:relative;z-index:2;display:block;width:100%;height:100%}
+.signal-meta{position:absolute;bottom:clamp(18px,3vw,40px);left:clamp(16px,3vw,44px);z-index:3;font:9px/1.6 Consolas,monospace;letter-spacing:.2em;opacity:.3;pointer-events:none}
+.signal-meta span{padding:4px 8px;background:#070a0c9c}
+.signal-roll{position:absolute;inset:0;z-index:1;background:#171b19;overflow:hidden;will-change:filter}
+.signal-picture{position:absolute;inset:0;overflow:hidden;will-change:transform}
+#signal-intro .signal-picture .main-viewport,#signal-intro .signal-picture .page-edge{visibility:visible}
+#signal-intro .signal-picture *,html.signal-settled main,html.signal-settled .card,html.signal-settled .backdrop{animation:none!important}
+@media(max-width:480px){.signal-meta{font-size:8px;letter-spacing:.08em}}
+.signal-filter-defs{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none}
+</style>
+<script>
+document.documentElement.classList.add('glitch-pending');
+window.signalFailsafe=setTimeout(function(){document.documentElement.classList.remove('glitch-pending');var intro=document.getElementById('signal-intro');if(intro)intro.hidden=true;var view=document.querySelector('.main-viewport');if(view){view.inert=false;view.removeAttribute('aria-hidden')}},5000);
+</script>
 </head>
 <body>
+<svg class="signal-filter-defs" aria-hidden="true"><defs><filter id="signal-repair" x="-20%" y="0" width="140%" height="100%" color-interpolation-filters="sRGB"><feImage id="signal-repair-map" x="0" y="0" width="100%" height="100%" preserveAspectRatio="none" result="repair-map"/><feDisplacementMap id="signal-displace" in="SourceGraphic" in2="repair-map" scale="0" xChannelSelector="R" yChannelSelector="G" result="warped"/><feColorMatrix in="warped" type="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="red"/><feOffset id="signal-chroma-red" in="red" dx="0" dy="0" result="red-shift"/><feColorMatrix in="warped" type="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 1 0" result="cyan"/><feOffset id="signal-chroma-blue" in="cyan" dx="0" dy="0" result="cyan-shift"/><feBlend in="red-shift" in2="cyan-shift" mode="screen"/></filter></defs></svg>
+<section id="signal-intro" aria-label="故障開場動畫">
+<canvas aria-hidden="true"></canvas>
+<div class="signal-meta" aria-hidden="true"><span>ZEONMACHA / ARCHIVE<br>BOOT SEQUENCE — 001</span></div>
+</section>
+
 <div class="backdrop" aria-hidden="true"></div><div class="grain" aria-hidden="true"></div>
 <div class="page-edge edge-top" aria-hidden="true"><svg viewBox="0 0 1440 30" preserveAspectRatio="none"><defs><clipPath id="edge-stripe-trim" clipPathUnits="userSpaceOnUse"><rect x="-10000" y="-10000" width="20000" height="10017"></rect></clipPath></defs><path class="edge-line" d="M0 17H90L102 9H300L313 17H687M753 17H1100L1112 23H1254L1267 17H1440M0 23H84L99 14H295M1140 27H1257L1273 21H1440"></path><path class="edge-plate" d="M104 7H271L279 13H97ZM1167 18H1264L1256 25H1175Z"></path><path class="edge-detail" d="M313 16H1100V18H313Z M296 -34H304L334 18H326Z M318 -34H326L356 18H348Z M340 -34H348L378 18H370Z M362 -34H370L400 18H392Z M384 -34H392L422 18H414Z"></path><path class="edge-line" d="M687 17H753"></path></svg></div><div class="page-edge edge-bottom" aria-hidden="true"><svg viewBox="0 0 1440 30" preserveAspectRatio="none"><path class="edge-line" d="M0 17H90L102 9H300L313 17H687M753 17H1100L1112 23H1254L1267 17H1440M0 23H84L99 14H295M1140 27H1257L1273 21H1440"></path><path class="edge-plate" d="M104 7H271L279 13H97ZM1167 18H1264L1256 25H1175Z"></path><path class="edge-detail" d="M313 16H1100V18H313Z M296 -34H304L334 18H326Z M318 -34H326L356 18H348Z M340 -34H348L378 18H370Z M362 -34H370L400 18H392Z M384 -34H392L422 18H414Z"></path><path class="edge-line" d="M687 17H753"></path></svg></div>
 <div class="main-viewport"><main aria-label="ZeonMacha・Home">
@@ -186,4 +213,414 @@ if(location.protocol==='file:'){const homeEditorLoader=document.createElement('s
 
 
 
-<script id="home-tuning-data" type="application/json">{"version":1,"groups":{"outline":{"shared":{"props":{"width":1.3},"paths":{}},"instances":{}},"inner":{"shared":{"props":{"width":1.2,"cap":"square","join":"bevel"},"paths":{}},"instances":{}},"plate":{"shared":{"props":{"x":-1,"y":0},"paths":{}},"instances":{}},"edgeDetail":{"shared":{"props":{"width":2,"stroke":"#53f6e1"},"paths":{}},"instances":{}},"edgeLine":{"shared":{"props":{"width":2,"dash":"none","sy":2,"sx":1,"y":0},"paths":{}},"instances":{}},"edgePlate":{"shared":{"props":{"width":2,"stroke":"#53f6e1","y":-5,"sx":0.99,"sy":1.31,"x":5},"paths":{}},"instances":{}},"ticks":{"shared":{"props":{"width":0,"stroke":"#53f6e1","sx":1.47,"x":-8,"sy":0.82,"y":1},"paths":{}},"instances":{}},"connector":{"shared":{"props":{"x":0},"paths":{}},"instances":{}}}}</script></body></html>
+<script id="home-tuning-data" type="application/json">{"version":1,"groups":{"outline":{"shared":{"props":{"width":1.3},"paths":{}},"instances":{}},"inner":{"shared":{"props":{"width":1.2,"cap":"square","join":"bevel"},"paths":{}},"instances":{}},"plate":{"shared":{"props":{"x":-1,"y":0},"paths":{}},"instances":{}},"edgeDetail":{"shared":{"props":{"width":2,"stroke":"#53f6e1"},"paths":{}},"instances":{}},"edgeLine":{"shared":{"props":{"width":2,"dash":"none","sy":2,"sx":1,"y":0},"paths":{}},"instances":{}},"edgePlate":{"shared":{"props":{"width":2,"stroke":"#53f6e1","y":-5,"sx":0.99,"sy":1.31,"x":5},"paths":{}},"instances":{}},"ticks":{"shared":{"props":{"width":0,"stroke":"#53f6e1","sx":1.47,"x":-8,"sy":0.82,"y":1},"paths":{}},"instances":{}},"connector":{"shared":{"props":{"x":0},"paths":{}},"instances":{}}}}</script><script id="home-signal-animation">
+(() => {
+  'use strict';
+  const root = document.documentElement;
+  const overlay = document.getElementById('signal-intro');
+  const canvas = overlay.querySelector('canvas');
+  const main = document.querySelector('main');
+  const viewport = document.querySelector('.main-viewport');
+  const ctx = canvas.getContext('2d');
+  const scene = document.createElement('canvas');
+  const ink = scene.getContext('2d', { alpha: false });
+  const noise = document.createElement('canvas');
+  noise.width = 240; noise.height = 150;
+  const grain = noise.getContext('2d');
+  const pixels = grain.createImageData(240, 150);
+  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const duration = 2390;
+  const pauseAt = 1670;
+  const handoff = 1870;
+  const cadence = 40;
+  // Excerpts of this page's own markup and styles, shown as inert terminal text.
+  const outline = (document.querySelector('.frame-outline')?.getAttribute('d') || '').slice(0, 72);
+  const pageCode = [
+    'ZEONMACHA ARCHIVE // BOOT SEQUENCE ROOT 001',
+    '<nav class="cards" aria-label="Archive"><a class="card" data-key="matter" href="../github-pages/at2_matter.html">',
+    '<path class="frame-outline" d="' + outline + '"/>',
+    '<path class="frame-shadow" d="M1 24V10L10 1H45L52 7H194L204 1H213L223 11V271"/>',
+    ':root { --cyan:#53f6e1; --card-width:clamp(150px,15vw,224px); --gap:8px; --rail:calc(4 * var(--card-width) + 3 * var(--gap)); }',
+    '@keyframes page-in { from { opacity:0; transform:translateY(12px) } to { opacity:1; transform:translateY(0) } }',
+    '@keyframes card-in { from { opacity:0; translate:0 15px } to { opacity:1; translate:0 0 } }',
+    '.card.is-active .picture { clip-path:polygon(.45% 8%, 4.46% .33%, 99.55% 3.67%, 99.55% 90.33%, 14.73% 99.67%); }',
+    '.frame-outline { fill:none; stroke:var(--metal); stroke-width:1.3; vector-effect:non-scaling-stroke; }',
+    '.indicator { width:min(140px, var(--card-width)); filter:drop-shadow(0 0 4px #53f6e138); }',
+    '.page-edge { position:fixed; left:0; right:0; height:26px; pointer-events:none; }',
+    '.band { background:linear-gradient(90deg,#131314ac,#0b1013dc 45%,#0a1012d4); border-color:#53f6e122; }',
+    'const cards = [...document.querySelectorAll(".card")];',
+    'track.style.setProperty("--marker", String(offset)); card.classList.toggle("is-active");',
+    'requestAnimationFrame(loop); signal.restore({ frame:"HOME", buffer:"RESTORING", crc:"0x53F6E1" });',
+    'Addr : HOME.MATTER   Connecting......   D-1 : ready   status = "RESTORING FRAME BUFFER";'
+  ];
+  const codeBlocks = [
+    { source: pageCode.concat(pageCode).join('\n') },
+    { source: pageCode.slice(4).concat(pageCode.slice(2, 10)).join('\n') },
+    { source: pageCode.slice(12).concat(pageCode.slice(0, 6)).join('\n') }
+  ];
+  // Preserve the three code regions, with independent typography and arrival rhythms.
+  const codeLayout = [
+    { x: .016, y: .025, width: .419, height: .32, font: 11, family: 'Consolas, "Lucida Console", monospace', advance: .6, at: 0, step: .9, alpha: .65, color: '#d3e0e6', dim: '#79939f' },
+    { x: .625, y: .13, width: .35, height: .71, font: 18, family: '"Bahnschrift", "Arial Narrow", sans-serif', advance: .55, at: 190, step: 1.5, alpha: .48, color: '#9eb5d9', dim: '#6e819f' },
+    { x: .307, y: .57, width: .205, height: .39, font: 12, family: '"Courier New", monospace', advance: .6, at: 380, step: 2.8, alpha: .30, color: '#b1a18e', dim: '#82786f' }
+  ];
+  let w = 0, h = 0, frame = 0, start = 0, deadline = 0, running = false, released = false, lastTick = -1;
+  let seed = 1;
+  function rand() {
+    seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
+    return seed / 4294967296;
+  }
+  function size() {
+    w = innerWidth; h = innerHeight;
+    // Cap raster resolution for mobile GPUs while keeping text sharp.
+    const dpr = Math.min(devicePixelRatio || 1, 1.5, 1800 / w);
+    canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
+    scene.width = canvas.width; scene.height = canvas.height;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ink.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  function type(text, x, y, font, color = '#e1e5dc', align = 'left') {
+    ink.font = font; ink.fillStyle = color; ink.textAlign = align;
+    ink.fillText(text, x, y);
+  }
+  function pulse(t, a, b) {
+    return t < a || t > b ? 0 : Math.sin((t - a) / (b - a) * Math.PI);
+  }
+  function typedCount(length, elapsed, step) {
+    if (elapsed <= 0 || length <= 0) return 0;
+    return Math.min(length, Math.floor(elapsed / step));
+  }
+  function drawCode(ms, power, quiet) {
+    codeBlocks.forEach((block, index) => {
+      const layout = codeLayout[index];
+      const fontSize = layout.font * Math.max(.8, Math.min(1.08, w / 1440));
+      const lineHeight = fontSize * 1.28;
+      const blockWidth = w * layout.width;
+      const blockHeight = h * layout.height;
+      const x = w * layout.x;
+      const y = h * layout.y;
+      if (!quiet && ms < layout.at) return;
+      const elapsed = Math.max(0, ms - layout.at);
+      // The right channel arrives in packets; the other two have independent typewriter clocks.
+      const clock = index === 1 ? Math.floor(elapsed / 175) * 175 : elapsed;
+      const typed = quiet ? block.source.length : typedCount(block.source.length, clock, layout.step);
+      const chars = Math.max(4, Math.floor((blockWidth - 10) / (fontSize * layout.advance)));
+      const wrapped = [];
+      block.source.slice(0, typed).split('\n').forEach(line => {
+        if (!line.length) { wrapped.push(''); return; }
+        for (let i = 0; i < line.length; i += chars) wrapped.push(line.slice(i, i + chars));
+      });
+      const rows = Math.max(1, Math.floor((blockHeight - 8) / lineHeight));
+      const shown = wrapped.length > rows ? wrapped.slice(-rows) : wrapped;
+      const kick = quiet || index === 2 ? 0 : (rand() - .5) * power * (index === 1 ? 9 : 2);
+      ink.save();
+      ink.beginPath();
+      ink.rect(x, y, blockWidth, blockHeight);
+      ink.clip();
+      ink.translate(kick, 0);
+      ink.font = `${fontSize}px ${layout.family}`;
+      ink.textAlign = 'left';
+      ink.textBaseline = 'top';
+      shown.forEach((line, row) => {
+        const latest = row === shown.length - 1;
+        const rowY = y + 4 + row * lineHeight;
+        const underTitle = rowY > h * .30 && rowY < h * .69;
+        const packetBlink = index === 1 && elapsed % 175 < 45 ? .65 : 1;
+        ink.globalAlpha = layout.alpha * (latest ? 1 : .74) *
+          (underTitle ? .38 : 1) * (quiet ? 1 : packetBlink);
+        ink.fillStyle = latest ? layout.color : layout.dim;
+        ink.fillText(line, x + 4, y + 4 + row * lineHeight);
+      });
+      if (!quiet && index === 0 && typed < block.source.length && Math.floor(ms / 130) % 2 === 0) {
+        const last = shown.at(-1) || '';
+        ink.globalAlpha = layout.alpha;
+        ink.fillStyle = layout.color;
+        ink.fillRect(x + 4 + Math.min(chars, last.length) * fontSize * layout.advance,
+          y + 4 + Math.max(0, shown.length - 1) * lineHeight,
+          Math.max(5, fontSize * .48), fontSize * .9);
+      }
+      ink.restore();
+    });
+  }
+  function drawSignalWords(ms, quiet) {
+    const cues = [
+      [70, 490, .60, .11, '映像信号・復元中', 'ANALOG / DIGITAL'],
+      [460, 900, .05, .79, '同期信号を検出', 'SYNC SEARCH / 59.94'],
+      [880, 1320, .57, .85, '映像信号・復元中', 'FRAME BUFFER / REBUILD'],
+      [1290, 1710, .04, .22, '信号同期', 'CARRIER LOCKED'],
+      [1600, 1860, .55, .77, '映像信号・復元中', 'ANALOG / DIGITAL']
+    ];
+    if (quiet) return;
+    for (const [from, to, x, y, label, detail] of cues) {
+      if (ms < from || ms > to) continue;
+      const phase = ms - from;
+      const beat = Math.floor(phase / 40);
+      // Short dropouts continue throughout each burst, with hard position changes.
+      if ([2, 5, 9].includes(beat % 11)) continue;
+      ink.save();
+      const fontSize = Math.max(24, Math.min(62, w * .043, h * .09));
+      const labelFont = `600 ${fontSize}px "Yu Gothic", "Microsoft YaHei", sans-serif`;
+      const detailFont = `${Math.max(11, fontSize * .32)}px Consolas, monospace`;
+      ink.font = labelFont;
+      const labelWidth = ink.measureText(label).width;
+      ink.font = detailFont;
+      const rightLimit = w - Math.max(labelWidth, ink.measureText(detail).width) - 14;
+      const jumps = [0, .10, -.035, .065, -.09];
+      const px = Math.max(14, Math.min(w * (x + jumps[beat % 5]), rightLimit));
+      const py = Math.max(fontSize + 8, Math.min(h - fontSize * .6 - 12, h * y + [0, -16, 20, -6][beat % 4]));
+      ink.globalAlpha = .08;
+      type(label, px - 9, py + 3, labelFont, '#9c9390');
+      ink.globalAlpha = [.42, .26, .35, .30][beat % 4];
+      type(label, px, py, labelFont, '#a4aeb4');
+      // Offset only a narrow slice, keeping the rest of the lettering readable.
+      ink.save();
+      ink.beginPath(); ink.rect(0, py - fontSize * .46, w, fontSize * .15); ink.clip();
+      ink.globalAlpha = .32;
+      type(label, px + (beat % 2 ? 17 : -13), py, labelFont, '#90a4b1');
+      ink.restore();
+      ink.globalAlpha = .35;
+      type(detail, px + (beat % 3) * 5, py + fontSize * .48, detailFont, '#a4acb0');
+      ink.restore();
+    }
+  }
+  function render(ms) {
+    // Three disturbance pulses, a short readable hold, then the analog handoff.
+    const t = Math.min(ms / pauseAt, 1) * 2.7;
+    seed = Math.floor(ms / cadence) + 71;
+    const tear = pulse(t, .33, .64) + pulse(t, 1.19, 1.46) + pulse(t, 2.12, 2.42);
+    const quiet = motion.matches;
+    const holding = ms >= pauseAt && ms < handoff;
+    const power = quiet || holding ? 0 : Math.min(1.15, tear * 1.2 + .08);
+    ink.globalAlpha = 1; ink.fillStyle = '#060708'; ink.fillRect(0, 0, w, h);
+    const halo = ink.createRadialGradient(w * .52, h * .48, 0, w * .52, h * .48, w * .66);
+    halo.addColorStop(0, '#182425'); halo.addColorStop(1, '#050507');
+    ink.fillStyle = halo; ink.fillRect(0, 0, w, h);
+    drawCode(ms, power, quiet);
+    drawSignalWords(ms, quiet);
+    const word = 'LOADING';
+    const fontSize = Math.min(w * .145, h * .21, 176);
+    const titleFont = `900 ${fontSize}px Impact, "Arial Black", sans-serif`;
+    const center = h * .49;
+    const enter = Math.min(1, ms / 60);
+    ink.globalAlpha = enter;
+    // Faint displaced exposure, followed by a sharp, slightly split foreground.
+    type(word, w / 2 + 12 * power, center + fontSize * .34,
+      titleFont, '#ff80652a', 'center');
+    type(word, w / 2 - 5 * power, center, titleFont, '#dee1d5', 'center');
+    if (power > .15) {
+      ink.globalCompositeOperation = 'screen';
+      ink.globalAlpha = power * .5;
+      type(word, w / 2 + 15 * power, center - 2 * power, titleFont, '#648bff', 'center');
+      ink.globalCompositeOperation = 'source-over'; ink.globalAlpha = enter;
+    }
+    const mono = `${Math.max(10, Math.min(14, w * .025))}px Consolas, "Yu Gothic", "Microsoft YaHei", monospace`;
+    type('再接続中  /  正在重構', w / 2, center + Math.min(46, h * .08), mono, '#a8b8b5', 'center');
+    const railWidth = Math.min(w * .61, 580);
+    const railX = (w - railWidth) / 2, railY = center + Math.min(86, h * .17);
+    ink.fillStyle = '#52645f'; ink.globalAlpha = .35;
+    ink.fillRect(railX, railY, railWidth, 1);
+    ink.globalAlpha = .8; ink.fillStyle = '#8ecbbd';
+    const progress = Math.min(1, t / 2.7);
+    ink.fillRect(railX, railY, railWidth * progress, 2);
+    ink.globalAlpha = .6;
+    type('RESTORING FRAME BUFFER',
+      railX, railY + 25, '10px Consolas, monospace', '#a8b8b5');
+    type(`${String(Math.floor(progress * 100)).padStart(3, '0')}%`,
+      railX + railWidth, railY + 25, '10px Consolas, monospace', '#a8b8b5', 'right');
+    ink.globalAlpha = 1;
+    // Thin film scratches and dust, regenerated at a capped 25 fps.
+    if (!quiet) {
+      for (let i = 0; i < 70; i++) {
+        ink.fillStyle = `rgba(207,218,207,${rand() * .11})`;
+        ink.fillRect(rand() * w, rand() * h, rand() * (power ? 85 : 15) + 1, rand() * 1.5 + .4);
+      }
+      for (let i = 0; i < 5; i++) {
+        ink.fillStyle = `rgba(210,214,189,${.025 + power * .12})`;
+        ink.fillRect(rand() * w, 0, rand() * 1.8 + .3, h);
+      }
+    }
+    ctx.globalAlpha = 1;
+    ctx.drawImage(scene, 0, 0, w, h);
+    // Displace real image strips: text, progress line and texture tear together.
+    if (power > .05) {
+      for (let i = 0; i < 22; i++) {
+        const y = rand() * h, height = rand() * h * .045 + 1;
+        const shift = (rand() - .5) * w * .25 * power;
+        ctx.drawImage(scene, 0, y / h * scene.height, scene.width,
+          Math.min(height, h - y) / h * scene.height, shift, y, w, Math.min(height, h - y));
+      }
+      ctx.fillStyle = `rgba(171,194,199,${power * .23})`;
+      ctx.fillRect(0, h * (.2 + rand() * .6), w, 1 + power * 3);
+      if (power > .55) {
+        // Dropouts and line stretching imitate damaged tape rather than a clean RGB offset.
+        for (let i = 0; i < 4; i++) {
+          const y = rand() * h;
+          ctx.fillStyle = `rgba(0,3,4,${.25 + rand() * .5})`;
+          ctx.fillRect(rand() * w * .2, y, w * (.4 + rand() * .6), 3 + rand() * h * .035);
+        }
+        const scanY = Math.floor(h * (.32 + rand() * .25));
+        ctx.globalAlpha = .3 * power;
+        ctx.drawImage(scene, 0, scanY / h * scene.height, scene.width, 1,
+          -w * .03 * power, scanY, w * 1.06, h * .045);
+        ctx.globalAlpha = 1;
+      }
+    }
+    if (!quiet) {
+      for (let i = 0; i < pixels.data.length; i += 4) {
+        const value = rand() * 255;
+        pixels.data[i] = value; pixels.data[i + 1] = value; pixels.data[i + 2] = value;
+        pixels.data[i + 3] = 255;
+      }
+      grain.putImageData(pixels, 0, 0);
+      ctx.globalAlpha = .045 + power * .14;
+      ctx.drawImage(noise, 0, 0, w, h); ctx.globalAlpha = 1;
+      ctx.fillStyle = '#00000028';
+      for (let y = 0; y < h; y += 4) ctx.fillRect(0, y, w, 1);
+    }
+    // The real styled home rolls beneath a transparent analog interference layer.
+    if (ms >= handoff) {
+      const assembly = Math.min(1, (ms - handoff) / (duration - handoff));
+      if (quiet) {
+        ctx.globalCompositeOperation = 'destination-out';
+        ctx.fillStyle = `rgba(0,0,0,${assembly})`; ctx.fillRect(0, 0, w, h);
+        ctx.globalCompositeOperation = 'source-over';
+      } else {
+        rollHome(assembly);
+      }
+    }
+  }
+  let homeRoll = null;
+  let homeFrames = [];
+  const repairMap = document.createElement('canvas');
+  repairMap.width = 2;
+  const repairInk = repairMap.getContext('2d');
+  function ensureHomeRoll() {
+    if (homeRoll) return;
+    homeRoll = document.createElement('div');
+    homeRoll.className = 'signal-roll';
+    homeRoll.inert = true;
+    homeRoll.setAttribute('aria-hidden', 'true');
+    homeFrames = [0, 1].map(index => {
+      const picture = document.createElement('div');
+      picture.className = 'signal-picture';
+      document.querySelectorAll('body > .backdrop, body > .grain, body > .page-edge, body > .main-viewport').forEach(source => {
+        const copy = source.cloneNode(true);
+        const ids = new Map();
+        copy.querySelectorAll('[id]').forEach(el => {
+          const old = el.id;
+          el.id = old + '-signal-' + index;
+          ids.set(old, el.id);
+        });
+        copy.querySelectorAll('*').forEach(el => {
+          for (const attr of [...el.attributes]) {
+            let value = attr.value;
+            ids.forEach((next, old) => { value = value.replaceAll('url(#' + old + ')', 'url(#' + next + ')'); });
+            if (value !== attr.value) el.setAttribute(attr.name, value);
+          }
+        });
+        picture.append(copy);
+      });
+      homeRoll.append(picture);
+      return picture;
+    });
+    overlay.prepend(homeRoll);
+  }
+  function rollHome(progress) {
+    ensureHomeRoll();
+    // Two fast field rolls, then a short sync lock; keep the damage strong until the tail.
+    const lock = Math.min(1, progress / .79);
+    const turns = 2 * (1 - Math.pow(1 - lock, 1.25));
+    const travel = turns % 1;
+    const settle = Math.max(0, Math.min(1, (progress - .64) / .36));
+    const strength = 1 - settle * settle * (3 - 2 * settle);
+    const field = Math.floor(progress * 16);
+    const exposure = [1.90, 1.40, 2.25, 1.65, 1.25][field % 5];
+    homeFrames[0].style.transform = `translateY(${-travel * h}px)`;
+    homeFrames[1].style.transform = `translateY(${(1 - travel) * h}px)`;
+    homeRoll.style.filter = `url(#signal-repair) saturate(${1 - strength * .32}) brightness(${1 + strength * (exposure - 1)}) contrast(${1 + strength * .45})`;
+    repairMap.height = Math.min(800, Math.ceil(h));
+    for (let y = 0; y < repairMap.height; y += 2) {
+      const kink = Math.abs(y / repairMap.height - ((progress * 2.7) % 1)) < .065 ? .35 : 0;
+      const wave = Math.sin(y * .042 + progress * 57) * .43 +
+        Math.sin(y * .19 - progress * 89) * .18 + (rand() - .5) * .32 + kink;
+      repairInk.fillStyle = `rgb(${Math.round(128 + wave * 126)},128,128)`;
+      repairInk.fillRect(0, y, 2, 2);
+    }
+    document.getElementById('signal-repair-map').setAttribute('href', repairMap.toDataURL());
+    document.getElementById('signal-displace').setAttribute('scale', String(Math.min(155, w * .12) * strength));
+    document.getElementById('signal-chroma-red').setAttribute('dx', String((field % 2 ? 8 : -6) * strength));
+    document.getElementById('signal-chroma-blue').setAttribute('dx', String(-4 * strength));
+    ctx.clearRect(0, 0, w, h);
+    ctx.globalAlpha = strength * .09;
+    ctx.drawImage(noise, 0, 0, w, h);
+    ctx.globalAlpha = 1;
+    ctx.globalCompositeOperation = 'screen';
+    ctx.fillStyle = `rgba(216,222,225,${strength * .055})`;
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = `rgba(0,0,0,${strength * .25})`;
+    for (let y = 0; y < h; y += 3) ctx.fillRect(0, y, w, 1);
+    // Broad drifting loss-of-sync band and a narrow retrace line, both fading on lock.
+    const bandY = h * (1 - (progress * 2.6) % 1);
+    const shade = ctx.createLinearGradient(0, bandY - h * .13, 0, bandY + h * .13);
+    shade.addColorStop(0, 'transparent');
+    shade.addColorStop(.45, `rgba(1,3,8,${strength * .65})`);
+    shade.addColorStop(.52, `rgba(207,215,222,${strength * .28})`);
+    shade.addColorStop(1, 'transparent');
+    ctx.fillStyle = shade;
+    ctx.fillRect(0, bandY - h * .13, w, h * .26);
+  }
+  function release() {
+    if (released) return;
+    released = true;
+    root.classList.add('signal-settled');
+    root.classList.remove('glitch-pending');
+    viewport.inert = false;
+    viewport.removeAttribute('aria-hidden');
+  }
+  function finish() {
+    if (!running) return;
+    running = false;
+    cancelAnimationFrame(frame); clearTimeout(deadline);
+    const wasFocused = overlay.contains(document.activeElement);
+    release(); overlay.hidden = true;
+    homeRoll?.remove(); homeRoll = null; homeFrames = [];
+    if (wasFocused) { main.setAttribute('tabindex', '-1'); main.focus({ preventScroll: true }); }
+  }
+  function loop(now) {
+    if (!running) return;
+    const ms = Math.min(now - start, duration);
+    const tick = Math.floor(ms / cadence);
+    if (tick !== lastTick) { render(ms); lastTick = tick; }
+    if (ms >= handoff) {
+      overlay.querySelector('.signal-meta').style.opacity = '0';
+      overlay.style.pointerEvents = 'none';
+    }
+    if (ms >= duration) finish(); else frame = requestAnimationFrame(loop);
+  }
+  function play() {
+    cancelAnimationFrame(frame); clearTimeout(deadline);
+    homeRoll?.remove(); homeRoll = null; homeFrames = [];
+    root.classList.remove('signal-settled');
+    running = true; released = false; lastTick = -1;
+    overlay.hidden = false; overlay.style.opacity = '1'; overlay.style.pointerEvents = '';
+    overlay.style.background = ''; overlay.querySelector('.signal-meta').style.opacity = '';
+    root.classList.add('glitch-pending');
+    viewport.inert = true; viewport.setAttribute('aria-hidden', 'true');
+    // Recreate the existing CSS animations in their paused initial state on replay.
+    const animated = document.querySelectorAll('main,.card,.backdrop');
+    animated.forEach(el => { el.style.animationName = 'none'; });
+    void main.offsetWidth;
+    animated.forEach(el => { el.style.removeProperty('animation-name'); });
+    size(); render(0); start = performance.now();
+    if (motion.matches) { finish(); return; }
+    deadline = setTimeout(finish, duration + 800);
+    frame = requestAnimationFrame(loop);
+  }
+  document.addEventListener('visibilitychange', () => { if (document.hidden && running) finish(); });
+  window.addEventListener('resize', () => { if (running) { size(); lastTick = -1; } });
+  clearTimeout(window.signalFailsafe);
+  if (!ctx || !ink || !grain) { root.classList.remove('glitch-pending'); overlay.hidden = true; return; }
+  play();
+})();
+</script></body></html>
