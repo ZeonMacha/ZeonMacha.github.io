@@ -134,7 +134,7 @@ html.glitch-pending body{overflow:hidden}
 #signal-intro{position:fixed;inset:0;z-index:1000;background:#060708;overflow:hidden;color:#e8eeeb;isolation:isolate}
 #signal-intro[hidden]{display:none}
 #signal-intro canvas{position:relative;z-index:2;display:block;width:100%;height:100%}
-.signal-roll{position:absolute;inset:0;z-index:1;background:#171b19;overflow:hidden;will-change:filter}
+.signal-roll{position:absolute;inset:0;z-index:1;background:#171b19;overflow:hidden;contain:paint}
 .signal-picture{position:absolute;inset:0;overflow:hidden;will-change:transform}
 #signal-intro .signal-picture .main-viewport,#signal-intro .signal-picture .page-edge{visibility:visible}
 #signal-intro .signal-picture *,html.signal-settled main,html.signal-settled .card,html.signal-settled .backdrop{animation:none!important}
@@ -709,7 +709,9 @@ navigation.addEventListener('focusout',()=>queueMicrotask(()=>{if(!navigation.co
   const noise = document.createElement('canvas');
   noise.width = 240; noise.height = 150;
   const grain = noise.getContext('2d');
-  const pixels = grain.createImageData(240, 150);
+  const compact = matchMedia('(max-width: 760px), (pointer: coarse)').matches;
+  if (compact) { noise.width = 120; noise.height = 75; }
+  const pixels = grain?.createImageData(noise.width, noise.height);
   const motion = matchMedia('(prefers-reduced-motion: reduce)');
   const duration = 2390;
   const pauseAt = 1670;
@@ -755,7 +757,7 @@ navigation.addEventListener('focusout',()=>queueMicrotask(()=>{if(!navigation.co
   function size() {
     w = innerWidth; h = innerHeight;
     // Cap raster resolution for mobile GPUs while keeping text sharp.
-    const dpr = Math.min(devicePixelRatio || 1, 1.5, 1800 / w);
+    const dpr = Math.min(devicePixelRatio || 1, compact ? 1 : 1.5, 1800 / w, Math.sqrt((compact ? 650000 : 2000000) / (w * h)));
     canvas.width = Math.round(w * dpr); canvas.height = Math.round(h * dpr);
     scene.width = canvas.width; scene.height = canvas.height;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -897,6 +899,7 @@ navigation.addEventListener('focusout',()=>queueMicrotask(()=>{if(!navigation.co
     ink.restore();
   }
   function render(ms) {
+    ms = Math.max(0, Math.min(duration, ms));
     // Three disturbance pulses, a short readable hold, then the analog handoff.
     const t = Math.min(ms / pauseAt, 1) * 2.7;
     seed = Math.floor(ms / cadence) + 71;
@@ -962,7 +965,7 @@ navigation.addEventListener('focusout',()=>queueMicrotask(()=>{if(!navigation.co
     ink.globalAlpha = 1;
     // Thin film scratches and dust, regenerated at a capped 25 fps.
     if (!quiet) {
-      for (let i = 0; i < 70; i++) {
+      for (let i = 0; i < (compact ? 30 : 70); i++) {
         ink.fillStyle = `rgba(207,218,207,${rand() * .11})`;
         ink.fillRect(rand() * w, rand() * h, rand() * (power ? 85 : 15) + 1, rand() * 1.5 + .4);
       }
@@ -975,7 +978,7 @@ navigation.addEventListener('focusout',()=>queueMicrotask(()=>{if(!navigation.co
     ctx.drawImage(scene, 0, 0, w, h);
     // Displace real image strips: text, progress line and texture tear together.
     if (power > .05) {
-      for (let i = 0; i < 22; i++) {
+      for (let i = 0; i < (compact ? 9 : 22); i++) {
         const y = rand() * h, height = rand() * h * .045 + 1;
         const shift = (rand() - .5) * w * .25 * power;
         ctx.drawImage(scene, 0, y / h * scene.height, scene.width,
@@ -1066,16 +1069,27 @@ navigation.addEventListener('focusout',()=>queueMicrotask(()=>{if(!navigation.co
     // The final card's animationend starts the copy; timeout is an interruption fallback.
     entranceTimer = setTimeout(finishEntrance, entranceDuration + 160);
   }
-  const repairMap = document.createElement('canvas');
-  repairMap.width = 2;
-  const repairInk = repairMap.getContext('2d');
+  // Encode a single reusable displacement texture, never a new PNG per frame.
+  function prepareRepairMap() {
+    if (compact) return;
+    const map = document.createElement('canvas');
+    map.width = 2; map.height = 256;
+    const painter = map.getContext('2d');
+    if (!painter) return;
+    for (let y = 0; y < map.height; y += 2) {
+      const wave = Math.sin(y * .13) * .43 + Math.sin(y * .59) * .18;
+      painter.fillStyle = `rgb(${Math.round(128 + wave * 126)},128,128)`;
+      painter.fillRect(0, y, 2, 2);
+    }
+    document.getElementById('signal-repair-map').setAttribute('href', map.toDataURL());
+  }
   function ensureHomeRoll() {
     if (homeRoll) return;
     homeRoll = document.createElement('div');
     homeRoll.className = 'signal-roll';
     homeRoll.inert = true;
     homeRoll.setAttribute('aria-hidden', 'true');
-    homeFrames = [0, 1].map(index => {
+    homeFrames = (compact ? [0] : [0, 1]).map(index => {
       const picture = document.createElement('div');
       picture.className = 'signal-picture';
       document.querySelectorAll('body > .backdrop, body > .grain, body > .page-edge, body > .main-viewport').forEach(source => {
@@ -1112,21 +1126,18 @@ navigation.addEventListener('focusout',()=>queueMicrotask(()=>{if(!navigation.co
     homeRoll.querySelectorAll('.band,.arrow-band').forEach(el => { el.style.opacity = String(strength); });
     const field = Math.floor(progress * 16);
     const exposure = [1.90, 1.40, 2.25, 1.65, 1.25][field % 5];
-    homeFrames[0].style.transform = `translateY(${-travel * h}px)`;
-    homeFrames[1].style.transform = `translateY(${(1 - travel) * h}px)`;
-    homeRoll.style.filter = `url(#signal-repair) saturate(${1 - strength * .32}) brightness(${1 + strength * (exposure - 1)}) contrast(${1 + strength * .45})`;
-    repairMap.height = Math.min(800, Math.ceil(h));
-    for (let y = 0; y < repairMap.height; y += 2) {
-      const kink = Math.abs(y / repairMap.height - ((progress * 2.7) % 1)) < .065 ? .35 : 0;
-      const wave = Math.sin(y * .042 + progress * 57) * .43 +
-        Math.sin(y * .19 - progress * 89) * .18 + (rand() - .5) * .32 + kink;
-      repairInk.fillStyle = `rgb(${Math.round(128 + wave * 126)},128,128)`;
-      repairInk.fillRect(0, y, 2, 2);
+    if (compact) {
+      // One composited field on phones: short sync drift instead of two full-screen filters.
+      homeFrames[0].style.transform = `translate3d(0,${(1 - progress) * 28}px,0)`;
+      homeRoll.style.opacity = String(Math.min(1, progress * 4));
+    } else {
+      homeFrames[0].style.transform = `translate3d(0,${-travel * h}px,0)`;
+      homeFrames[1].style.transform = `translate3d(0,${(1 - travel) * h}px,0)`;
+      homeRoll.style.filter = `url(#signal-repair) saturate(${1 - strength * .32}) brightness(${1 + strength * (exposure - 1)}) contrast(${1 + strength * .45})`;
+      document.getElementById('signal-displace').setAttribute('scale', String(Math.min(155, w * .12) * strength));
+      document.getElementById('signal-chroma-red').setAttribute('dx', String((field % 2 ? 8 : -6) * strength));
+      document.getElementById('signal-chroma-blue').setAttribute('dx', String(-4 * strength));
     }
-    document.getElementById('signal-repair-map').setAttribute('href', repairMap.toDataURL());
-    document.getElementById('signal-displace').setAttribute('scale', String(Math.min(155, w * .12) * strength));
-    document.getElementById('signal-chroma-red').setAttribute('dx', String((field % 2 ? 8 : -6) * strength));
-    document.getElementById('signal-chroma-blue').setAttribute('dx', String(-4 * strength));
     ctx.clearRect(0, 0, w, h);
     ctx.globalAlpha = strength * .09;
     ctx.drawImage(noise, 0, 0, w, h);
@@ -1165,11 +1176,25 @@ navigation.addEventListener('focusout',()=>queueMicrotask(()=>{if(!navigation.co
     enterHome();
     if (wasFocused) { main.setAttribute('tabindex', '-1'); main.focus({ preventScroll: true }); }
   }
+  function settle() {
+    running = false;
+    cancelAnimationFrame(frame); clearTimeout(deadline);
+    clearTimeout(window.signalFailsafe);
+    release(); overlay.hidden = true;
+    homeRoll?.remove(); homeRoll = null; homeFrames = [];
+    finishEntrance(true);
+  }
   function loop(now) {
     if (!running) return;
-    const ms = Math.min(now - start, duration);
+    // rAF timestamps can precede performance.now() sampled during the same frame.
+    // Establish both ends of the clock from rAF, including after history navigation.
+    if (start === null) start = now;
+    const ms = Math.max(0, Math.min(now - start, duration));
     const tick = Math.floor(ms / cadence);
-    if (tick !== lastTick) { render(ms); lastTick = tick; }
+    if (tick !== lastTick) {
+      try { render(ms); lastTick = tick; }
+      catch (error) { console.error('Home intro rendering failed', error); settle(); return; }
+    }
     if (ms >= handoff) {
       overlay.style.pointerEvents = 'none';
     }
@@ -1191,24 +1216,38 @@ navigation.addEventListener('focusout',()=>queueMicrotask(()=>{if(!navigation.co
     animated.forEach(el => { el.style.animationName = 'none'; });
     void main.offsetWidth;
     animated.forEach(el => { el.style.removeProperty('animation-name'); });
-    size(); render(0); start = performance.now();
-    if (motion.matches) { finish(); return; }
-    deadline = setTimeout(finish, duration + 800);
+    start = null;
+    deadline = setTimeout(settle, duration + 1800);
+    size(); prepareRepairMap(); render(0);
     frame = requestAnimationFrame(loop);
   }
   document.addEventListener('visibilitychange', () => {
-    if (document.hidden) { if (running) finish(); finishEntrance(true); }
+    if (document.hidden) settle();
   });
+  // Save a fully usable page into bfcache, and repair restored pages defensively.
+  window.addEventListener('pagehide', settle);
+  window.addEventListener('pageshow', event => { if (event.persisted) settle(); });
   window.addEventListener('resize', () => {
-    if (running) { size(); lastTick = -1; }
-    else if (root.classList.contains('home-entering')) finishEntrance(true);
+    // A resized surface (rotation / mobile toolbar) must not restart or stretch a paused frame.
+    if (running || root.classList.contains('home-entering')) settle();
   });
-  motion.addEventListener('change', () => {
-    if (motion.matches) { if (running) finish(); finishEntrance(true); }
-  });
-  clearTimeout(window.signalFailsafe);
-  if (!ctx || !ink || !grain) { root.classList.remove('glitch-pending'); overlay.hidden = true; finishEntrance(true); return; }
-  play();
+  motion.addEventListener('change', () => { if (motion.matches) settle(); });
+  const navigation = performance.getEntriesByType('navigation')[0];
+  let sameSiteReturn = false;
+  try {
+    const from = new URL(document.referrer);
+    sameSiteReturn = from.origin === location.origin && from.pathname !== location.pathname;
+  } catch (_) { /* A direct visit has no referrer. */ }
+  if (!ctx || !ink || !grain || motion.matches || document.hidden ||
+      navigation?.type === 'back_forward' || (navigation?.type === 'navigate' && sameSiteReturn)) {
+    settle(); return;
+  }
+  try {
+    play();
+    clearTimeout(window.signalFailsafe);
+  } catch (error) {
+    console.error('Home intro initialization failed', error);
+    settle();
+  }
 })();
-
 </script></body></html>
