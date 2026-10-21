@@ -373,9 +373,16 @@ html.home-copy-revealing .home-intro:focus-within *{animation:none}
 /* Hairline divider between the label and the outbound links. */
 .home-links{gap:2px}
 .home-links:before{
-  content:"";width:1px;height:14px;flex:none;align-self:center;
-  background:linear-gradient(#53f6e100,#53f6e14d,#53f6e100);
-  margin-right:8px;
+  content:"";width:2px;height:22px;flex:none;align-self:flex-end;
+  background:linear-gradient(to bottom,#53f6e100,var(--cyan) 35%,var(--cyan-hi));
+  margin:0 8px 4px 0;opacity:.58;will-change:opacity;
+}
+html.signal-settled .home-links::before{
+  animation:home-divider-breathe 4.8s cubic-bezier(.37,0,.63,1) infinite both;
+}
+@keyframes home-divider-breathe{0%,100%{opacity:.58}50%{opacity:1}}
+@media(max-width:760px){
+  .home-links::before{height:20px;margin-bottom:3px}
 }
 .home-link{height:30px;width:30px}  /* glyph box matches the readout row */
 @media(max-width:760px){
@@ -506,29 +513,32 @@ html.signal-settled .main-viewport{
 /* ---------- 1. Idle presence ("the machine is watching") --------
    Nothing loops forever at full brightness — the page BREATHES. */
 
-/* A very slow scan sweep crosses the band every 14s. It is a 1px
-   mint hairline with a soft tail, traveling the rail like a radar
-   trace. Implemented as a band ::after so it clips to the rail. */
+/* A continuous compositor sweep; no compressed sprint or long frozen tail.
+   The browser samples transform/opacity at the display's refresh rate. */
 .band{position:relative;overflow:hidden}
 .band::after{
   content:"";position:absolute;top:0;bottom:0;left:0;width:120px;
   pointer-events:none;opacity:0;
   background:linear-gradient(90deg,transparent,#53f6e114 55%,#53f6e12e 92%,#b4fff166 99%,transparent);
-  transform:translateX(-140px);
+  transform:translate3d(-140px,0,0);
 }
-html.signal-settled .band::after{animation:band-scan 14s linear 6s infinite}
+html.signal-settled:not(.home-entering) .band::after{
+  animation:band-scan 10s linear infinite;
+  will-change:transform,opacity;
+}
 @keyframes band-scan{
-  0%{opacity:0;transform:translateX(-140px)}
-  3%{opacity:1}
-  14%{opacity:1;transform:translateX(calc(100vw + 40px))}
-  15%{opacity:0;transform:translateX(calc(100vw + 40px))}
-  100%{opacity:0;transform:translateX(calc(100vw + 40px))}
+  0%{opacity:0;transform:translate3d(-140px,0,0)}
+  8%,92%{opacity:1}
+  100%{opacity:0;transform:translate3d(calc(100vw + 40px),0,0)}
 }
 
-/* The indicator block breathes: opacity swell on the arrow itself,
-   deep enough to read at a glance (per request, more visible). */
-html.signal-settled .indicator{animation:indicator-breathe 4s ease-in-out 3.5s infinite}
-@keyframes indicator-breathe{0%,100%{opacity:.5}50%{opacity:1}}
+/* Start at the resting luminance; matching endpoints have no delayed jump.
+   Position and breathing remain independent compositor properties. */
+.indicator{opacity:.55;will-change:transform,opacity}
+html.signal-settled .indicator{
+  animation:indicator-breathe 4.8s cubic-bezier(.37,0,.63,1) infinite both;
+}
+@keyframes indicator-breathe{0%,100%{opacity:.55}50%{opacity:1}}
 
 /* Removed: scan-glitch on card images. The interference frames fought
    the artwork and the :has() free channels; the sweep alone carries
@@ -577,7 +587,9 @@ html.signal-settled .indicator{animation:indicator-breathe 4s ease-in-out 3.5s i
 /* ---------- Idle & selection reduced-motion -------------------- */
 @media(prefers-reduced-motion:reduce){
   html.signal-settled .band::after,
-  html.signal-settled .indicator{animation:none!important}
+  html.signal-settled .indicator,
+  html.signal-settled .home-links::before{animation:none!important;will-change:auto}
+  html.signal-settled .indicator,html.signal-settled .home-links::before{opacity:.85}
   .card.is-active .frame-outline,.card.is-active .frame-inner{animation:none!important;stroke-dasharray:none;stroke-dashoffset:0}
   .card.is-active .card-title span:last-child::after{animation:none!important;opacity:1}
 }
