@@ -513,23 +513,23 @@ html.signal-settled .main-viewport{
 /* ---------- 1. Idle presence ("the machine is watching") --------
    Nothing loops forever at full brightness — the page BREATHES. */
 
-/* A continuous compositor sweep; no compressed sprint or long frozen tail.
-   The browser samples transform/opacity at the display's refresh rate. */
+/* A very slow scan sweep crosses the band every 14s. It is a 1px
+   mint hairline with a soft tail, traveling the rail like a radar
+   trace. Implemented as a band ::after so it clips to the rail. */
 .band{position:relative;overflow:hidden}
 .band::after{
   content:"";position:absolute;top:0;bottom:0;left:0;width:120px;
   pointer-events:none;opacity:0;
   background:linear-gradient(90deg,transparent,#53f6e114 55%,#53f6e12e 92%,#b4fff166 99%,transparent);
-  transform:translate3d(-140px,0,0);
+  transform:translateX(-140px);
 }
-html.signal-settled:not(.home-entering) .band::after{
-  animation:band-scan 10s linear infinite;
-  will-change:transform,opacity;
-}
+html.signal-settled .band::after{animation:band-scan 14s linear 6s infinite}
 @keyframes band-scan{
-  0%{opacity:0;transform:translate3d(-140px,0,0)}
-  8%,92%{opacity:1}
-  100%{opacity:0;transform:translate3d(calc(100vw + 40px),0,0)}
+  0%{opacity:0;transform:translateX(-140px)}
+  3%{opacity:1}
+  14%{opacity:1;transform:translateX(calc(100vw + 40px))}
+  15%{opacity:0;transform:translateX(calc(100vw + 40px))}
+  100%{opacity:0;transform:translateX(calc(100vw + 40px))}
 }
 
 /* Start at the resting luminance; matching endpoints have no delayed jump.
