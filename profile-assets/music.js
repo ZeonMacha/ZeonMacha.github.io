@@ -60,7 +60,7 @@
 
   function refresh() {
     stopDrawing();
-    const playing = !audio.paused && !audio.ended && wanted > 0;
+    const playing = !audio.paused && !audio.ended && wanted > 0 && (!context || context.state === 'running');
     player.dataset.state = playing ? 'on' : 'off';
     if (!playing) {
       levels.fill(0);
@@ -90,7 +90,8 @@
   }
 
   async function startAudio() {
-    if (starting) return;
+    // A suspended AudioContext can leave resume() pending until a gesture.
+    // Retry inside that gesture even while an earlier attempt is still pending.
     const current = ++operation;
     starting = true;
     player.setAttribute('aria-busy', 'true');
@@ -120,7 +121,7 @@
       if (current !== operation) return;
       audio.pause();
       paintVolume();
-      status.textContent = '播放失败，请点击音量竖线重试。';
+      status.textContent = '点击页面或按键后开始播放音乐';
       refresh();
     } finally {
       if (current === operation) {
@@ -199,12 +200,9 @@
   const resumeOnGesture = () => {
     if (wanted && (audio.paused || (context && context.state !== 'running'))) startAudio();
   };
-  document.addEventListener('pointerup', resumeOnGesture);
-  document.addEventListener('keydown', resumeOnGesture);
-  if (wanted) {
-    setGain();
-    audio.play().then(() => { if (wanted) startAudio(); }).catch(() => {
-      if (wanted) status.textContent = '点击页面或按键后开始播放音乐';
-    });
+  for (const event of ['pointerdown', 'pointerup', 'touchend', 'click', 'keydown']) {
+    document.addEventListener(event, resumeOnGesture, { capture: true, passive: true });
   }
+  window.addEventListener('pageshow', resumeOnGesture);
+  if (wanted) startAudio();
 })();
