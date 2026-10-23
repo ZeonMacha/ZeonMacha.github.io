@@ -9,3 +9,15 @@ _local-originals/
 *.webp
 *.gif
 *.avif
+
+# Local authoring sources, tools and caches never belong in the published site.
+*.ttf
+*.otf
+**/_font-sources/
+**/_local-*/
+**/_editor-backups/
+**/__pycache__/
+*.pyc
+*.log
+*.tmp
+*.zip
