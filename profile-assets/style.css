@@ -602,8 +602,11 @@ h1 {
 .contact-review { margin-bottom: 20px; }
 .contact-review dl { margin: 14px 0 0; padding: 0 0 0 12px; border-left: 1px dashed var(--edge); }
 .contact-review dt { margin-top: 14px; }
+.contact-review dd + dt { margin-top: 18px; padding-top: 16px; border-top: 1px dashed var(--edge); }
 .contact-review dt .contact-question { margin: 0; }
-.contact-review dd { margin: 5px 0 0; font: 13px/1.7 var(--input-type); white-space: pre-wrap; overflow-wrap: anywhere; }
+.contact-review dd { display: flex; gap: 7px; margin: 8px 0 0; font: 13px/1.7 var(--input-type); white-space: pre-wrap; overflow-wrap: anywhere; }
+.contact-review dd > :last-child { min-width: 0; }
+.contact-answer + .contact-question { padding-top: 16px; border-top: 1px dashed var(--edge); }
 .contact-error .contact-cn, .contact-error .contact-en { color: #ffb9c2; }
 .contact-ok .contact-cn { color: #b5e4c5; }
 .contact-muted .contact-cn { color: var(--muted); }

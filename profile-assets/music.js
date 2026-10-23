@@ -22,7 +22,14 @@
     return ink;
   });
   let context, analyser, gain, bins, edges;
-  let frame = 0, previous = 0, operation = 0, starting = false, wanted = 0;
+  const volumeKey = 'profile-music-volume';
+  let initialStep = 4;
+  try {
+    const saved = localStorage.getItem(volumeKey);
+    if (saved !== null && /^[0-6]$/.test(saved)) initialStep = Number(saved);
+  } catch (_) { /* Storage may be unavailable; keep the default. */ }
+  volume.value = String(initialStep);
+  let frame = 0, previous = 0, operation = 0, starting = false, wanted = initialStep / 6;
 
   function stopDrawing() {
     cancelAnimationFrame(frame);
@@ -112,8 +119,6 @@
     } catch (error) {
       if (current !== operation) return;
       audio.pause();
-      wanted = 0;
-      volume.value = '0';
       paintVolume();
       status.textContent = '播放失败，请点击音量竖线重试。';
       refresh();
@@ -127,6 +132,7 @@
 
   function changeVolume() {
     wanted = Number(volume.value) / 6;
+    try { localStorage.setItem(volumeKey, volume.value); } catch (_) {}
     paintVolume();
     setGain();
     if (!wanted) {
@@ -180,8 +186,8 @@
   audio.addEventListener('ended', refresh);
   audio.addEventListener('waiting', stopDrawing);
   audio.addEventListener('error', () => {
-    volume.value = '0';
-    changeVolume();
+    audio.pause();
+    refresh();
     status.textContent = '音乐加载失败，请点击音量竖线重试。';
   });
   document.addEventListener('visibilitychange', refresh);
@@ -189,4 +195,16 @@
   window.addEventListener('pagehide', () => { ++operation; starting = false; audio.pause(); stopDrawing(); });
   paintVolume();
   refresh();
+  // A blocked autoplay keeps the chosen volume and retries on user interaction.
+  const resumeOnGesture = () => {
+    if (wanted && (audio.paused || (context && context.state !== 'running'))) startAudio();
+  };
+  document.addEventListener('pointerup', resumeOnGesture);
+  document.addEventListener('keydown', resumeOnGesture);
+  if (wanted) {
+    setGain();
+    audio.play().then(() => { if (wanted) startAudio(); }).catch(() => {
+      if (wanted) status.textContent = '点击页面或按键后开始播放音乐';
+    });
+  }
 })();

@@ -53,8 +53,14 @@ window.createProfileContact = function createProfileContact(host) {
         const dt = document.createElement('dt');
         dt.append(bilingual(field.label));
         const dd = document.createElement('dd');
-        if (record.values[field.name]) dd.textContent = record.values[field.name];
-        else dd.append(bilingual('contact-empty'));
+        const prefix = document.createElement('span');
+        prefix.className = 'contact-answer-prefix';
+        prefix.textContent = '> ';
+        prefix.setAttribute('aria-hidden', 'true');
+        const value = document.createElement('span');
+        if (record.values[field.name]) value.textContent = record.values[field.name];
+        else value.append(bilingual('contact-empty'));
+        dd.append(prefix, value);
         dl.append(dt, dd);
       }
       node.append(dl);
