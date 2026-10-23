@@ -36,6 +36,15 @@
   font-style: normal;
   font-display: swap;
 }
+/* 只补齐中文；没有 Courier New 的手机仍用系统等宽英文字体。 */
+@font-face {
+  font-family: 'Profile Mono CJK';
+  src: url('./huiwen-mincho.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+2E80-9FFF, U+F900-FAFF, U+FF00-FFEF;
+}
 
 :root {
   /* 配色 */
@@ -49,7 +58,8 @@
   --bar: #382e41;
 
   /* 字族 */
-  --mono: 'Courier New', monospace;
+  /* 英数沿用顶部编码的等宽字，中文固定回退到页面自带字体。 */
+  --mono: 'Courier New', 'Profile Mono CJK', monospace;
   --type: 'Huiwen Mincho', 'Profile Symbols', serif;
   --input-type: 'Source Han Sans SC', 'Source Han Sans CN', '思源黑体', 'Noto Sans CJK SC', 'Noto Sans SC', 'Microsoft YaHei', 'PingFang SC', sans-serif;
 }
@@ -62,6 +72,8 @@
 html {
   height: 100%;
   min-width: 280px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -124,8 +136,9 @@ a:focus-visible {
 .outside,
 .below {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
-  gap: 12px;
+  gap: 2px 12px;
   padding: 0 3px;
   flex: none;
   color: var(--muted);
@@ -133,11 +146,15 @@ a:focus-visible {
   letter-spacing: 1.5px;
 }
 
+.outside span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.outside span:last-child { margin-left: auto; white-space: nowrap; }
+
 .window {
   flex: 1;
+  min-width: 0;
   min-height: 0;
   display: grid;
-  grid-template-rows: 76px 32px minmax(0, 1fr) 22px;
+  grid-template-rows: minmax(76px, auto) auto minmax(0, 1fr) minmax(22px, auto);
   gap: 0;
   padding: 12px;
   border: 4px double var(--edge);
@@ -161,20 +178,26 @@ a:focus-visible {
 .heading-copy {
   flex: 1;
   min-width: 0;
+  container-type: inline-size;
 }
 
 .eyebrow {
   font: 10px/14px var(--mono);
   letter-spacing: 3px;
   color: var(--muted);
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 h1 {
   margin: 3px 0 0;
   font-size: 27px;
+  font-size: clamp(18px, 8cqi, 27px);
   line-height: 1.25;
   font-weight: 400;
+  word-break: keep-all;
   overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 /* 倒十字装饰 */
@@ -216,25 +239,29 @@ h1 {
    ========================================================== */
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  font: 10px/1 var(--mono);
+  gap: 0 12px;
+  padding: 2px 0;
+  font: 11px/1.5 var(--mono);
 }
 
 .toolbar button {
+  flex: none;
+  margin-left: auto;
   padding: 4px 8px;
   min-height: 28px;
   border: 2px solid transparent;
   background: none;
-  font: 11px var(--type);
-  letter-spacing: .06em;
+  font: inherit;
+  white-space: nowrap;
 }
 .toolbar button:hover {
   background: var(--bar);
 }
 
-.path { color: var(--muted); font-family: var(--mono), var(--type); overflow-wrap: anywhere; }
+.path { min-width: 0; color: var(--muted); overflow-wrap: anywhere; }
 
 /* 当前字符模式显示下划线；切换后由 app.js 同步 */
 #language [data-ui] {
@@ -741,8 +768,10 @@ h1 {
    ========================================================== */
 .status {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
+  gap: 0 8px;
   padding-top: 5px;
   font: 9px/14px var(--mono);
   letter-spacing: 1px;
@@ -866,11 +895,10 @@ h1 {
   }
   .window {
     padding: 8px;
-    grid-template-rows: 65px 29px minmax(0, 1fr) 20px;
+    grid-template-rows: minmax(65px, auto) auto minmax(0, 1fr) minmax(20px, auto);
   }
   .heading { padding: 7px 12px; gap: 12px; }
   .eyebrow { font-size: 9px; letter-spacing: 2px; }
-  h1 { font-size: 23px; }
   .columns { grid-template-columns: 150px minmax(0, 1fr); gap: 8px; }
   .identity-body { padding: 8px; }
   .name { font-size: 20px; }
@@ -891,17 +919,26 @@ h1 {
   .boot-progress { font-size: 10px; }
 }
 
-/* 手机竖屏：身份卡横向排在终端上方 */
-@media (max-width: 450px) {
+/* 竖屏使用可用高度，不再把桌面横窗缩在屏幕中央。 */
+@media (orientation: portrait) {
+  .workspace {
+    height: calc(100dvh - 32px);
+    min-height: 600px;
+    transform: none;
+  }
+}
+
+/* 窄屏和竖屏平板：身份卡横向排在终端上方。 */
+@media (max-width: 600px), (orientation: portrait) {
   .columns {
     grid-template-columns: minmax(0, 1fr);
     grid-template-rows: auto minmax(0, 1fr);
     gap: 9px;
   }
-  .identity { max-height: 240px; }
+  .identity { max-height: min(240px, 28dvh); }
   .identity-body {
     display: grid;
-    grid-template-columns: 96px minmax(0, 1fr);
+    grid-template-columns: clamp(76px, 22vw, 150px) minmax(0, 1fr);
     gap: 6px 10px;
     padding: 6px 10px;
     overflow: auto;
@@ -910,7 +947,7 @@ h1 {
   .portrait {
     height: 100%;
     min-height: 0;
-    max-height: 130px;
+    max-height: 160px;
     flex: none;
   }
   .identity-info { align-self: center; }
@@ -948,17 +985,16 @@ h1 {
   .workspace { transform: none; }
 }
 
-@media (max-height: 650px) and (min-width: 451px) {
+@media (max-height: 650px) and (min-width: 601px) and (orientation: landscape) {
   .workspace {
     height: calc(100dvh - 24px);
     gap: 5px;
   }
   .window {
     padding: 8px;
-    grid-template-rows: 59px 27px minmax(0, 1fr) 18px;
+    grid-template-rows: minmax(59px, auto) auto minmax(0, 1fr) minmax(18px, auto);
   }
   .heading { padding: 5px 14px; }
-  h1 { font-size: 23px; }
   .portrait { min-height: 50px; }
   .identity-body { padding: 7px 10px; }
   .identity-foot { display: none; }
@@ -970,13 +1006,13 @@ h1 {
   .cross { transform: scale(.8); }
 }
 
-@media (max-height: 600px) and (max-width: 450px) {
+@media (max-height: 600px) and (max-width: 600px) {
+  .workspace { min-height: 560px; }
   .window {
     padding: 6px;
-    grid-template-rows: 49px 25px minmax(0, 1fr) 17px;
+    grid-template-rows: minmax(49px, auto) auto minmax(0, 1fr) minmax(17px, auto);
   }
   .heading { padding: 4px 10px; }
-  .eyebrow { display: none; }
   .identity { max-height: 130px; }
   .identity:has(.ascii-player) { max-height: min(180px, 45dvh); }
   .identity dl { display: grid; }
@@ -990,7 +1026,7 @@ h1 {
   .command-menu { max-height: calc(100dvh - 160px); }
 }
 
-@media (max-height: 450px) and (min-width: 451px) {
+@media (max-height: 450px) and (min-width: 601px) and (orientation: landscape) {
   .identity-body {
     display: grid;
     grid-template-columns: 78px minmax(0, 1fr);
@@ -1014,6 +1050,7 @@ h1 {
 
 @media (pointer: coarse) {
   .identity-links a { min-height: 44px; }
+  .toolbar button { min-height: 44px; }
 }
 
 
