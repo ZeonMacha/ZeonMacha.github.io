@@ -20,7 +20,7 @@
     // 探测超时（毫秒）
     PROBE_TIMEOUT: 2200,
     // 逐字动画速度：每个字符间隔（毫秒）
-    TYPE_INTERVAL: 9
+    TYPE_INTERVAL: 5
   };
 
   // 用 UA / 平台信息推断系统名称

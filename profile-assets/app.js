@@ -21,6 +21,7 @@
   // ==========================================================
   // 1. 元素与基础状态
   // ==========================================================
+  const TYPE_INTERVAL = 16; // 每字符毫秒数；按经过时间推进，避免低帧率拖慢输出。
   const $ = id => document.getElementById(id);
   const input = $('command');
   const menu = $('command-menu');
@@ -430,12 +431,14 @@
 
     const total = targets.reduce((sum, target) => sum + target.chars.length, 0);
     let shown = 0;
-    let last = 0;
+    let start;
     function tick(now) {
       if (token !== generation) return;
-      if (now - last >= 32) {
-        reveal(job, ++shown);
-        last = now;
+      start ??= now;
+      const count = Math.min(total, Math.floor((now - start) / TYPE_INTERVAL) + 1);
+      if (count !== shown) {
+        shown = count;
+        reveal(job, shown);
         output.scrollTop = output.scrollHeight;
       }
       if (shown >= total) finishTyping(job);
