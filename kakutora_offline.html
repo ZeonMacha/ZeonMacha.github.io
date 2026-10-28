@@ -711,7 +711,7 @@ try{
  localStorage.removeItem(legacyKey);
 }catch{}
 function openingMessages(choice){
- return [...CHATS_JP[0].messages.slice(0,3),{text:choice==='CN'?'日语看不懂啦':'わかる',mine:true},{text:'そう。'},...(choice==='CN'?[{text:'では、中国語で。'}]:[])];
+ return [...CHATS_JP[0].messages.slice(0,3),{text:choice==='CN'?'日语看不懂啦':'出来る',mine:true},{text:'そう。'},...(choice==='CN'?[{text:'では、中国語で。'}]:[])];
 }
 if(languageChosen)openingTranscript=openingMessages(language);
 // Existing explicit language preferences also count as a completed first visit.
@@ -923,7 +923,7 @@ function appendLanguageChoice(){
  const caption=document.createElement('span');caption.className='choice-caption';
  const captionText=document.createElement('span');captionText.textContent='SELECT YOUR MIND';caption.append(captionText);
  const options=document.createElement('div');options.className='choice-options';
- [['JP','わかる','ja'],['CN','日语看不懂啦','zh-CN']].forEach(([value,text,lang])=>{
+ [['JP','出来る','ja'],['CN','日语看不懂啦','zh-CN']].forEach(([value,text,lang])=>{
   const button=document.createElement('button');button.type='button';button.lang=lang;button.dataset.choice=value;
   const label=document.createElement('span');label.textContent=text;button.append(label);
   button.addEventListener('click',()=>chooseLanguage(value,text));options.append(button);
