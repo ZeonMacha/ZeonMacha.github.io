@@ -46,7 +46,13 @@ window.PROFILE_CONTENT = {
   ],
   "projects": [
     {
-      "name": "Ar toиΣlιco2 ・ 亱會話癿查裱",
+      "name": "Ar toиΣlιco2 ・ 主線攻略",
+      "description": "≒主綫・自我領域與茵菲爾領域，整理翻譯也/／.ら",
+      "url": "https://zeonmacha.github.io/at2_walkthrough.html",
+      "role": ""
+    },
+    {
+      "name": "Ar toиΣlιco2 ・ 話題癿查裱",
       "description": "≒可篩選蕗線，進剫葆洊至本土也/／.ら",
       "url": "https://zeonmacha.github.io/at2_matter.html",
       "role": ""

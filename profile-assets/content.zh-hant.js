@@ -46,7 +46,13 @@ window.PROFILE_CONTENT_TRADITIONAL = {
   ],
   "projects": [
     {
-      "name": "Ar tonelico2 ・ 夜會話自查表",
+      "name": "Ar tonelico2 ・ 主線攻略",
+      "description": "主線、自我領域與茵菲爾領域攻略",
+      "url": "https://zeonmacha.github.io/at2_walkthrough.html",
+      "role": ""
+    },
+    {
+      "name": "Ar tonelico2 ・ 話題自查表",
       "description": "可篩選路線，進度保存至本地",
       "url": "https://zeonmacha.github.io/at2_matter.html",
       "role": ""
