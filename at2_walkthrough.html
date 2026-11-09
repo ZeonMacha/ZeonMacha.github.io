@@ -958,6 +958,13 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
 #cosmosphere-intro .cosmosphere-controls { margin: 18px 0 0; }
 </style>
 <style>.route-warning, .route-warning a, .route-choice::marker { color: #bf2424; font-weight: 700; }</style>
+  <style>
+.area-table { table-layout:fixed; }
+.area-table th:first-child { width:37%; }
+@media(max-width:760px) {
+  .area-table th:first-child { width:34%; }
+}
+</style>
 </head>
   <body id="top">
     <a class="skip" href="#main">跳到正文</a>
@@ -1369,18 +1376,54 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                               </ul>
                             </details>
                           </li>
+                          <li><a href="#phase2-cloche-content_1_6">孤独之镇</a></li>
+                          <li><a href="#phase2-cloche-prison">狱门释</a></li>
+                          <li><a href="#phase2-cloche-blackdog">智者的忧郁</a></li>
                           <li>
                             <details class="toc-branch">
-                              <summary><a href="#phase2-cloche-content_1_6">孤独之镇</a></summary>
+                              <summary><a href="#phase2-cloche-trick">玉石宝盒</a></summary>
                               <ul>
                                 <li><a href="#phase2-cloche-content_1_7">宝箱中的物品</a></li>
-                                <li><a href="#phase2-cloche-content_1_8"><span class="hero-name cloche">克萝洁</span> ・台词集</a></li>
-                                <li><a href="#phase2-cloche-content_1_9">可获得道具</a></li>
-                                <li><a href="#phase2-cloche-content_1_10">茵菲尔领域 Lv3・领域之门（250pts）</a></li>
                               </ul>
                             </details>
                           </li>
-                          <li><a href="#phase2-cloche-content_1_11">帝域</a></li>
+                          <li>
+                            <details class="toc-branch">
+                              <summary><a href="#phase2-cloche-moon">月遇阴云</a></summary>
+                              <ul>
+                                <li><a href="#phase2-cloche-pepen">佩佩恩台词集</a></li>
+                              </ul>
+                            </details>
+                          </li>
+                          <li><a href="#phase2-cloche-judge">审判与特赦</a></li>
+                          <li>
+                            <details class="toc-branch">
+                              <summary><a href="#phase2-cloche-sellout">爱渐友牙</a></summary>
+                              <ul>
+                                <li><a href="#phase2-cloche-content_1_8"><span class="hero-name cloche">克萝洁</span>・台词集</a></li>
+                              </ul>
+                            </details>
+                          </li>
+                          <li>
+                            <details class="toc-branch">
+                              <summary><a href="#phase2-cloche-desert">流星沙漠</a></summary>
+                              <ul>
+                                <li><a href="#phase2-cloche-content_1_9">可获得道具</a></li>
+                              </ul>
+                            </details>
+                          </li>
+                          <li><a href="#phase2-cloche-heaven">污天</a></li>
+                          <li><a href="#phase2-cloche-sweet">甘辛小路</a></li>
+                          <li><a href="#phase2-cloche-content_1_10">茵菲尔领域Lv3・领域之门（250pts）</a></li>
+                          <li>
+                            <details class="toc-branch">
+                              <summary><a href="#phase2-cloche-content_1_11">帝域</a></summary>
+                              <ul>
+                                <li><a href="#phase2-cloche-imperial-items">可获得道具</a></li>
+                                <li><a href="#phase2-cloche-imperial-enemies">出现的敌人</a></li>
+                              </ul>
+                            </details>
+                          </li>
                         </ul>
                       </details>
                     </li>
@@ -1408,7 +1451,14 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                               </ul>
                             </details>
                           </li>
-                          <li><a href="#phase2-cloche-content_1_21">约定之丘</a></li>
+                          <li>
+                            <details class="toc-branch">
+                              <summary><a href="#phase2-cloche-content_1_21">约定之丘</a></summary>
+                              <ul>
+                                <li><a href="#phase2-cloche-side"><span class="hero-name jakuri">蛇刳</span>加入之后</a></li>
+                              </ul>
+                            </details>
+                          </li>
                         </ul>
                       </details>
                     </li>
@@ -3315,7 +3365,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li>
                   深入丛云栈桥，前往指挥仪激活器
                   <ul>
-                    <li>暴走I．P．D．猫猫子的前卫与诗魔法都很强，建议暂时避开</li>
+                    <li>失控I．P．D．猫猫子的前卫与诗魔法都很强，建议暂时避开</li>
                   </ul>
                 </li>
                 <li>保存环右侧的门是指挥仪激活器的入口</li>
@@ -4062,7 +4112,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
               <h4 id="phase2-ruka-content_1_2">错乱村 <span id="phase2-ruka-pc40f4e1"></span></h4>
               <div>
                 <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">错乱村</th>
@@ -4071,12 +4121,16 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     </thead>
                     <tbody>
                       <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.4</td>
                       </tr>
                       <tr>
                         <th>说明</th>
-                        <td>治愈与安息之地</td>
+                        <td>治愈与放松之地</td>
                       </tr>
                     </tbody>
                   </table>
@@ -4137,7 +4191,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   魔大陆的店铺
                   <div>
                     <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                      <table>
+                      <table class="area-table">
                         <thead>
                           <tr>
                             <th scope="col">名称</th>
@@ -4180,6 +4234,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 </li>
               </ul>
               <h4 id="phase2-ruka-content_1_3">伪世界 <span id="phase2-ruka-yab95a53"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">伪世界</th>
+                        <th scope="col">Perjury</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.1</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>映出的森林之姿，是真是假</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>进入后触发事件</li>
                 <li>
@@ -4275,6 +4355,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 </li>
               </ul>
               <h4 id="phase2-ruka-content_1_8">月遇阴云 <span id="phase2-ruka-z1781503"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">月遇阴云</th>
+                        <th scope="col">Obstruction</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.1</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>世事并非易事的道理</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>进入后触发事件</li>
                 <li>
@@ -4457,6 +4563,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li><span class="hero-name cloche">克萝洁</span> Lv6・「<a href="at2_matter.html#cloche-37" rel="noopener noreferrer" target="_blank">想让它多吃点</a>」<span class="checklist-condition" data-matter-id="cloche-37">（在月遇阴云拾取（<span class="hero-name ruka">瑠珈</span>线））</span></li>
               </ul>
               <h4 id="phase2-ruka-content_1_11">审判与特赦 <span id="phase2-ruka-ibc72218"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">审判与特赦</th>
+                        <th scope="col">Judge and Amnesty</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.1</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>究竟是受刑者邪恶，还是执行者邪恶</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>
                   进入右侧的门，与房间内几位<span class="hero-name ruka">瑠珈</span>中最前面的<span class="hero-name ruka">瑠珈</span>交谈，事件开始
@@ -4469,11 +4601,11 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   挑战费用第一次500利夫，第二次起1000利夫
                   <ul>
                     <li>选项「挑战！」「不参加……」</li>
-                    <li>自我介绍时：左「艾娜」中央「安妮」右「雅雅」</li>
+                    <li>自我介绍时：左「埃娜」中央「安妮」右「雅雅」</li>
                     <li>
-                      如果钱不够，只能返回纵贯洞，<br/> 或从「月遇阴云」继续前进战斗赚钱…… 不过通常在那之前就会读档重来了
+                      如果钱不够，只能返回纵贯洞，<br/> 或从「月遇阴云」继续前进战斗赚钱
                       <ul>
-                        <li>其实……摆姿势时摔倒的那位一定是「安妮」。</li>
+                        <li>摆姿势时摔倒的那位一定是「安妮」。</li>
                       </ul>
                     </li>
                   </ul>
@@ -4563,6 +4695,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li>从世界地图前往「玉石宝盒」</li>
               </ul>
               <h4 id="phase2-ruka-content_1_14">玉石宝盒 <span id="phase2-ruka-y20ee8f0"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">玉石宝盒</th>
+                        <th scope="col">Trick or Treat</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.2</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>箱中所装，是爱还是背叛</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>进入后触发与<span class="hero-name jakuri">蛇刳</span>的事件</li>
                 <li>
@@ -4685,6 +4843,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li>返回现实，前往新出现的地图</li>
               </ul>
               <h4 id="phase2-ruka-content_1_18">污天 <span id="phase2-ruka-mde61806"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">污天</th>
+                        <th scope="col">Slummy Heaven</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.2</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>天空有时污秽而虚幻</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>进入后触发事件</li>
                 <li>
@@ -4714,6 +4898,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li><span class="hero-name cloche">克萝洁</span> Lv6・「<a href="at2_matter.html#cloche-42" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>很邋遢吗？</a>」<span class="checklist-condition" data-matter-id="cloche-42">（在污天拾取（<span class="hero-name ruka">瑠珈</span>线））</span></li>
               </ul>
               <h4 id="phase2-ruka-content_1_20">智者的忧郁 <span id="phase2-ruka-u73e3209"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">智者的忧郁</th>
+                        <th scope="col">Black Dog</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.2</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>知识之山几欲崩塌</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>
                   进入后触发说明事件
@@ -4785,6 +4995,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li>前往新出现的地图</li>
               </ul>
               <h4 id="phase2-ruka-content_1_23">流星沙漠 <span id="phase2-ruka-n50efa31"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">流星沙漠</th>
+                        <th scope="col">Shooting Desert</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.3</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>沙漠黄沙与宝石颗粒共存的梦想</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>
                   进入后触发事件
@@ -4887,6 +5123,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li><span class="hero-name cloche">克萝洁</span> Lv6-R・「<a href="at2_matter.html#cloche-47" rel="noopener noreferrer" target="_blank">光是沙漠这个词……</a>」<span class="checklist-condition" data-matter-id="cloche-47">（在流星沙漠拾取（<span class="hero-name ruka">瑠珈</span>线））</span></li>
               </ul>
               <h4 id="phase2-ruka-content_1_26">爱渐友牙 <span id="phase2-ruka-x458ea46"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">爱渐友牙</th>
+                        <th scope="col">Sinful Sellout</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.3</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>计谋是爱、背叛是爱</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>
                   进入后触发说明事件
@@ -4928,12 +5190,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li>
                   左侧深处房间
                   <ul>
-                    <li>
-                      「哎呀、我的狗。你这种家伙，吃点佩佩恩仙贝不就好了。」
-                      <ul>
-                        <li>这是<span class="hero-name cloche">克萝洁</span>线的事件 ……明明<span class="hero-name ruka">瑠珈</span>应该不在场</li>
-                      </ul>
-                    </li>
+                    <li>「哎呀、我的狗。你这种家伙，吃点佩佩恩仙贝不就好了。」</li>
                     <li>「噢，克罗亚！ 我当然是真正的<span class="hero-name ruka">瑠珈</span>！一定要选我啊！」</li>
                     <li>「无礼之徒！不要随便和余说话。你以为余是谁。余可是正统的御子啊！」</li>
                   </ul>
@@ -4952,7 +5209,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     <li>
                       「不要走！！对不起、我…… 我……想和克罗亚在一起……。」
                       <ul>
-                        <li>这是前作中让玩家为最终选择最为烦恼的那个人的台词</li>
+                        <li>经典台词XD</li>
                       </ul>
                     </li>
                   </ul>
@@ -5042,6 +5299,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li>前往新出现的地图</li>
               </ul>
               <h4 id="phase2-ruka-content_1_31">甘辛小路 <span id="phase2-ruka-h5811031"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">甘辛小路</th>
+                        <th scope="col">Sweet and Crop</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.4</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>世间的70%由辛辣构成</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>
                   进入后触发事件
@@ -5073,6 +5356,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li><span class="hero-name cloche">克萝洁</span> Lv6-R・「<a href="at2_matter.html#cloche-52" rel="noopener noreferrer" target="_blank">溶化吧！</a>」<span class="checklist-condition" data-matter-id="cloche-52">（在甘辛小路拾取（<span class="hero-name ruka">瑠珈</span>线））</span></li>
               </ul>
               <h4 id="phase2-ruka-content_1_33">狱门释 <span id="phase2-ruka-ibff3882"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">狱门释</th>
+                        <th scope="col">Prison</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.4</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>赐予鬼道与试炼的神之心意</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>进入后触发事件，这里大概是魔大陆最难的地图</li>
                 <li>
@@ -5147,6 +5456,32 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li>从世界地图前往帝域</li>
               </ul>
               <h4 id="phase2-ruka-content_1_38">帝域 <span id="phase2-ruka-vac36ed1"></span></h4>
+              <div>
+                <div aria-label="PHASE2-瑠珈线 攻略表格" class="table-wrap" role="region" tabindex="0">
+                  <table class="area-table">
+                    <thead>
+                      <tr>
+                        <th scope="col">帝域</th>
+                        <th scope="col">Imperial</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Luca-Trulyworth</td>
+                      </tr>
+                      <tr>
+                        <th>Layer of Spirit</th>
+                        <td>Level.4</td>
+                      </tr>
+                      <tr>
+                        <th>说明</th>
+                        <td>「被名为肋骨的牢笼保护的颤抖小鸟」</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
               <ul>
                 <li>进入后触发事件</li>
                 <li>如果尚未完成茵菲尔领域Lv3，入口会有屏障，被送回世界地图。</li>
@@ -5369,7 +5704,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   休息后，触发可以潜入<span class="hero-name jakuri">蛇刳</span>的事件
                   <ul>
                     <li>潜入条件要求<span class="hero-name cloche">克萝洁</span>与<span class="hero-name ruka">瑠珈</span>也同时在队</li>
-                    <li>不过，特意在两人不在时尝试潜入的话……</li>
+                    <li>不过，特意在两人不在时尝试潜入有特殊事件查看</li>
                   </ul>
                 </li>
                 <li>
@@ -5379,10 +5714,9 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   </ul>
                 </li>
                 <li>
-                  如果在<span class="hero-name ruka">瑠珈</span>潜入Lv5确定了本命，此时会发生告白事件
+                  如果潜入了<span class="hero-name ruka">瑠珈</span>Lv5并确定本命，此时会发生告白事件
                   <ul>
-                    <li>这种情况下<span class="hero-name ruka">瑠珈</span>结局已确定，无法再进入<span class="hero-name jakuri">蛇刳</span>、可可娜结局</li>
-                    <li>只要在Lv5选择进入<span class="hero-name ruka">瑠珈</span>结局的选项，之后随时可以观看该事件</li>
+                    <li>这时<span class="hero-name ruka">瑠珈</span>结局已确定，无法再进入<span class="hero-name jakuri">蛇刳</span>、可可娜结局</li>
                   </ul>
                 </li>
                 <li>
@@ -5424,9 +5758,9 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
               <p>PHASE3起，各地开始出现Lv9的I．P．D．，请注意（此时基本无法击败Lv9的I．P．D．）<br/> 此时可进行多种支线内容，统一列于PHASE3，此处省略</p>
               <h4 id="phase2-ruka-content_1_52">关于<span class="hero-name jakuri">蛇刳</span> <span id="phase2-ruka-paf362d8"></span></h4>
               <ul>
-                <li><span class="hero-name jakuri">蛇刳</span>离队次数少，能力也很不错</li>
+                <li><span class="hero-name jakuri">蛇刳</span>离队次数少，开局即装备毕业装</li>
                 <li>可以在艾纳药店、拉克夏克的邦贝尔坦、帕斯塔利亚武器店进行调合</li>
-                <li>刚加入时，与前卫的相性仅雷格利斯为bad，其他人均为normal<br/> （进入PHASE4后会变化）</li>
+                <li>刚加入时，仅与雷格利斯的相性为bad，其他人均为normal<br/> （PHASE4后会变化）</li>
                 <li>未参加战斗的RT无法获得DP<br/> 如果想潜入<span class="hero-name jakuri">蛇刳</span>，请将她编入后卫RT</li>
               </ul>
             </div>
@@ -5440,7 +5774,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
               <h4 id="phase2-cloche-content_1_2">孤独之镇 <span id="phase2-cloche-pc40f4e1"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">孤独之镇</th>
@@ -5458,7 +5792,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                       <tr>
                         <th>说明</th>
-                        <td>治愈与安息之地</td>
+                        <td>治愈与放松之地</td>
                       </tr>
                     </tbody>
                   </table>
@@ -5529,7 +5863,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   魔大陆的店铺
                   <div>
                     <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                      <table>
+                      <table class="area-table">
                         <thead>
                           <tr>
                             <th scope="col">名称</th>
@@ -5578,7 +5912,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
               <h4 id="phase2-cloche-content_1_3">伪世界 <span id="phase2-cloche-yab95a53"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">伪世界</th>
@@ -5586,6 +5920,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
                       <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.1</td>
@@ -5658,7 +5996,15 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     <li>茵菲尔领域的第一阶层指针【命定之地】开放</li>
                   </ul>
                 </li>
-                <li>详情参见「茵菲尔领域」</li>
+                <li>
+                  指针【命定之地】（50SP）
+                  <ul>
+                    <li>「关上窗户」→魔大陆追加「狱门释」。通关后获得『领域之钥：1B』</li>
+                    <li>「三个人溜出去约会」→魔大陆追加「智者的忧郁」。通关后获得『领域之钥：1C』</li>
+                    <li>若想体验另一选项，或把两张地图都走一遍，可在指针处使用道具店的「重置之护符」，从头重做该事件</li>
+                    <li>已经出现的地图会保留。每张地图都会掉落<a href="at2_matter.html" rel="noopener noreferrer" target="_blank">对话话题</a></li>
+                  </ul>
+                </li>
                 <li>指针开放后，自动进入茵菲尔领域</li>
                 <li>各个地点都<a href="at2_matter.html" rel="noopener noreferrer" target="_blank">对话话题</a>掉落着<a href="at2_matter.html" rel="noopener noreferrer" target="_blank">对话话题</a>，想要全部收集就需要全部走过。</li>
                 <li>
@@ -5668,17 +6014,11 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     <li><span class="hero-name ruka">瑠珈</span>&amp;<span class="hero-name cloche">克萝洁</span>・「<a href="at2_matter.html#sync-45" rel="noopener noreferrer" target="_blank">有点不妙吧？</a>」<span class="checklist-condition" data-matter-id="sync-45">（已保护的I．P．D．中，有10人以上尚未接受心理治疗）</span>已有10人以上I．P．D．尚未治疗。此前尚未获得的话，此处确认可以触发</li>
                     <li><span class="hero-name ruka">瑠珈</span>&amp;<span class="hero-name cloche">克萝洁</span>・「<a href="at2_matter.html#sync-38" rel="noopener noreferrer" target="_blank">好难受……</a>」<span class="checklist-condition" data-matter-id="sync-38">（入浴时LV提升7级以上）</span>放入6个未使用的二重斯诺晶体后触发。</li>
                   </ul>
-                </li>
-                <li>
-                  之后省略小游戏的重复说明。只是出现顺序不同，操作方法与<span class="hero-name ruka">瑠珈</span>线相同。
-                  <ul>
-                    <li>详情参见<a href="#phase2-ruka">PHASE2-<span class="hero-name ruka">瑠珈</span>线</a>部分。</li>
-                  </ul>
-                </li>
               </ul>
+              <h4 id="phase2-cloche-prison">狱门释 <span id="phase2-cloche-prison-mark"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">狱门释</th>
@@ -5686,6 +6026,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
                       <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.1</td>
@@ -5699,17 +6043,42 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 </div>
               </div>
               <ul>
-                <li>Boss：双翼 自天而来的使者x3</li>
+                <li>进入后触发事件。这里是魔大陆里最难走的一张图</li>
+                <li>
+                  每走几步就减少10HP。自天而来的使者在地图上徘徊，接触后进入战斗
+                  <ul>
+                    <li>可以打一两场杂兵，用蓝魔法把HP补回来再继续走</li>
+                    <li>与入口的<span class="hero-name cloche">克萝洁</span>？交谈，选「是」后 HP 会完全恢复。对深处的地图帮助不大，但总比没有强</li>
+                    <li>如果有恢复魔法治愈中提琴或煌辉铃，会轻松一些</li>
+                  </ul>
+                </li>
                 <li>
                   <a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>
                   <ul>
                     <li><span class="hero-name ruka">瑠珈</span> Lv4・「<a href="at2_matter.html#ruka-32" rel="noopener noreferrer" target="_blank">太不留情面了！！</a>」<span class="checklist-condition" data-matter-id="ruka-32">（<span class="hero-name cloche">克萝洁</span>线魔大陆　狱门释）</span>第3张地图的第3个宝箱（内容：仿制号角）前</li>
                   </ul>
                 </li>
+                <li>
+                  沿途宝箱
+                  <ul>
+                    <li>2000利夫</li>
+                    <li>吉牛奶</li>
+                    <li>黏黏苏打水×4</li>
+                    <li>仿制号角×3</li>
+                  </ul>
+                </li>
+                <li>
+                  最深处Boss战：双翼、自天而来的使者×3
+                  <ul>
+                    <li>走到门口时HP可能已经只剩1，进战前先用药恢复</li>
+                  </ul>
+                </li>
+                <li>通关后获得『领域之钥：1B』</li>
               </ul>
+              <h4 id="phase2-cloche-blackdog">智者的忧郁 <span id="phase2-cloche-blackdog-mark"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">智者的忧郁</th>
@@ -5717,6 +6086,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
                       <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.1</td>
@@ -5730,16 +6103,30 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 </div>
               </div>
               <ul>
+                <li>进入后触发说明。这是推书谜题，把书推到对应的书架前即可</li>
                 <li>
                   <a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>
                   <ul>
                     <li><span class="hero-name ruka">瑠珈</span> Lv4・「<a href="at2_matter.html#ruka-33" rel="noopener noreferrer" target="_blank">真是麻烦……</a>」<span class="checklist-condition" data-matter-id="ruka-33">（<span class="hero-name cloche">克萝洁</span>线魔大陆　智者的忧郁）</span>刚进入作业场的位置</li>
                   </ul>
                 </li>
+                <li>
+                  调查书本，会从当前调查的方向把它推动一格
+                  <ul>
+                    <li>与<span class="hero-name cloche">克萝洁</span>？交谈，选项是「……拜托您了。」「不用了」。选前者，书会回到初始位置</li>
+                    <li>也可以从右侧开始推，但会绕一点。先把中间的空位填上更稳</li>
+                    <li>1・先把碍事桌子右侧的书向里推，推到右起第2个书架前，再从右侧推这本书，放到中央书架前</li>
+                    <li>2・将靠近入口的右侧书本从前方向里推1次，再从左侧推2次，放到最右边的书架前</li>
+                    <li>3・将靠近入口的左侧书本从前方向里推1次，再从左侧推1次，放到右起第2个书架前</li>
+                    <li>4・最后把剩下的左侧书本从前方向里推，即可完成</li>
+                  </ul>
+                </li>
+                <li>书全部归位后触发事件，获得『领域之钥：1C』</li>
               </ul>
+              <h4 id="phase2-cloche-trick">玉石宝盒 <span id="phase2-cloche-trick-mark"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">玉石宝盒</th>
@@ -5747,6 +6134,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
                       <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.2</td>
@@ -5760,6 +6151,15 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 </div>
               </div>
               <ul>
+                <li>进入后触发与<span class="hero-name jakuri">蛇刳</span>的事件</li>
+                <li>
+                  自动走到深处，与<span class="hero-name cloche">克萝洁</span>？交谈，听取试炼说明
+                  <ul>
+                    <li>前面摆着大量宝箱，逐个打开即可，全部打开也没有问题</li>
+                    <li>部分宝箱里是敌人，固定为自天而来的使者×1、棒棒糖×1</li>
+                    <li>可以逃跑，逃跑后宝箱仍保持开启。想缩短逃跑所需时间，可以穿标准服装</li>
+                  </ul>
+                </li>
                 <li>
                   <a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>
                   <ul>
@@ -5767,12 +6167,12 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   </ul>
                 </li>
                 <li>
-                  装有敌人的宝箱，敌方固定为自天而来的使者x1、棒棒糖x1
+                  集齐五颗魔法宝珠后自动触发事件，获得『领域之钥：2A』，Lv1结束
                   <ul>
-                    <li>可以逃跑，逃跑后宝箱仍保持开启。想缩短逃跑所需时间，可以穿标准服装</li>
+                    <li>事件后仍可以回来捡漏，但此时已经开始随机遇敌</li>
                   </ul>
                 </li>
-                <li>箱中物品似乎与<span class="hero-name ruka">瑠珈</span>线的玉石宝盒不同，列表如下。</li>
+                <li>箱中物品如下。</li>
               </ul>
               <h5 id="phase2-cloche-content_1_7">宝箱中的物品 <span id="phase2-cloche-c950a44e"></span></h5>
               <ul>
@@ -5842,9 +6242,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   </ul>
                 </li>
               </ul>
+              <h4 id="phase2-cloche-moon">月遇阴云 <span id="phase2-cloche-moon-mark"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">月遇阴云</th>
@@ -5852,6 +6253,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
                       <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.2</td>
@@ -5865,17 +6270,186 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 </div>
               </div>
               <ul>
+                <li>进入后触发事件。把佩佩恩仙贝送到深处的<span class="hero-name cloche">克萝洁</span>？那里</li>
                 <li>
-                  <a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>
+                  从入口宝箱获得佩佩恩仙贝30枚，原先持有的数量会被没收
+                  <ul>
+                    <li>不领取就继续前进，会出现提示</li>
+                    <li>
+                      尝试离开入口，也会出现提示
+                      <ul>
+                        <li>事件完成前无法离开</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </li>
+                <li>靠近佩佩恩会被夺走佩佩恩仙贝，判定范围相当大</li>
+                <li>
+                  抵达深处<span class="hero-name cloche">克萝洁</span>？所在处时，剩余15枚以上即可完成
+                  <ul>
+                    <li>事件完成前，深处出口同样无法离开</li>
+                  </ul>
+                </li>
+                <li>向说着「作为努力至今的奖励……」的佩佩恩搭话，也会被夺走</li>
+                <li>
+                  右侧地图有佩佩恩仙贝×7，左侧有佩佩恩仙贝×5
+                  <ul>
+                    <li>领取后，即使失败重来，宝箱内容也不会恢复。也可以等试炼完成后再领取</li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>建议在试炼完成后再收集
                   <ul>
                     <li><span class="hero-name ruka">瑠珈</span> Lv5・「<a href="at2_matter.html#ruka-40" rel="noopener noreferrer" target="_blank">有点想吃一口……</a>」<span class="checklist-condition" data-matter-id="ruka-40">（<span class="hero-name cloche">克萝洁</span>线魔大陆　月遇阴云）</span></li>
                   </ul>
                 </li>
-                <li>佩佩恩的台词与被夺取数量均与<span class="hero-name ruka">瑠珈</span>线相同</li>
+                <li>
+                  交给<span class="hero-name cloche">克萝洁</span>？的数量不足时，会被送回入口重新开始
+                  <ul>
+                    <li>如果仍有剩余，也会被没收，再重新发给30枚</li>
+                  </ul>
+                </li>
+                <li>再次挑战时，已经夺取过仙贝的佩佩恩不会再次夺取。利用这一点，最多可以带走30＋7＋5＝42枚佩佩恩仙贝</li>
+                <li>
+                  成功后触发事件，获得『领域之钥：2C』
+                  <ul>
+                    <li>获得后会提示购买域心示位（已经买过也会发生）</li>
+                    <li>事件后佩佩恩与<span class="hero-name cloche">克萝洁</span>？全部消失。左右房间里装着佩佩恩仙贝的箱子不会消失，但已经领取的无法再领</li>
+                  </ul>
+                </li>
+                <li>此处完全不会发生战斗</li>
               </ul>
+              <h5 id="phase2-cloche-pepen">佩佩恩台词集 <span id="phase2-cloche-pepen-mark"></span></h5>
+              <ul>
+                <li>
+                  入口右侧的佩佩恩「拿着那么多也用不着𭊟！」减少1枚
+                  <ul>
+                    <li>被夺取后「再多给点佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  入口左侧的佩佩恩「把它交出来佩！」减少2枚
+                  <ul>
+                    <li>被夺取后「饥饿的佩佩恩 比野兽还可怕佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  上方的佩佩恩「好香𭊟」减少1枚
+                  <ul>
+                    <li>被夺取后「佩佩恩仙贝的头和尾巴，要从哪边先开始吃佩？」</li>
+                  </ul>
+                </li>
+                <li>其右侧两只佩佩恩中的左侧「这清淡的味道真是太棒了佩」减少2枚</li>
+                <li>
+                  两只佩佩恩中的右侧「你拿着也是暴殄天物佩！」减少3枚
+                  <ul>
+                    <li>被夺取后・左侧「这个形状也是极品佩！」</li>
+                    <li>被夺取后・右侧「还远远不够佩！」</li>
+                  </ul>
+                </li>
+                <li>
+                  藏在地图中央箱子后面的佩佩恩「佩佩恩仙贝，到手佩！」减少1枚
+                  <ul>
+                    <li>被夺取后「没有更多了吗佩？」</li>
+                  </ul>
+                </li>
+                <li>
+                  地图中央瓶子旁的佩佩恩「呜嘻嘻，抱歉啦♪」减少3枚
+                  <ul>
+                    <li>被夺取后「果然很好吃佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  右侧、两个欧邦呶后面的佩佩恩「虽然和你无冤无仇， 但这也是工作佩。 我就收下了佩」减少2枚
+                  <ul>
+                    <li>被夺取后「这个工作的时薪佩？佩佩恩仙贝5枚佩！」</li>
+                  </ul>
+                </li>
+                <li>
+                  右侧、下沿的佩佩恩「Me就收下它啦佩！」减少2枚
+                  <ul>
+                    <li>被夺取后「已经吃掉啦佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  左侧、下沿的佩佩恩「<span class="hero-name ruka">瑠珈</span>是我老婆佩！」减少1枚
+                  <ul>
+                    <li>被夺取后「我没法从<span class="hero-name ruka">瑠珈</span>和佩佩恩仙贝中做出选择佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  最右侧的佩佩恩「让人类吃佩佩恩仙贝太浪费了佩」减少1枚
+                  <ul>
+                    <li>被夺取后「明天也给我带过来佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  右侧、芭菲底部的佩佩恩「大意可是会要命的𭊟！要小心𭊟！」减少2枚
+                  <ul>
+                    <li>被夺取后「还不够成熟佩。要努力修行佩！」</li>
+                  </ul>
+                </li>
+                <li>
+                  左侧房间入口的玩具阴影中「有埋伏𭊟！」减少1枚
+                  <ul>
+                    <li>被夺取后「吃了好多佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  左侧、树根附近的佩佩恩「哦，You拿着好东西𭊟！」减少2枚
+                  <ul>
+                    <li>被夺取后「佩佩恩仙贝，从肚子开始吃味道会不一样佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  右侧、藏在点心后不易看见的佩佩恩「偷啊，偷啊， 尽情地偷佩——！」减少3枚
+                  <ul>
+                    <li>被夺取后「任务完成佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  其左侧的佩佩恩「为了佩佩恩仙贝，Me连恶魔都愿意当佩！」减少5枚
+                  <ul>
+                    <li>被夺取后「就算是恶魔，也不错佩……」</li>
+                  </ul>
+                </li>
+                <li>
+                  中央、芭菲后面的佩佩恩「连家里饿着肚子的妹妹的份 也一起拿走佩！」减少2枚
+                  <ul>
+                    <li>被夺取后「太好了佩！ 时隔三天的食物佩！」</li>
+                  </ul>
+                </li>
+                <li>
+                  出口附近右侧的佩佩恩「我无所不偷佩！」减少2枚
+                  <ul>
+                    <li>被夺取后「我对欧邦呶没兴趣佩」</li>
+                  </ul>
+                </li>
+                <li>
+                  向出口附近会显示蓝色气泡「作为努力至今的奖励 送你个礼物佩」的佩佩恩搭话<br/> 「呀—— 你真的上当了佩！」减少4枚
+                  <ul>
+                    <li>被夺取后逃到右边「骗你的佩」。切换地图后便会消失</li>
+                  </ul>
+                </li>
+                <li>左侧、对话话题附近的三只佩佩恩・右侧「趁现在……！ 佩佩恩风暴 攻击！」减少3枚</li>
+                <li>三只中的左侧，三只一起靠近「粗心大意佩！」减少4枚</li>
+                <li>
+                  三只中的上方，三只一起靠近「全部拿走了佩！」减少5枚
+                  <ul>
+                    <li>被夺取后两只消失，剩下的佩佩恩「太大意了佩！」</li>
+                  </ul>
+                </li>
+                <li>
+                  藏在出口左侧草丛中的佩佩恩「不可大意𭊟！」减少3枚
+                  <ul>
+                    <li>被夺取后「最后关头掉以轻心了佩」</li>
+                  </ul>
+                </li>
+              </ul>
+              <h4 id="phase2-cloche-judge">审判与特赦 <span id="phase2-cloche-judge-mark"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">审判与特赦</th>
@@ -5883,6 +6457,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
                       <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.2</td>
@@ -5897,20 +6475,41 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
               </div>
               <ul>
                 <li>
-                  <a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>
+                  进入右侧的门，与房间里站在最前面的<span class="hero-name cloche">克萝洁</span>交谈，事件开始
                   <ul>
                     <li>
-<span class="hero-name ruka">瑠珈</span> Lv5・「<a href="at2_matter.html#ruka-38" rel="noopener noreferrer" target="_blank">休息……？</a>」<span class="checklist-condition" data-matter-id="ruka-38">（<span class="hero-name cloche">克萝洁</span>线魔大陆　审判与特赦）</span>
+                      开始前先拾取<a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>
                       <ul>
-                        <li>顺带一提，摆姿势时举起拳头的那位一定是「安妮」</li>
+                        <li><span class="hero-name ruka">瑠珈</span> Lv5・「<a href="at2_matter.html#ruka-38" rel="noopener noreferrer" target="_blank">休息……？</a>」<span class="checklist-condition" data-matter-id="ruka-38">（<span class="hero-name cloche">克萝洁</span>线魔大陆　审判与特赦）</span></li>
                       </ul>
                     </li>
                   </ul>
                 </li>
+                <li>位置会被打乱。从其中找出「安妮」。看清摆姿势的动作，可以一次过</li>
+                <li>
+                  参加费第一次500利夫。猜错后再来，第二次起要1000利夫
+                  <ul>
+                    <li>选项「参加！」「不参加……」</li>
+                    <li>报上名字时依次是「埃娜」「安妮」「雅雅」</li>
+                    <li>打乱之后再搭话，三人会说「我叫埃娜」「我叫安妮」「我叫梅米」。要找的是安妮</li>
+                    <li>确认位置时的选项是「左！」「中！」「右！」</li>
+                    <li>钱不够的话，只能返回纵贯洞，或去已经可以战斗的地图赚钱。通常会直接读档重来</li>
+                    <li>摆姿势时举起拳头的那位一定是「安妮」</li>
+                  </ul>
+                </li>
+                <li>
+                  成功后获得『领域之钥：2B』
+                  <ul>
+                    <li>自动返回入口</li>
+                    <li>会提示购买域心示位（已经买过也会发生）</li>
+                    <li>事件后这里变成空地，但开始随机遇敌</li>
+                  </ul>
+                </li>
               </ul>
+              <h4 id="phase2-cloche-sellout">爱渐友牙 <span id="phase2-cloche-sellout-mark"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">爱渐友牙</th>
@@ -5918,6 +6517,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
                       <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.3</td>
@@ -5932,9 +6535,31 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
               </div>
               <ul>
                 <li>
+                  进入后触发说明
+                  <ul>
+                    <li>从中央、左侧深处、右侧深处房间的<span class="hero-name cloche">克萝洁</span>中，找出真正的<span class="hero-name cloche">克萝洁</span></li>
+                    <li>只能根据说话方式判断。先把每个人的话听完再选</li>
+                  </ul>
+                </li>
+                <li>
+                  确定后与入口的<span class="hero-name cloche">克萝洁</span>交谈，选项「知道了！」「还不知道……」
+                  <ul>
+                    <li>选中一位后再选「是」「否」</li>
+                    <li>指名之后不能再听台词</li>
+                    <li>答错需要支付500利夫</li>
+                  </ul>
+                </li>
+                <li>真正的是中央房间里说「贵安。很遗憾，我并不需要你。」的那位。各房间的全部台词见下方</li>
+                <li>
                   <a href="at2_matter.html#section-cloche" rel="noopener noreferrer" target="_blank"><span class="hero-name cloche">克萝洁</span>的对话话题</a>
                   <ul>
                     <li><span class="hero-name cloche">克萝洁</span> Lv5・「<a href="at2_matter.html#cloche-35" rel="noopener noreferrer" target="_blank">要是没选对……</a>」<span class="checklist-condition" data-matter-id="cloche-35">（在魔大陆（爱渐友牙）拾取（<span class="hero-name cloche">克萝洁</span>线））</span></li>
+                  </ul>
+                </li>
+                <li>
+                  完成后触发事件，获得『领域之钥：3A』。走「赤红之地」的「我必须去救她！」过来时，这一下同时完成Lv2
+                  <ul>
+                    <li>完成后这些<span class="hero-name cloche">克萝洁</span>会消失，场地变成一片空地</li>
                   </ul>
                 </li>
                 <li>
@@ -5976,9 +6601,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   </ul>
                 </li>
               </ul>
+              <h4 id="phase2-cloche-desert">流星沙漠 <span id="phase2-cloche-desert-mark"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">流星沙漠</th>
@@ -5986,6 +6612,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
                       <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.3</td>
@@ -6000,9 +6630,31 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
               </div>
               <ul>
                 <li>
+                  进入后触发事件。寻找埋在地下的「希望之星」。<span class="hero-name cloche">克萝洁</span>？口头说的是「闪耀之星」，试炼说明里的名字是「希望之星」，要找的就是这3颗。地下也有道具、金钱和敌人
+                  <ul>
+                    <li>挖到敌人时，会与自天而来的使者×1、棒棒糖×1战斗</li>
+                    <li>在出现「！」的位置按○调查。试炼完成前不会随机遇敌</li>
+                    <li>集齐3颗「希望之星」时会被送回入口并强制触发事件。想在不遇敌的时候把道具挖完，先别挖第三颗</li>
+                  </ul>
+                </li>
+                <li>
+                  星星所在位置
+                  <ul>
+                    <li>第一张地图右侧深处、星星堆前方附近</li>
+                    <li>左下地图左侧深处、星星堆前</li>
+                    <li>左上地图左侧深处、星星堆前方附近</li>
+                  </ul>
+                </li>
+                <li>
                   <a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>
                   <ul>
                     <li><span class="hero-name ruka">瑠珈</span> Lv5・「<a href="at2_matter.html#ruka-42" rel="noopener noreferrer" target="_blank">爱？　毅力？</a>」<span class="checklist-condition" data-matter-id="ruka-42">（<span class="hero-name cloche">克萝洁</span>线魔大陆　流星沙漠）</span></li>
+                  </ul>
+                </li>
+                <li>
+                  集齐3颗后触发事件，获得『领域之钥：3B』。走「托付后背」的「才没这回事！」过来时，这一下同时完成Lv2
+                  <ul>
+                    <li>如果在意遗漏，可以在事件后再挖。此时已经恢复随机遇敌</li>
                   </ul>
                 </li>
               </ul>
@@ -6061,9 +6713,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   </ul>
                 </li>
               </ul>
+              <h4 id="phase2-cloche-heaven">污天 <span id="phase2-cloche-heaven-mark"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">污天</th>
@@ -6072,8 +6725,12 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     </thead>
                     <tbody>
                       <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
+                      <tr>
                         <th>Layer of Spirit</th>
-                        <td>Level.3</td>
+                        <td>Level.4</td>
                       </tr>
                       <tr>
                         <th>说明</th>
@@ -6084,16 +6741,34 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 </div>
               </div>
               <ul>
+                <li>进入后触发事件</li>
+                <li>
+                  获得『火焰清扫机』，从左侧的门进入建筑
+                  <ul>
+                    <li>对着垃圾按教程里显示的按键喷射火球，把中央、左侧、右侧房间的垃圾全部烧掉即可完成</li>
+                    <li>前方不易看见的位置、物体阴影里也有垃圾，需要耐心清</li>
+                    <li>弹数不限，连射也快</li>
+                  </ul>
+                </li>
                 <li>
                   <a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>
                   <ul>
                     <li><span class="hero-name ruka">瑠珈</span> Lv6・「<a href="at2_matter.html#ruka-47" rel="noopener noreferrer" target="_blank">为什么浴池里……</a>」<span class="checklist-condition" data-matter-id="ruka-47">（<span class="hero-name cloche">克萝洁</span>线魔大陆　污天）</span>右侧房间的右侧深处，烧掉垃圾后出现</li>
                   </ul>
                 </li>
+                <li>
+                  烧光全部垃圾后触发事件，获得『领域之钥：3C』
+                  <ul>
+                    <li>事件完成后无法再使用『火焰清扫机』</li>
+                    <li>完成后才开始随机遇敌，此前不会发生战斗</li>
+                  </ul>
+                </li>
+                <li>完成后再次进入，垃圾会重新出现。从空隙穿过去之后，返回时可能被垃圾挡住而无法离开</li>
               </ul>
+              <h4 id="phase2-cloche-sweet">甘辛小路 <span id="phase2-cloche-sweet-mark"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">甘辛小路</th>
@@ -6102,8 +6777,12 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     </thead>
                     <tbody>
                       <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
+                      <tr>
                         <th>Layer of Spirit</th>
-                        <td>Level.3</td>
+                        <td>Level.4</td>
                       </tr>
                       <tr>
                         <th>说明</th>
@@ -6115,20 +6794,47 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
               </div>
               <ul>
                 <li>
+                  进入后，<span class="hero-name cloche">克萝洁</span>？突然提问：「我讨厌的食物是什么呢！」
+                  <ul>
+                    <li>选项「糖果」「菠萝」</li>
+                    <li>「糖果」是正确答案。她讨厌糖果，喜欢菠萝</li>
+                    <li>选「菠萝」会听到「答错了」，被送出去。重新进入即可</li>
+                  </ul>
+                </li>
+                <li>
+                  尽量少拿糖果，多收集菠萝，送到深处的<span class="hero-name cloche">克萝洁</span>？手里
+                  <ul>
+                    <li>不必把菠萝全部捡完</li>
+                    <li>不会发生战斗</li>
+                    <li>到终点时，菠萝只要比糖果多一个即可</li>
+                    <li>入口的<span class="hero-name cloche">克萝洁</span>？可以查看当前的糖果和菠萝数量</li>
+                  </ul>
+                </li>
+                <li>调查各处入口的招牌，可以从上方确认全景</li>
+                <li>
                   <a href="at2_matter.html#section-ruka" rel="noopener noreferrer" target="_blank"><span class="hero-name ruka">瑠珈</span>的对话话题</a>
                   <ul>
                     <li><span class="hero-name ruka">瑠珈</span> Lv6・「<a href="at2_matter.html#ruka-48" rel="noopener noreferrer" target="_blank">这实在是……</a>」<span class="checklist-condition" data-matter-id="ruka-48">（<span class="hero-name cloche">克萝洁</span>线魔大陆　甘辛小路）</span></li>
+                  </ul>
+                </li>
+                <li>
+                  穿过第2个房间后见到<span class="hero-name cloche">克萝洁</span>？。合格则触发事件，获得『领域之钥：3D』
+                  <ul>
+                    <li>完成后自动返回入口</li>
+                    <li>此时已恢复随机遇敌</li>
                   </ul>
                 </li>
               </ul>
               <h5 id="phase2-cloche-content_1_10">茵菲尔领域Lv3・领域之门（250pts） <span id="phase2-cloche-g11f4f6b"></span></h5>
               <ul>
                 <li>选项只有「你给我差不多得了！」</li>
+                <li>Lv3完成，学会合体诗魔法「冰瀑龙华」</li>
+                <li>此后再潜入会暂时无法推进。先完成帝域。其他阶层仍可前往</li>
               </ul>
               <h4 id="phase2-cloche-content_1_11">帝域 <span id="phase2-cloche-ua70cc7d"></span></h4>
               <div>
                 <div aria-label="PHASE2-克萝洁线 攻略表格" class="table-wrap" role="region" tabindex="0">
-                  <table>
+                  <table class="area-table">
                     <thead>
                       <tr>
                         <th scope="col">帝域</th>
@@ -6136,6 +6842,10 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </thead>
                     <tbody>
+                      <tr>
+                        <th>Continent</th>
+                        <td>Chroche-Latel-Pastalie</td>
+                      </tr>
                       <tr>
                         <th>Layer of Spirit</th>
                         <td>Level.4</td>
@@ -6149,60 +6859,84 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 </div>
               </div>
               <ul>
-                <li>沿路前进，在最深处触发事件战斗</li>
+                <li>进入后触发事件</li>
                 <li>
-                  如果尚未完成茵菲尔领域Lv3，门口会出现屏障，被送回世界地图。但再次进入时屏障会消失，可以进入。（只有<span class="hero-name cloche">克萝洁</span>线能进入？）不过在这种状态下，即使抵达最深处也不会触发事件。
+                  如果尚未完成茵菲尔领域Lv3，门口会出现屏障，被送回世界地图。再次进入时屏障会消失，人可以进去，但走到最深处也不会触发事件。先把Lv3的领域之门做完再来
+                </li>
+                <li>
+                  从门进入后向下前进
                   <ul>
-                    <li>详情参见<a href="#phase2-ruka">PHASE2-<span class="hero-name ruka">瑠珈</span>线</a>。构造、出现的敌人和可获得道具均相同。</li>
-                    <li>BGM为原声集的「躁动的心跳〜<span class="hero-name cloche">克萝洁</span>〜」，战斗中也固定播放，越向下前进歌声越响</li>
-                    <li>
-                      目前只有这里的「葫芦瓜」掉落「梦魇」
-                      <ul>
-                        <li>I．P．D．「那沙」的支持条件需要五个，建议在此收集。</li>
-                        <li>在此之前，别忘了先为「那沙」进行心理治疗。</li>
-                      </ul>
-                    </li>
+                    <li>地图移动和战斗都固定播放「躁动的心跳〜<span class="hero-name cloche">克萝洁</span>〜」。越往下，歌声越响</li>
+                    <li>敌人比魔大陆其他地点更强。可以在这里练习从蓝魔法切换到红魔法，以及雷普雷奇亚</li>
+                    <li>7F分成左右两条路。右侧通往最深处（8F），左侧用来收集8F的道具</li>
+                  </ul>
+                </li>
+                <li>
+                  「梦魇」掉落「葫芦瓜」。目前只有这里能拿到
+                  <ul>
+                    <li>I．P．D．「那沙」的支持条件需要五个，建议在此收集</li>
+                    <li>先给「那沙」做完心理治疗，再来刷</li>
                   </ul>
                 </li>
                 <li>
                   6F有保存环，休息并收集同步话题
                   <ul>
-                    <li><span class="hero-name ruka">瑠珈</span>&amp;<span class="hero-name cloche">克萝洁</span>・「<a href="at2_matter.html#sync-08" rel="noopener noreferrer" target="_blank">差不多该回去了吧？</a>」<span class="checklist-condition" data-matter-id="sync-08">（帝域（<span class="hero-name cloche">克萝洁</span>）事件后；PHASE2 <span class="hero-name cloche">克萝洁</span>线）</span><span class="hero-name cloche">克萝洁</span>线限定，帝域攻略开始〜心灵守护神战开始前期间限定</li>
+                    <li><span class="hero-name ruka">瑠珈</span>&amp;<span class="hero-name cloche">克萝洁</span>・「<a href="at2_matter.html#sync-08" rel="noopener noreferrer" target="_blank">差不多该回去了吧？</a>」<span class="checklist-condition" data-matter-id="sync-08">（帝域（<span class="hero-name cloche">克萝洁</span>）事件后；PHASE2 <span class="hero-name cloche">克萝洁</span>线）</span>只在帝域攻略开始到心灵守护神战开始之前出现</li>
                   </ul>
                 </li>
                 <li>
-                  最上层（8F）心灵守护神（参见怪物图鉴）
+                  最深处（8F）触发大地的心脏事件，接着是Boss战・心灵守护神
                   <ul>
-                    <li>负责翻译的是<span class="hero-name ruka">瑠珈</span>。</li>
-                    <li>
-                      攻略方法与<a href="#phase2-ruka">PHASE2-<span class="hero-name ruka">瑠珈</span>线</a>相同。
-                      <ul>
-                        <li>先选择蓝魔法，撑过敌人攻击后切换红魔法，在同一回合内释放即可</li>
-                        <li>「接待员乱舞」约2万％时，可造成约7500〜8000伤害。</li>
-                        <li>稀有：二重斯诺晶体：破坏之力 较稀有：二重斯诺晶体：神 普通：二重斯诺晶体：守护</li>
-                      </ul>
-                    </li>
-                  </ul>
-                </li>
-                <li>获胜后触发事件，离队的是<span class="hero-name cloche">克萝洁</span>？。遇敌量表也会恢复。</li>
-                <li>从6F保存环前方的升降机返回5F时触发事件，自动离开。</li>
-                <li>
-                  Boss战：ELMA−DSRX（参见怪物图鉴）
-                  <ul>
-                    <li>
-                      「接待员乱舞」8400%时造成2000左右伤害，敌人相当坚硬。
-                      <ul>
-                        <li>较稀有：二重斯诺晶体：爱 普通：二重斯诺晶体：无知的憎恶</li>
-                      </ul>
-                    </li>
+                    <li>负责翻译的是<span class="hero-name ruka">瑠珈</span></li>
+                    <li>「大脑疲乏」会把爆发槽降到0%。不必硬靠红魔法开场。先用蓝魔法撑过攻击，再在同一回合切换红魔法释放</li>
+                    <li>「接待员乱舞」约2万％时，可造成约7500〜8000伤害</li>
+                    <li>掉落：稀有 二重斯诺晶体『破坏之力』；较稀有 二重斯诺晶体『神』；普通 二重斯诺晶体『守护』</li>
                   </ul>
                 </li>
                 <li>
-                  战斗后触发事件，自动前往大钟堂母舰
+                  获胜后触发事件，<span class="hero-name cloche">克萝洁</span>？离队。队伍里的蕾瓦蒂尔只剩<span class="hero-name ruka">瑠珈</span>，遇敌量表重新填满
                   <ul>
-                    <li>魔大陆消失，魔大陆限定的<a href="at2_matter.html" rel="noopener noreferrer" target="_blank">对话话题</a>也无法再收集。</li>
+                    <li>之后每次返回这个房间，遇敌量表都会再次填满</li>
                   </ul>
                 </li>
+                <li>回到6F保存环前方的升降机，降到5F时触发事件，自动离开</li>
+                <li>
+                  Boss战・ELMA−DSRX
+                  <ul>
+                    <li>攻击次数多，出手时机也难抓。身体很硬，「接待员乱舞」8400%时大约只造成2000伤害</li>
+                    <li>掉落：较稀有 二重斯诺晶体『爱』；普通 二重斯诺晶体『无知的憎恶』</li>
+                  </ul>
+                </li>
+                <li>
+                  战斗后是返航与迎接的演出，并与切斯塔、塔尔加纳交谈，然后自动登上大钟堂母舰
+                  <ul>
+                    <li>魔大陆消失，魔大陆限定的<a href="at2_matter.html" rel="noopener noreferrer" target="_blank">对话话题</a>也无法再收集</li>
+                  </ul>
+                </li>
+              </ul>
+              <h5 id="phase2-cloche-imperial-items">可获得道具 <span id="phase2-cloche-imperial-items-mark"></span></h5>
+              <ul>
+                <li>2F→上：能量矛、葫芦瓜×2</li>
+                <li>3F：水晶符文</li>
+                <li>3F→左上：烤肉、烤肉</li>
+                <li>4F→左上：彼岸呼唤之水×3</li>
+                <li>4F→右上：可可草种×2、500利夫</li>
+                <li>5F：陆浮石、帕斯塔利亚大衣</li>
+                <li>5F→上：天空板、1500利夫</li>
+                <li>6F：1200利夫、正午月</li>
+                <li>8F左：忍耐按钮×2</li>
+                <li>8F左→上：700利夫</li>
+              </ul>
+              <h5 id="phase2-cloche-imperial-enemies">出现的敌人 <span id="phase2-cloche-imperial-enemies-mark"></span></h5>
+              <ul>
+                <li>双翼</li>
+                <li>死灵法师</li>
+                <li>巧克力波姆</li>
+                <li>零式</li>
+                <li>棒棒糖</li>
+                <li>梦魇</li>
+                <li>Boss 心灵守护神</li>
+                <li>Boss ELMA－DSRX</li>
               </ul>
               <h4 class="major" id="phase2-cloche-content_1_12">魔大陆消失 <span id="phase2-cloche-n93d2f58"></span></h4>
               <ul>
@@ -6288,7 +7022,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     <li>
                       从岔路右侧房间进入上方房间，触发战斗事件
                       <ul>
-                        <li>ELM-DSRX</li>
+                        <li>ELMA-DSRX</li>
                         <li>没有战利品</li>
                       </ul>
                     </li>
@@ -6351,22 +7085,53 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     <li><span class="hero-name cloche">克萝洁</span>加入队伍（装备已被卸下，请注意）</li>
                   </ul>
                 </li>
+                <li>
+                  离开之前，先在营地休息
+                  <ul>
+                    <li>触发可以潜入<span class="hero-name jakuri">蛇刳</span>的事件。条件是<span class="hero-name cloche">克萝洁</span>和<span class="hero-name ruka">瑠珈</span>也都在队里</li>
+                    <li>故意等两人不在时再尝试潜入，会看到另一段事件</li>
+                  </ul>
+                </li>
+                <li>
+                  再休息一次
+                  <ul>
+                    <li>触发关于茵菲尔领域的事件。此后克罗亚不再参与茵菲尔领域</li>
+                  </ul>
+                </li>
+                <li>
+                  如果已经潜入<a href="#cosmosphere-cloche"><span class="hero-name cloche">克萝洁</span>的自我领域</a>Lv5并在那里告白，这次休息会发生告白事件
+                  <ul>
+                    <li><span class="hero-name cloche">克萝洁</span>结局就此确定，不能再进<span class="hero-name jakuri">蛇刳</span>结局和可可娜结局</li>
+                  </ul>
+                </li>
+                <li>
+                  此时可以收集的话题
+                  <ul>
+                    <li><span class="hero-name cloche">克萝洁</span>&amp;<span class="hero-name jakuri">蛇刳</span>・「<a href="at2_matter.html#sync-65" rel="noopener noreferrer" target="_blank">呱呱子还是嘎嘎子</a>」<span class="checklist-condition" data-matter-id="sync-65">（<span class="hero-name jakuri">蛇刳</span>刚加入队伍后）</span></li>
+                    <li><span class="hero-name jakuri">蛇刳</span> Lv1・「<a href="at2_matter.html#jakuri-03" rel="noopener noreferrer" target="_blank">防守松懈</a>」<span class="checklist-condition" data-matter-id="jakuri-03">（由克罗亚为<span class="hero-name jakuri">蛇刳</span>防御，多次失败）</span></li>
+                  </ul>
+                </li>
                 <li>准备从入口离开时，雷格利斯拜托主角前往大钟堂</li>
                 <li>
                   进入森与水之都帕斯塔利亚，触发事件
                   <ul>
                     <li>出现PHASE3过场画面，进入PHASE3「INFEL-PHIRA_DEPENDENCY」</li>
+                    <li>此后<span class="hero-name cloche">克萝洁</span>在战斗中的台词与前半段不同</li>
+                    <li>各地开始出现Lv9的I．P．D．。这时基本打不过</li>
                   </ul>
                 </li>
               </ul>
+              <h4 id="phase2-cloche-side"><span class="hero-name jakuri">蛇刳</span>加入之后 <span id="phase2-cloche-side-mark"></span></h4>
               <ul>
+                <li>三个人都在队里。主线推进之前，可以把下面这些先做掉。</li>
                 <li>
-                  备注
+                  关于<span class="hero-name jakuri">蛇刳</span>
                   <ul>
-                    <li><span class="hero-name jakuri">蛇刳</span>加入后，三名女主角齐聚，还可以进行多种内容。</li>
-                    <li>详情参见<a href="#phase2-ruka">PHASE2-<span class="hero-name ruka">瑠珈</span>线</a>参见其中的支线篇。</li>
+                    <li>离队次数少，加入时就已经是毕业装备</li>
+                    <li>可以在艾纳药店、拉克夏克的邦贝尔坦、帕斯塔利亚武器店调合</li>
+                    <li>刚加入时只有和雷格利斯的相性是bad，其他人是normal。PHASE4之后会变</li>
+                    <li>没上场的蕾瓦蒂尔拿不到DP。要潜入<span class="hero-name jakuri">蛇刳</span>，把她放进后卫</li>
                   </ul>
-                </li>
               </ul>
             </div>
           </section>
@@ -6541,7 +7306,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </ul>
                     </li>
                     <li>
-                      除了小物以外都不会消耗，可以反复尝试到满意为止
+                      仅消耗入浴剂和玩具，可以反复尝试到满意为止
                       <ul>
                         <li>只要收集上述全部内容，就能超过同步所需的30%。<br/> 已确认<span class="hero-name jakuri">蛇刳</span>＆<span class="hero-name cloche">克萝洁</span>超过该数值。</li>
                       </ul>
@@ -8344,9 +9109,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     <li>
                       『Hartes ciel, melenas walasye』
                       <ul>
-                        <li>CD版似乎没有拍手声及公园里人们的合唱</li>
-                        <li>应该是游戏演出带来的差别。</li>
-                        <li>也可能间接与支持5.1ch有关 <a href="http://ar-tonelico.jp/at2/dokkoi_fes/index_1122.htm" rel="noopener noreferrer" target="_blank">嘿哟秋祭 霜月遥篇</a>（其实那个场景不支持5.1ch。它以Pro Logic模式播放，因此支持的是Pro Logic。）</li>
+                        <li>CD版没有拍手声及公园里人们的合唱</li>
                       </ul>
                     </li>
                   </ul>
@@ -8464,7 +9227,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   </ul>
                 </li>
                 <li>帕斯塔利亚、艾纳城镇、杂货店、拉克夏克城镇、拉克夏克休养地、<br/> 纵贯洞、I．P．D．实验室、洛螺、丛云栈桥与指挥仪激活器会保留</li>
-                <li>暴走I．P．D．不会出现在崩塌区域，应在其他地方，仍可集齐100人，不必担心</li>
+                <li>失控I．P．D．不会出现在崩塌区域，应在其他地方，仍可集齐100人，不必担心</li>
               </ul>
               <h4 id="phase5-content_1_21">丛云栈桥 <span id="phase5-x0f3ae77"></span></h4>
               <ul>
@@ -8489,9 +9252,6 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   <ul>
                     <li>
                       启动后，可以使用入口左侧的升降机<br/> 步行返回，乘坐升降机上行，可以取得狂热马达
-                      <ul>
-                        <li>之后当然仍需步行返回</li>
-                      </ul>
                     </li>
                   </ul>
                 </li>
@@ -8754,13 +9514,12 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                     <li>为打开门，决定寻找两处紧急解除系统</li>
                   </ul>
                 </li>
-                <li>返回入口房间，前往左右两侧房间（先去哪边都可以，但最终两边都要去）<br/> 调查里面的装置，可以移动先前房间的桥<br/> 将桥分别移向左右，启动前方房间中的紧急停止系统。</li>
+                <li>返回入口房间，前往左右两侧房间（先去哪边都可以，两边都要去）<br/> 调查里面的装置，可以移动先前房间的桥<br/> 将桥分别移向左右，启动前方房间中的紧急停止系统。</li>
                 <li>将桥移回中央，穿过门继续前进，触发事件</li>
                 <li>
                   Boss战斗「菈奇 神兵×2」
                   <ul>
                     <li>菈奇的HP减少后会发动干扰，且效果随机<br/> 只能将其击败才能解除＝战斗中无法解除</li>
-                    <li>在索尔・玛尔塔探索期间，队伍等级已经提升，<br/> 神的守卫也不再构成威胁…………</li>
                   </ul>
                 </li>
                 <li>
@@ -8771,9 +9530,6 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 </li>
                 <li>
                   靠近门触发事件，决定前往乐点
-                  <ul>
-                    <li>仍需步行返回世界地图…………</li>
-                  </ul>
                 </li>
               </ul>
               <h5 id="phase5-content_1_35">出现的敌人 <span id="phase5-daef9c4a"></span></h5>
@@ -8893,8 +9649,8 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li>
                   战斗后前往乐点触发事件，可以潜入芙蕾莉亚<br/> （潜入本身不一定要在乐点进行）
                   <ul>
-                    <li>内容是打破世界观的附加故事，可以取得服装与强力诗魔法</li>
-                    <li>消耗的是SP，而非DP</li>
+                    <li>可获得服装与强力诗魔法</li>
+                    <li>消耗SP，而非DP</li>
                     <li>选错选项会立即结束<br/></li>
                   </ul>
                 </li>
@@ -8935,23 +9691,13 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                   与深处的菈奇交谈，可以进行名为「对练」的战斗。
                   <ul>
                     <li>可以反复挑战，每次击败后都会变强，但不会突然大幅增强。</li>
-                    <li>随机效果的干扰比较棘手，・・・不过也仅此而已。</li>
-                    <li>分形变化时，HP槽总量会变化，但并未恢复HP。</li>
                     <li>获胜5･10･15次时，会在美术馆（通关附加内容）追加奖励图片。</li>
-                    <li>按BOSS战处理，因此无论我方等级如何都能获得经验值，适合练级<br/> （虽然大概不太需要）</li>
+                    <li>按BOSS战处理，因此无论我方等级如何都能获得经验值，适合练级</li>
                     <li>建议至少拒绝一次对练。</li>
                   </ul>
                 </li>
                 <li>
                   菈奇身后有保存环，穿过深处的门即触发最终BOSS事件
-                  <ul>
-                    <li>
-                      此时会播放一首原声集与焰、澪中均未收录的曲子
-                      <ul>
-                        <li>有说法称，是将其他作品的弃用曲重新利用</li>
-                      </ul>
-                    </li>
-                  </ul>
                 </li>
                 <li>动画「赌上世界的圣战」后，开始最终BOSS战（2连战）</li>
               </ul>
@@ -9079,12 +9825,11 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                 <li>
                   贸易都市拉克夏克、小都市艾纳，以及武器店・饭店・杂货店・药店都有事件
                   <ul>
-                    <li>根据所选女主角，事件会有些许差异</li>
-                    <li>观看拉克夏克、艾纳事件后，准备返回世界地图时，<br/> 可可娜以外的成员会离队。想观看各调合商店的事件，应先完成。</li>
-                    <li>前往索尔・玛尔塔中菈奇原先所在的房间，可以与芙蕾莉亚、瞬、茵菲尔交谈<br/> 菈奇的台词也会变化<br/> 但只能交谈，不会发生特别事件</li>
+                    <li>观看拉克夏克、艾纳事件后，准备返回世界地图时，可可娜以外的成员会离队。<br/>想观看各调合商店的事件，应先完成。</li>
+                    <li>前往索尔・玛尔塔中菈奇原先所在的房间，可以与芙蕾莉亚、瞬、茵菲尔交谈<br/> 菈奇的台词也会变化<br/>，但只能交谈，不会发生特别事件</li>
                   </ul>
                 </li>
-                <li>克罗亚的家事件 此后开启语音</li>
+                <li>克罗亚的家事件，此后开启语音</li>
                 <li>结局 『EXEC_with.METHOD_METAFALICA/.』</li>
                 <li>
                   制作人员名单结束后，根据结局条件显示事件与插图
@@ -11570,21 +12315,21 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                         <td>繁华街</td>
                         <td>50</td>
                         <td></td>
-                        <td>虽标有★★★，但可以不去</td>
+                        <td></td>
                       </tr>
                       <tr>
                         <td></td>
                         <td>教室</td>
                         <td>100</td>
                         <td></td>
-                        <td>可以不去，但能听到圆田老师意味深长、难以理解的课程<br/>选项「作为嘴巴的功能」「作为眼睛的功能」</td>
+                        <td>能听到圆田老师意味深长、难以理解的课程<br/>选项「作为嘴巴的功能」「作为眼睛的功能」</td>
                       </tr>
                       <tr>
                         <td></td>
                         <td>教室</td>
                         <td>100</td>
                         <td></td>
-                        <td>可以不去，但能听到可可老师的国语课</td>
+                        <td>能听到可可老师的国语课</td>
                       </tr>
                       <tr>
                         <th>1</th>
@@ -11685,7 +12430,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                         <td>学校正门</td>
                         <td>220</td>
                         <td>【梦境潜入者：Lv1】<br/>「小P」</td>
-                        <td>动画电影「小P的誓言」<br/>主角是欧邦呶？</td>
+                        <td>动画电影「小P的誓言」<br/>主角是欧邦努</td>
                       </tr>
                       <tr>
                         <th>6</th>
@@ -11824,7 +12569,7 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                         <td>男生宿舍</td>
                         <td>250</td>
                         <td></td>
-                        <td>有语音<br/>欧邦呶凝视着畔章……。<br/>欧邦呶诉说着，不想被遗忘在狭小的地方……。</td>
+                        <td>有语音</td>
                       </tr>
                       <tr>
                         <th>4</th>
@@ -12036,6 +12781,13 @@ details.nav-group > summary a { color:inherit; text-decoration:none; }
                       </tr>
                     </tfoot>
                     <tbody>
+					  <tr>
+                        <td>-</td>
+                        <td>生命之塔</td>
+                        <td>400</td>
+                        <td></td>
+                        <td>关于蛇刳的极端</td>
+                      </tr>
                       <tr>
                         <th>1</th>
                         <td>巨石阵</td>
