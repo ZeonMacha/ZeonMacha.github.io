@@ -4499,7 +4499,7 @@ window.MATTERS = [
     "pair": "瑠珈＆克萝洁",
     "location": "休息",
     "condition": "茵菲尔领域Lv4完成后",
-    "note": "需要观看击败索多玛〜取得因普兰塔之间发生的事件",
+    "note": "需要观看击败索多玛〜取得因普兰塔之间发生在敏特区瑠珈家的事件",
     "route": "",
     "partner": "",
     "guideNote": "",
