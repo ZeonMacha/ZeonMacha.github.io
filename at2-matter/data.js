@@ -1288,11 +1288,11 @@ window.MATTERS = [
     "level": "L9",
     "pair": "",
     "location": "休息",
-    "condition": "",
+    "condition": "进入PHASE5后，连续与蛇刳进行4次以上对话话题会话。",
     "note": "",
     "route": "",
     "partner": "",
-    "guideNote": "攻略本：连续与蛇刳进行4次以上对话话题会话（有主线进度条件）。",
+    "guideNote": "",
     "source": "https://gustwiki.com/ar-tonelico2/wiki/114.html",
     "limited": false,
     "requiredCS": {}
