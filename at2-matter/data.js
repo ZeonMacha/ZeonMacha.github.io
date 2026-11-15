@@ -5096,7 +5096,7 @@ window.MATTERS = [
     "id": "sync-50",
     "group": "sync",
     "no": 50,
-    "title": "母亲是？",
+    "title": "关于母亲？",
     "level": "",
     "pair": "瑠珈＆蛇刳",
     "location": "休息",
